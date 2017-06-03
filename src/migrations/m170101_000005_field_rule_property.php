@@ -1,6 +1,6 @@
 <?php
 
-class m170101_000004_field_rule
+class m170101_000005_field_rule_property
     extends tecnocen\formgenerator\migrations\BaseTable
 {
     /**
@@ -17,7 +17,7 @@ class m170101_000004_field_rule
     public function columns()
     {
         return [
-            'rule_id' => $this->primaryKey(),
+            'rule_id' => $this->normalKey(),
             'property' => $this->string(64)->notNull(),
             'value' => $this->string(64)->notNull(),
         ];

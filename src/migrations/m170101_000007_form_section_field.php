@@ -1,6 +1,6 @@
 <?php
 
-class m170101_000006_form_section_field
+class m170101_000007_form_section_field
     extends tecnocen\formgenerator\migrations\BaseTable
 {
     /**
