@@ -95,18 +95,22 @@ class SolicitudeValue extends BaseActiveRecord
                 'message' => 'Field already filled.',
             ],
             [['value'], 'trim'],
-            [
-                ['value'],
-                function ($attribute) {
-                    $this->field->attachValidators($this, $attribute);
-                },
-                'when' => function () {
-                    return !$this->hasErrors('section_id')
-                        && !$this->hasErrors('field_id')
-                        && !$this->hasErrors('solicitude_id');
-                },
-            ],                
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterValidate()
+    {
+        if (!$this->hasErrors()) {
+            foreach ($this->field->buildValidators($this, 'value')
+                as $validator
+            ) {
+                $validator->validateAttributes($this, ['value']);
+            }
+        }
+        parent::afterValidate();
     }
 
     /**
@@ -149,9 +153,9 @@ class SolicitudeValue extends BaseActiveRecord
     public function getField()
     {
         return $this->hasOne(
-            $this->getNamespace() . '\\Field',
-            ['id' => 'section_id']
-        );
+                $this->getNamespace() . '\\Field',
+                ['id' => 'section_id']
+            )->with(['rules.properties']);
     }
 
     /**

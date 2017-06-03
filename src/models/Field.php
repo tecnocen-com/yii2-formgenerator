@@ -91,10 +91,15 @@ class Field extends BaseActiveRecord
         )->inverseOf('field');
     }
 
-    public function attachValidators(Model $model, $attributes)
+    /**
+     * @return \yii\validators\Validator[]
+     */
+    public function buildValidators(Model $model, $attributes)
     {
+        $validators = [];
         foreach ($this->rules as $rule) {
-            $model->validators[] = $rule->buildValidator($model, $attributes);
+            $validators[] = $rule->buildValidator($model, $attributes);
         }
+        return $validators;
     }
 }
