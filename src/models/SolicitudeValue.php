@@ -104,6 +104,7 @@ class SolicitudeValue extends BaseActiveRecord
     public function afterValidate()
     {
         if (!$this->hasErrors()) {
+            $this->field->dataType->castValue($this, 'value');
             foreach ($this->field->buildValidators($this, 'value')
                 as $validator
             ) {
