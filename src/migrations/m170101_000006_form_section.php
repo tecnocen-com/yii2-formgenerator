@@ -27,7 +27,7 @@ class m170101_000006_form_section
     /**
      * @inheritdoc
      */
-    public function columns()
+    public function foreignKeys()
     {
         return ['form_id' => 'formgenerator_form'];
     }

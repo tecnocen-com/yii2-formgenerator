@@ -39,6 +39,6 @@ class m170101_000007_form_section_field
      */
     public function compositePrimaryKeys()
     {
-        return ['secction_id', 'field_id'];
+        return ['section_id', 'field_id'];
     }
 }

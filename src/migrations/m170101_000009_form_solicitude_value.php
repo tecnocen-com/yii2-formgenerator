@@ -34,7 +34,7 @@ class m170101_000009_form_solicitude_value
             'field' => [
                 'table' => 'formgenerator_form_section_field',
                 'columns' => [
-                    'section_id' => 'seccion_id',
+                    'section_id' => 'section_id',
                     'field_id' => 'field_id',
                 ],
             ],
