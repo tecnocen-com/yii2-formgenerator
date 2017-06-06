@@ -13,7 +13,7 @@ use yii\web\UploadedFile;
  *
  * @property Section[] $sections
  */
-class Form extends BaseActiveRecord
+class DataType extends BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -51,7 +51,7 @@ class Form extends BaseActiveRecord
     {
          $values = explode(':', $this->cast, 2);
          return isset($values[1]) 
-             ? [$values[0], $values[1]];
+             ? [$values[0], $values[1]]
              : [static::class, $values[0]];
     }
 
