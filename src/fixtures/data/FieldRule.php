@@ -93,17 +93,4 @@ return [
         'created_by' => 1,
         'created_at' => $now
     ],
-    [
-        'field_id' => 6,
-        'class' => 'integer',
-        'created_by' => 1,
-        'created_at' => $now
-    ],
-    [
-        'data_type_id' => 3,
-        'name' => 'income',
-        'label' => 'Income',
-        'created_by' => 1,
-        'created_at' => $now
-    ],
 ];
