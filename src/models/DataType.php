@@ -86,6 +86,11 @@ class Form extends BaseActiveRecord
         return (string)$value;
     }
 
+    public static function floatCast($value, $attribute)
+    {
+        return (float)$value;
+    }
+
     public static function fileCast($value, $attribute)
     {
         if (null !== ($uploadedFile = UploadedFile::getInstanceByName(
