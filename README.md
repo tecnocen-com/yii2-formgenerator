@@ -21,7 +21,7 @@ require: {
 
 Then run the required migrations
 
-`php yii migrate/up -p=@vendor/tecnocen/yii2-formgenerator/src/migrations`
+`php yii migrate/up -p=@tecnocen/formgenerator/migrations`
 
 Which will install the following table structure
 
@@ -42,6 +42,7 @@ class Api extends \tecnocen\roa\modules\ApiContainer
        'fg1' => ['class' => 'tecnocen\formgenerator\roa\modules\Version'],
    ];
 }
+```
 
 You can then access the module to check the available resources.
 
