@@ -57,7 +57,7 @@ class SolicitudeValue extends BaseActiveRecord
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Section::class,
-                'targetAttribute' => ['section_id' => 'id']],
+                'targetAttribute' => ['section_id' => 'id'],
                 'when' => function () {
                     return !$this->hasErrors('solicitude_id');
                 },

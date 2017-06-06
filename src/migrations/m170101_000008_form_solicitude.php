@@ -8,7 +8,7 @@ class m170101_000008_form_solicitude
      */
     public function getTableName()
     {
-        return 'formgenerator_form_solicitude';
+        return 'formgenerator_solicitude';
     }
 
     /**
