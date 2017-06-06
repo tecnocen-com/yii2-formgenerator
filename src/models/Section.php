@@ -101,7 +101,7 @@ class Section extends BaseActiveRecord
     public function getFields()
     {
         return $this->hasMany(
-            $this->getNamespace() . '\\Field'
+            $this->getNamespace() . '\\Field',
             ['id' => 'field_id']
         )->via('sectionFields');
     }
