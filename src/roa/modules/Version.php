@@ -20,7 +20,7 @@ class Version extends \tecnocen\roa\modules\ApiVersion
     const FIELD_RULE_PROPERTY_ROUTE = self::FIELD_RULE_ROUTE
         . '/<rule_id:\d+>/property';
 
-    const SOLICITUDE_ROUTE = 'solicitude';
+    const SOLICITUDE_ROUTE = self::FORM_ROUTE . '/<form_id:\d+>/solicitude';
     const SOLICITUDE_VALUE_ROUTE = self::SOLICITUDE_ROUTE
         . '/<solicitude_id:\d+>/value';
 

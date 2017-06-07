@@ -2,6 +2,7 @@
 
 namespace tecnocen\formgenerator\roa\resources\form\section;
 
+use Yii;
 use tecnocen\formgenerator\roa\models\SectionField;
 
 /**
@@ -14,4 +15,14 @@ class FieldResource extends \tecnocen\roa\controllers\OAuth2Resource
      * @inheritdoc
      */
     public $modelClass = SectionField::class;
+
+    /**
+     * @inheritdoc
+     */
+    public function baseQuery()
+    {
+        return parent::baseQuery()->andWhere([
+            'section_id' => Yii::$app->request->getQueryParam('section_id'),
+        ]);
+    }
 }

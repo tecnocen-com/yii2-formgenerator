@@ -1,7 +1,8 @@
 <?php
 
-namespace tecnocen\formgenerator\roa\resources;
+namespace tecnocen\formgenerator\roa\resources\form;
 
+use Yii;
 use tecnocen\formgenerator\roa\models\Solicitude;
 
 /**
@@ -14,4 +15,14 @@ class SolicitudeResource extends \tecnocen\roa\controllers\OAuth2Resource
      * @inheritdoc
      */
     public $modelClass = Solicitude::class;
+
+    /**
+     * @inheritdoc
+     */
+    public function baseQuery()
+    {
+        return parent::baseQuery()->andWhere([
+            'form_id' => Yii::$app->request->getQueryParam('form_id'),
+        ]);
+    }
 }
