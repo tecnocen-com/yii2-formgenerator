@@ -1,6 +1,6 @@
 <?php
 
-namespace tecnocen\formgenerato\roa\models;
+namespace tecnocen\formgenerator\roa\models;
 
 use yii\web\Linkable;
 
