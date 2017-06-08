@@ -2,12 +2,14 @@
 
 namespace tecnocen\formgenerator\roa\modules;
 
+use tecnocen\formgenerator\roa\resources;
+
 class Version extends \tecnocen\roa\modules\ApiVersion
 {
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'tecnocen\\formgenerator\\roa\\resources';
+    public $controllerNamespace = resources::class;
 
     const FORM_ROUTE = 'form';
     const SECTION_ROUTE = self::FORM_ROUTE . '/<form_id:\d+>/section';
@@ -36,7 +38,10 @@ class Version extends \tecnocen\roa\modules\ApiVersion
 
         self::FIELD_ROUTE,
         self::FIELD_RULE_ROUTE,
-        self::FIELD_RULE_PROPERTY_ROUTE,
+        self::FIELD_RULE_PROPERTY_ROUTE => [
+            'class' => resources\field\rule\PropertyResource::class,
+            'urlRule' => ['tokens' => ['{id}' => '<id:\w+>']],
+        ],
 
         self::SOLICITUDE_ROUTE,
         self::SOLICITUDE_VALUE_ROUTE,

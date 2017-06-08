@@ -14,6 +14,11 @@ class PropertyResource extends \tecnocen\roa\controllers\OAuth2Resource
     /**
      * @inheritdoc
      */
+    public $idAttribute = 'property';
+    
+    /**
+     * @inheritdoc
+     */
     public $modelClass = FieldRuleProperty::class;
 
     /**

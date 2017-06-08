@@ -18,6 +18,7 @@ class FieldRuleProperty extends \tecnocen\formgenerator\models\FieldRuleProperty
     protected function slugConfig()
     {
         return [
+            'idAttribute' => 'property',
             'resourceName' => 'property',
             'parentSlugRelation' => 'rule',
         ];
