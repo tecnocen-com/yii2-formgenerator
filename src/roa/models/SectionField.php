@@ -18,6 +18,7 @@ class SectionField extends \tecnocen\formgenerator\models\SectionField
     protected function slugConfig()
     {
         return [
+            'idAttribute' => 'field_id',
             'resourceName' => 'field',
             'parentSlugRelation' => 'section',
         ];

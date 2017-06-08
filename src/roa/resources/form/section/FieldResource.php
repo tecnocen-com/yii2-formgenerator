@@ -14,6 +14,11 @@ class FieldResource extends \tecnocen\roa\controllers\OAuth2Resource
     /**
      * @inheritdoc
      */
+    public $idAttribute = 'field_id';
+
+    /**
+     * @inheritdoc
+     */
     public $modelClass = SectionField::class;
 
     /**
