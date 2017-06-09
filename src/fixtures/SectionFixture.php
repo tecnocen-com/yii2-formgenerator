@@ -19,4 +19,8 @@ class SectionFixture extends \yii\test\ActiveFixture
      * @inheritdoc
      */
     public $dataFile = __DIR__ . '/data/Section.php';
+    /**
+     * @inheritdoc
+     */
+    public $depends = [FormFixture::class];
 }
