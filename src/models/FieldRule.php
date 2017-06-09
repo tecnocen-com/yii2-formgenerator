@@ -3,6 +3,8 @@
 namespace tecnocen\formgenerator\models;
 
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
+use yii\validators\Validator;
 
 /**
  * Model class for table `{{%formgenerator_field_rule}}`

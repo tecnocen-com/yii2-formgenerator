@@ -55,9 +55,9 @@ class DataType extends BaseActiveRecord
              : [static::class, $values[0]];
     }
 
-    protected function castValue(SolicitudeValue $model, $attribute)
+    public function castValue(SolicitudeValue $model, $attribute)
     {
-         $callable = $this->getCastCallabe();
+         $callable = $this->getCastCallable();
          $model->$attribute = $callable($model->$attribute, $attribute);
     }
 

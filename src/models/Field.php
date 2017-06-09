@@ -76,8 +76,8 @@ class Field extends BaseActiveRecord
     {
         return $this->hasOne(
             $this->getNamespace() . '\\DataType',
-            ['data_type_id' => 'id']
-        )->inverseOf('form');
+            ['id' => 'data_type_id']
+        );
     }
 
     /**
