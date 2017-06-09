@@ -14,6 +14,11 @@ class ValueResource extends \tecnocen\roa\controllers\OAuth2Resource
     /**
      * @inheritdoc
      */
+    public $idAttribute = 'field_id';
+
+    /**
+     * @inheritdoc
+     */
     public $modelClass = SolicitudeValue::class;
 
     /**
@@ -24,6 +29,9 @@ class ValueResource extends \tecnocen\roa\controllers\OAuth2Resource
         return parent::baseQuery()->andWhere([
             'solicitude_id' => Yii::$app->request
                 ->getQueryParam('solicitude_id'),
+        ])->andFilterWhere([
+            'section_id' => Yii::$app->request
+                ->getQueryParam('section_id'),
         ]);
     }
 }
