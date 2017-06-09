@@ -3,6 +3,8 @@
 namespace tecnocen\formgenerator\models;
 
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
+use yii\validators\Validator;
 
 /**
  * Model class for table `{{%formgenerator_field_rule}}`
@@ -30,6 +32,7 @@ class FieldRule extends BaseActiveRecord
     protected function attributeTypecast()
     {
         return parent::attributeTypecast() + [
+            'id' => 'integer',
             'field_id' => 'integer',
         ];
     }
@@ -49,7 +52,8 @@ class FieldRule extends BaseActiveRecord
                 'targetClass' => Field::class,
                 'targetAttribute' => ['field_id' => 'id'],
             ],
-            [['class'], 'string', 'min' => 4],
+            [['class'], 'string', 'min' => 2],
+            // todo check its a valid validator class
         ];
     }
 

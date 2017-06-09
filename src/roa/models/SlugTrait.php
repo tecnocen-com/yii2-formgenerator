@@ -22,6 +22,9 @@ trait SlugTrait
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getLinks()
     {
         return $this->getSlugLinks();

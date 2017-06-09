@@ -8,7 +8,7 @@ class m170101_000009_form_solicitude_value
      */
     public function getTableName()
     {
-        return 'formgenerator_form_solicitude_value';
+        return 'formgenerator_solicitude_value';
     }
 
     /**
@@ -30,7 +30,7 @@ class m170101_000009_form_solicitude_value
     public function foreignKeys()
     {
         return [
-            'solicitude_id' => 'formgenerator_form_solicitude',
+            'solicitude_id' => 'formgenerator_solicitude',
             'field' => [
                 'table' => 'formgenerator_form_section_field',
                 'columns' => [

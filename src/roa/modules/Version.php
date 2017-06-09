@@ -2,12 +2,14 @@
 
 namespace tecnocen\formgenerator\roa\modules;
 
+use tecnocen\formgenerator\roa\resources;
+
 class Version extends \tecnocen\roa\modules\ApiVersion
 {
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = 'tecnocen\\formgenerator\\roa\\resources';
+    public $controllerNamespace = resources::class;
 
     const FORM_ROUTE = 'form';
     const SECTION_ROUTE = self::FORM_ROUTE . '/<form_id:\d+>/section';
@@ -20,7 +22,7 @@ class Version extends \tecnocen\roa\modules\ApiVersion
     const FIELD_RULE_PROPERTY_ROUTE = self::FIELD_RULE_ROUTE
         . '/<rule_id:\d+>/property';
 
-    const SOLICITUDE_ROUTE = 'solicitude';
+    const SOLICITUDE_ROUTE = self::FORM_ROUTE . '/<form_id:\d+>/solicitude';
     const SOLICITUDE_VALUE_ROUTE = self::SOLICITUDE_ROUTE
         . '/<solicitude_id:\d+>/value';
 
@@ -36,9 +38,31 @@ class Version extends \tecnocen\roa\modules\ApiVersion
 
         self::FIELD_ROUTE,
         self::FIELD_RULE_ROUTE,
-        self::FIELD_RULE_PROPERTY_ROUTE,
+        self::FIELD_RULE_PROPERTY_ROUTE => [
+            'class' => resources\field\rule\PropertyResource::class,
+            'urlRule' => ['tokens' => ['{id}' => '<id:\w+>']],
+        ],
 
         self::SOLICITUDE_ROUTE,
-        self::SOLICITUDE_VALUE_ROUTE,
+        self::SOLICITUDE_VALUE_ROUTE => [
+            'class' => resources\form\solicitude\ValueResource::class,
+            'urlRule' => [
+                'tokens' => [
+                    '{section_id}' => '<section_id:\d+>',
+                    '{id}' => '<id:\w+>',
+                ],
+                'patterns' => [
+                    'PUT,PATCH {section_id}/{id}' => 'update',
+                    'DELETE {section_id}/{id}' => 'delete',
+                    'GET,HEAD {section_id}/{id}' => 'view',
+                    'POST' => 'create',
+                    'GET,HEAD {section_id}' => 'index',
+                    'GET,HEAD' => 'index',
+                    '{section_id}' => 'options',
+                    '{section_id}/{id}' => 'options',
+                    '' => 'options',
+                ],
+            ],
+        ],
     ];
 }

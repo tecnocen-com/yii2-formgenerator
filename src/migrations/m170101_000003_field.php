@@ -20,7 +20,9 @@ class m170101_000003_field
             'id' => $this->primaryKey(),
             'data_type_id' => $this->normalKey(),
             'name' => $this->string(16)->unique()->notNull(),
-            'label' => $this->string(64)->notNull(),            
+            'label' => $this->string(64)->notNull(),
+            'service' => $this->string(128)->notNull()
+                ->comment('url for a web service to provide searcheable data'),
         ];
     }
 

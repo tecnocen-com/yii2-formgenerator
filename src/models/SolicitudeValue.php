@@ -57,7 +57,7 @@ class SolicitudeValue extends BaseActiveRecord
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => Section::class,
-                'targetAttribute' => ['section_id' => 'id']],
+                'targetAttribute' => ['section_id' => 'id'],
                 'when' => function () {
                     return !$this->hasErrors('solicitude_id');
                 },
@@ -104,7 +104,18 @@ class SolicitudeValue extends BaseActiveRecord
     public function afterValidate()
     {
         if (!$this->hasErrors()) {
-            foreach ($this->field->buildValidators($this, 'value')
+            $field = $this->getField()
+                ->with([
+                    'dataType',
+                    'rules' => function ($query) {
+                        $query->modelClass = 'tecnocen\\formgenerator\\models\\FieldRule';
+                    },
+                    'rules.properties',
+                ])
+                ->one();
+            $field->dataType->castValue($this, 'value');
+            $this->populateRelation('field', $field);
+            foreach ($field->buildValidators($this, 'value')
                 as $validator
             ) {
                 $validator->validateAttributes($this, ['value']);
@@ -153,9 +164,9 @@ class SolicitudeValue extends BaseActiveRecord
     public function getField()
     {
         return $this->hasOne(
-                $this->getNamespace() . '\\Field',
-                ['id' => 'section_id']
-            )->with(['rules.properties']);
+            $this->getNamespace() . '\\Field',
+            ['id' => 'field_id']
+        );
     }
 
     /**

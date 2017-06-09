@@ -2,6 +2,7 @@
 
 namespace tecnocen\formgenerator\roa\resources\field\rule;
 
+use Yii;
 use tecnocen\formgenerator\roa\models\FieldRuleProperty;
 
 /**
@@ -13,5 +14,20 @@ class PropertyResource extends \tecnocen\roa\controllers\OAuth2Resource
     /**
      * @inheritdoc
      */
+    public $idAttribute = 'property';
+    
+    /**
+     * @inheritdoc
+     */
     public $modelClass = FieldRuleProperty::class;
+
+    /**
+     * @inheritdoc
+     */
+    public function baseQuery()
+    {
+        return parent::baseQuery()->andWhere([
+            'rule_id' => Yii::$app->request->getQueryParam('rule_id'),
+        ]);
+    }
 }

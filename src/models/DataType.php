@@ -13,7 +13,7 @@ use yii\web\UploadedFile;
  *
  * @property Section[] $sections
  */
-class Form extends BaseActiveRecord
+class DataType extends BaseActiveRecord
 {
     /**
      * @inheritdoc
@@ -51,13 +51,13 @@ class Form extends BaseActiveRecord
     {
          $values = explode(':', $this->cast, 2);
          return isset($values[1]) 
-             ? [$values[0], $values[1]];
+             ? [$values[0], $values[1]]
              : [static::class, $values[0]];
     }
 
-    protected function castValue(SolicitudeValue $model, $attribute)
+    public function castValue(SolicitudeValue $model, $attribute)
     {
-         $callable = $this->getCastCallabe();
+         $callable = $this->getCastCallable();
          $model->$attribute = $callable($model->$attribute, $attribute);
     }
 
@@ -84,6 +84,11 @@ class Form extends BaseActiveRecord
     public static function stringCast($value, $attribute)
     {
         return (string)$value;
+    }
+
+    public static function floatCast($value, $attribute)
+    {
+        return (float)$value;
     }
 
     public static function fileCast($value, $attribute)
