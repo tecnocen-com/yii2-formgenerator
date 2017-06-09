@@ -44,6 +44,25 @@ class Version extends \tecnocen\roa\modules\ApiVersion
         ],
 
         self::SOLICITUDE_ROUTE,
-        self::SOLICITUDE_VALUE_ROUTE,
+        self::SOLICITUDE_VALUE_ROUTE => [
+            'class' => resources\form\solicitude\ValueResource::class,
+            'urlRule' => [
+                'tokens' => [
+                    '{section_id}' => '<section_id:\d+>',
+                    '{id}' => '<id:\w+>',
+                ],
+                'patterns' => [
+                    'PUT,PATCH {section_id}/{id}' => 'update',
+                    'DELETE {section_id}/{id}' => 'delete',
+                    'GET,HEAD {section_id}/{id}' => 'view',
+                    'POST' => 'create',
+                    'GET,HEAD {section_id}' => 'index',
+                    'GET,HEAD' => 'index',
+                    '{section_id}' => 'options',
+                    '{section_id}/{id}' => 'options',
+                    '' => 'options',
+                ],
+            ],
+        ],
     ];
 }
