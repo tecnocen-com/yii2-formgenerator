@@ -23,4 +23,12 @@ class SectionField extends \tecnocen\formgenerator\models\SectionField
             'parentSlugRelation' => 'section',
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLinks()
+    {
+        return $this->getSlugLinks() + ['field' => $this->field->getSelfLink()];
+    }
 }

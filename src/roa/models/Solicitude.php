@@ -17,7 +17,10 @@ class Solicitude extends \tecnocen\formgenerator\models\Solicitude
      */
     protected function slugConfig()
     {
-        return ['resourceName' => 'field'];
+        return [
+            'resourceName' => 'solicitude',
+            'parentSlugRelation' => 'form',
+        ];
     }
 
     /**
