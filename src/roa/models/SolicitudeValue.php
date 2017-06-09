@@ -18,7 +18,7 @@ class SolicitudeValue extends \tecnocen\formgenerator\models\SolicitudeValue
     public function attributes()
     {
         return array_merge(parent::attributes(), ['resourceId']);
-        
+
     }
 
     /**
@@ -27,10 +27,9 @@ class SolicitudeValue extends \tecnocen\formgenerator\models\SolicitudeValue
     public function afterFind()
     {
         parent::afterFind();
-        $this->setAttribute(
-            'resourceId',
-            $this->section_id . '/' . $this->field_id
-        );
+        $resourceId = $this->section_id . '/' . $this->field_id;
+        $this->setAttribute('resourceId', $resourceId);
+        $this->setOldAttribute('resourceId', $resourceId);
     }
 
     /**
