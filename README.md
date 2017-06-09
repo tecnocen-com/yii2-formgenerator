@@ -51,10 +51,10 @@ You can then access the module to check the available resources.
 - field/<field_id:\d+>/rule
 - field/<field_id:\d+>/rule/<rule_id:\d+>/property
 - form
-- form/<formg_id:\d+>/section
-- form/<formg_id:\d+>/section/<section_id:\d+>/field
-- solicitude
-- solicitude/<solicitude_id:\d+>/value
+- form/<form_id:\d+>/section
+- form/<form_id:\d+>/section/<section_id:\d+>/field
+- form/<form_id:\d+>/solicitude
+- form/<form_id:\d+>/solicitude/<solicitude_id:\d+>/value
 
 Which will implement CRUD functionalities for a formgenerator.
 
