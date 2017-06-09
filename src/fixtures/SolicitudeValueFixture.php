@@ -23,5 +23,5 @@ class SolicitudeValueFixture extends \yii\test\ActiveFixture
     /**
      * @inheritdoc
      */
-    public $depends = [SolicitudeFixture::class, SectionFieldFixture::class];    
+    public $depends = [SolicitudeFixture::class, SectionFieldFixture::class];
 }

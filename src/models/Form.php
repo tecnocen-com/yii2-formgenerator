@@ -47,7 +47,7 @@ class Form extends BaseActiveRecord
     {
         return array_merge([
             'id' => 'ID',
-            'name' => 'Workflow name',
+            'name' => 'Form name',
         ], parent::attributeLabels());
     }
 
