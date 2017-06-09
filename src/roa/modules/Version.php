@@ -49,7 +49,7 @@ class Version extends \tecnocen\roa\modules\ApiVersion
             'urlRule' => [
                 'tokens' => [
                     '{section_id}' => '<section_id:\d+>',
-                    '{id}' => '<id:\w+>',
+                    '{id}' => '<id:\d+>',
                 ],
                 'patterns' => [
                     'PUT,PATCH {section_id}/{id}' => 'update',
