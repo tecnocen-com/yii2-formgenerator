@@ -113,13 +113,13 @@ class SolicitudeValue extends BaseActiveRecord
                     'rules.properties',
                 ])
                 ->one();
-            $field->dataType->castValue($this, 'value');
             $this->populateRelation('field', $field);
             foreach ($field->buildValidators($this, 'value')
                 as $validator
             ) {
                 $validator->validateAttributes($this, ['value']);
             }
+            $field->dataType->castValue($this, 'value');
         }
         parent::afterValidate();
     }
