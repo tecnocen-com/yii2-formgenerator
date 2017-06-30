@@ -15,31 +15,10 @@ class SolicitudeValue extends \tecnocen\formgenerator\models\SolicitudeValue
     /**
      * @inheritdoc
      */
-    public function attributes()
-    {
-        return array_merge(parent::attributes(), ['resourceId']);
-        
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function afterFind()
-    {
-        parent::afterFind();
-        $this->setAttribute(
-            'resourceId',
-            $this->section_id . '/' . $this->field_id
-        );
-    }
-
-    /**
-     * @inheritdoc
-     */
     protected function slugConfig()
     {
         return [
-            'idAttribute' => 'resourceId',
+            'idAttribute' => ['section_id', 'field_id'],
             'resourceName' => 'value',
             'parentSlugRelation' => 'solicitude',
         ];
@@ -50,8 +29,6 @@ class SolicitudeValue extends \tecnocen\formgenerator\models\SolicitudeValue
      */
     public function getLinks()
     {
-        return $this->getSlugLinks() + [
-            'values' => $this->getSelfLink() . '/value',
-        ];
+        return $this->getSlugLinks();
     }
 }

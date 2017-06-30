@@ -26,6 +26,8 @@ class Version extends \tecnocen\roa\modules\ApiVersion
     const SOLICITUDE_VALUE_ROUTE = self::SOLICITUDE_ROUTE
         . '/<solicitude_id:\d+>/value';
 
+    const SOLICITUDE_VALUE_SEARCH_ROUTE = 'solicitude-value';
+
     /**
      * @inheritdoc
      */
@@ -60,6 +62,17 @@ class Version extends \tecnocen\roa\modules\ApiVersion
                     'GET,HEAD' => 'index',
                     '{section_id}' => 'options',
                     '{section_id}/{id}' => 'options',
+                    '' => 'options',
+                ],
+            ],
+        ],
+        self::SOLICITUDE_VALUE_SEARCH_ROUTE => [
+            'class' => resources\form\solicitude\ValueResource::class,
+            'urlRule' => [
+                'tokens' => [
+                ],
+                'patterns' => [
+                    'GET,HEAD' => 'index',
                     '' => 'options',
                 ],
             ],
