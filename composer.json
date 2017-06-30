@@ -14,7 +14,7 @@
     "require": {
         "php": ">=5.6",
         "yiisoft/yii2": "~2.0.10",
-        "tecnocen/yii2-roa": "*",
+        "tecnocen/yii2-roa": "~0.0.2",
         "tecnocen/yii2-migrate": ">=1.0.1"
     },
     "require-dev": {
