@@ -4,6 +4,7 @@ namespace tecnocen\formgenerator\roa\resources\form;
 
 use Yii;
 use tecnocen\formgenerator\roa\models\Solicitude;
+use tecnocen\formgenerator\roa\models\SolicitudeSearch;
 
 /**
  * CRUD resource for `Solicitude` records 
@@ -15,6 +16,11 @@ class SolicitudeResource extends \tecnocen\roa\controllers\OAuth2Resource
      * @inheritdoc
      */
     public $modelClass = Solicitude::class;
+
+    /**
+     * @inheritdoc
+     */
+    public $searchClass = SolicitudeSearch::class;
 
     /**
      * @inheritdoc
