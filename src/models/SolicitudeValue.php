@@ -179,18 +179,4 @@ class SolicitudeValue extends BaseActiveRecord
             ['id' => 'solicitude_id']
         );
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSectionField()
-    {
-        return $this->hasOne(
-            $this->getNamespace() . '\\SectionField',
-            [
-                'field_id' => 'field_id',
-                'section_id' => 'section_id',
-            ]
-        );
-    }
 }

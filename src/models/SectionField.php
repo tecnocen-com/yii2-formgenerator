@@ -2,6 +2,8 @@
 
 namespace tecnocen\formgenerator\models;
 
+use Yii;
+
 /**
  * Model class for table `{{%formgenerator_form_section_field}}`
  *
@@ -123,10 +125,13 @@ class SectionField extends BaseActiveRecord
      */
     public function getSolicitudeValuesData()
     {
-        return $this->getSolicitudeValue()
+        return Yii::configure(
+                $this->getSolicitudeValues(),
+                ['multiple' => false]
+            )
             ->select([
-                'countValues' => 'count(value)',
-                'countDistinctValues' => 'count(distinct value)',
+                'amount' => 'count(value)',
+                'amountDistinct' => 'count(distinct value)',
             ])
             ->groupBy(['section_id', 'field_id'])
             ->inverseOf(null)
@@ -138,12 +143,12 @@ class SectionField extends BaseActiveRecord
      */
     public function getSolicitudeValuesDataDetail()
     {
-        return $this->getSolicitudeValue()
+        return $this->getSolicitudeValues()
             ->select([
                 'field_id',
                 'section_id',
                 'value',
-                'countValues', 'amount' => 'count(value)',
+                'amount' => 'count(value)',
             ])
             ->groupBy(['field_id', 'section_id', 'value'])
             ->inverseOf(null)

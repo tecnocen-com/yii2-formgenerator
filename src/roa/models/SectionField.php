@@ -37,6 +37,6 @@ class SectionField extends \tecnocen\formgenerator\models\SectionField
      */
     public function extraFields()
     {
-        return ['detailValues', 'totalValues'];
+        return ['solicitudeValuesData', 'solicitudeValuesDataDetail'];
     }
 }
