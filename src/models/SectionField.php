@@ -11,6 +11,9 @@ namespace tecnocen\formgenerator\models;
  *
  * @property Section $section
  * @property Field $field
+ * @property SolicitudeValue $solicitudeValues
+ * @property array $solicitudeValuesData
+ * @property array $solicitudeValuesDataDetail
  */
 class SectionField extends BaseActiveRecord
 {
@@ -97,7 +100,53 @@ class SectionField extends BaseActiveRecord
     {
         return $this->hasOne(
             $this->getNamespace() . '\\Field',
-            ['id' => 'section_id']
+            ['id' => 'field_id']
         );
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSolicitudeValues()
+    {
+        return $this->hasMany(
+            $this->getNamespace() . '\\SolicitudeValue',
+            [
+                'field_id' => 'field_id',
+                'section_id' => 'section_id',
+            ]
+        )->inverseOf('sectionField');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSolicitudeValuesData()
+    {
+        return $this->getSolicitudeValue()
+            ->select([
+                'countValues' => 'count(value)',
+                'countDistinctValues' => 'count(distinct value)',
+            ])
+            ->groupBy(['section_id', 'field_id'])
+            ->inverseOf(null)
+            ->asArray();
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSolicitudeValuesDataDetail()
+    {
+        return $this->getSolicitudeValue()
+            ->select([
+                'field_id',
+                'section_id',
+                'value',
+                'countValues', 'amount' => 'count(value)',
+            ])
+            ->groupBy(['field_id', 'section_id', 'value'])
+            ->inverseOf(null)
+            ->asArray();
     }
 }

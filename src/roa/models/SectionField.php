@@ -31,4 +31,12 @@ class SectionField extends \tecnocen\formgenerator\models\SectionField
     {
         return $this->getSlugLinks() + ['field' => $this->field->getSelfLink()];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['detailValues', 'totalValues'];
+    }
 }
