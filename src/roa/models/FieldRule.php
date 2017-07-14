@@ -28,8 +28,21 @@ class FieldRule extends \tecnocen\formgenerator\models\FieldRule
      */
     public function getLinks()
     {
+        $selfLink = $this->getSelfLink();
         return $this->getSlugLinks() + [
-            'properties' => $this->getSelfLink() . '/property',
+            'properties' => $selfLink . '/property',
+            'curies' => [
+                'expand' => Url::to($selfLink, ['expand' => '{rel}']),
+            ],
+            'expand:properties' => 'properties',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['properties'];
     }
 }

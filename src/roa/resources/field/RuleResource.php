@@ -6,7 +6,7 @@ use Yii;
 use tecnocen\formgenerator\roa\models\FieldRule;
 
 /**
- * CRUD resource for `FieldRule` records 
+ * CRUD resource for `FieldRule` records
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
 class RuleResource extends \tecnocen\roa\controllers\OAuth2Resource
@@ -21,8 +21,10 @@ class RuleResource extends \tecnocen\roa\controllers\OAuth2Resource
      */
     public function baseQuery()
     {
-        return parent::baseQuery()->andWhere([
-            'field_id' => Yii::$app->request->getQueryParam('field_id'),
-        ]);
+        return parent::baseQuery()
+            ->andWhere([
+                'field_id' => Yii::$app->request->getQueryParam('field_id'),
+            ])
+            ->joinWith(['properties'])
     }
 }
