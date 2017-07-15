@@ -21,10 +21,8 @@ class RuleResource extends \tecnocen\roa\controllers\OAuth2Resource
      */
     public function baseQuery()
     {
-        return parent::baseQuery()
-            ->andWhere([
-                'field_id' => Yii::$app->request->getQueryParam('field_id'),
-            ])
-            ->joinWith(['properties'])
+        return parent::baseQuery()->with(['properties'])->andWhere([
+            'field_id' => Yii::$app->request->getQueryParam('field_id'),
+        ]);            
     }
 }

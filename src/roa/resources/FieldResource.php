@@ -13,11 +13,6 @@ class FieldResource extends \tecnocen\roa\controllers\OAuth2Resource
     /**
      * @inheritdoc
      */
-    $idAttribute = 'field.id';
-
-    /**
-     * @inheritdoc
-     */
     public $modelClass = Field::class;
 
     /**
@@ -25,6 +20,6 @@ class FieldResource extends \tecnocen\roa\controllers\OAuth2Resource
      */
     public function baseQuery()
     {
-        return parent::baseQuery()->alias('field')->innerJoinWith(['dataType']);
+        return parent::baseQuery()->alias('field')->with(['dataType']);
     }
 }
