@@ -2,6 +2,7 @@
 
 namespace tecnocen\formgenerator\roa\models;
 
+use yii\helpers\Url;
 use yii\web\Linkable;
 
 /**
