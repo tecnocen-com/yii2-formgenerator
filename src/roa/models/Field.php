@@ -3,6 +3,7 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use yii\helpers\Url;
+use yii\web\Link;
 use yii\web\Linkable;
 
 /**
@@ -31,9 +32,14 @@ class Field extends \tecnocen\formgenerator\models\Field
           'rules' => $selfLink . '/rule',
           'dataType' => $this->dataType->getSelfLink(),
           'curies' => [
-              'expand' => Url::to($selfLink, ['expand' => '{rel}']),
+              'expand' => new Link([
+                  'href' => Url::to([$selfLink, 'expand' => '{rel}']),
+                  'name' => 'expand',
+                  'templated' => true,
+                  'title' => 'expand values to embed at the resource.',
+              ]),
           ],
-          'expand:properties' => 'properties',
+          'expand:properties' => 'dataType',
       ];
     }
 
