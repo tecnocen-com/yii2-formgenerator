@@ -23,4 +23,12 @@ class FieldRuleProperty extends \tecnocen\formgenerator\models\FieldRuleProperty
             'parentSlugRelation' => 'rule',
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function fields()
+    {
+        return ['id', 'property', 'value'];
+    }
 }

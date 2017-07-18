@@ -48,6 +48,15 @@ class FieldRule extends \tecnocen\formgenerator\models\FieldRule
     /**
      * @inheritdoc
      */
+    public function fields()
+    {
+        return ['id', 'class'];
+    }
+   
+
+    /**
+     * @inheritdoc
+     */
     public function extraFields()
     {
         return ['properties'];
