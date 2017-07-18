@@ -19,6 +19,7 @@ class m170101_000002_data_type
         return [
             'id' => $this->primaryKey(),
             'name' => $this->string(16)->notNull()->unique(),
+            'label' => $this->string(128)->notNull(),
             'cast' => $this->string(64)->notNull(),
         ];
     }

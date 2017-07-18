@@ -9,9 +9,10 @@ use yii\web\UploadedFile;
  *
  * @property integer $id
  * @property string $name
+ * @property string $label
  * @property string $cast
  *
- * @property Section[] $sections
+ * @property Field[] $fields
  */
 class DataType extends BaseActiveRecord
 {
@@ -37,8 +38,8 @@ class DataType extends BaseActiveRecord
     public function rules()
     {
         return [
-            [['name', 'cast'], 'required'],
-            [['name', 'cast'], 'string', 'min' => 4],
+            [['name', 'label', 'cast'], 'required'],
+            [['name', 'label', 'cast',], 'string', 'min' => 4],
             [['name'], 'unique'],
             [['cast'], 'verifyCast'],
         ];
@@ -55,12 +56,23 @@ class DataType extends BaseActiveRecord
              : [static::class, $values[0]];
     }
 
+    /**
+     * Cast the value of an attribute in a model.
+     *
+     * @param SolicitudeValue $model
+     * @param string $attribute
+     */
     public function castValue(SolicitudeValue $model, $attribute)
     {
          $callable = $this->getCastCallable();
          $model->$attribute = $callable($model->$attribute, $attribute);
     }
 
+    /**
+     * Verify that the cast saved is callable.
+     *
+     * @param string $attribute
+     */
     public function verifyCast($attribute)
     {
          if (!is_callable($this->getCastCallable())) {
@@ -109,6 +121,7 @@ class DataType extends BaseActiveRecord
         return array_merge([
             'id' => 'ID',
             'name' => 'Data Type name',
+            'label' => 'Label',
             'cast' => 'Type Cast Method',
         ], parent::attributeLabels());
     }
