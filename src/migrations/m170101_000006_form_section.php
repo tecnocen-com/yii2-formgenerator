@@ -20,7 +20,8 @@ class m170101_000006_form_section
             'id' => $this->primaryKey(),
             'form_id' => $this->normalKey(),
             'name' => $this->string(16)->notNull(),
-            'label' => $this->string(64)->notNull(),            
+            'position' => $this->integer()->unsigned()->notNull(),
+            'label' => $this->string(64)->notNull(),
         ];
     }
 
@@ -31,12 +32,12 @@ class m170101_000006_form_section
     {
         return ['form_id' => 'formgenerator_form'];
     }
-    
+
     /**
      * @inheritdoc
      */
     public function compositeUniqueKeys()
     {
-        return [['form_id', 'name']];
+        return [['form_id', 'name'], ['form_id', 'position']];
     }
 }

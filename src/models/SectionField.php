@@ -3,6 +3,7 @@
 namespace tecnocen\formgenerator\models;
 
 use Yii;
+use tenocen\formgenerator\behaviors\Positionable;
 
 /**
  * Model class for table `{{%formgenerator_form_section_field}}`
@@ -69,6 +70,29 @@ class SectionField extends BaseActiveRecord
                 'targetAttribute' => ['section_id', 'field_id'],
                 'message' => 'Field already associated to the section.',
             ],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return parent::behaviors() + [
+            'position' => [
+                'class' => Positionable::class,
+                'parentAttribute' => 'section_id',
+            ]
         ];
     }
 

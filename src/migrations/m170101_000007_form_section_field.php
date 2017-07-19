@@ -19,7 +19,8 @@ class m170101_000007_form_section_field
         return [
             'section_id' => $this->normalKey(),
             'field_id' => $this->normalKey(),
-            'label' => $this->string(64)->notNull(),            
+            'position' => $this->integer()->unsigned()->notNull(),
+            'label' => $this->string(64)->notNull(),
         ];
     }
 
@@ -40,5 +41,13 @@ class m170101_000007_form_section_field
     public function compositePrimaryKeys()
     {
         return ['section_id', 'field_id'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function compositeUniqueKeys()
+    {
+        return [['section_id', 'position']];
     }
 }

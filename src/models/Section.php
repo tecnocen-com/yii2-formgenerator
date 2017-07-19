@@ -1,6 +1,9 @@
 <?php
 
 namespace tecnocen\formgenerator\models;
+
+use tenocen\formgenerator\behaviors\Positionable;
+
 /**
  * Model class for table `{{%formgenerator_form_section}}`
  *
@@ -31,6 +34,29 @@ class Section extends BaseActiveRecord
         return parent::attributeTypecast() + [
             'id' => 'integer',
             'form_id' => 'integer',
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return parent::behaviors() + [
+            'position' => [
+                'class' => Positionable::class,
+                'parentAttribute' => 'form_id',
+            ]
         ];
     }
 
