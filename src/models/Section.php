@@ -2,13 +2,14 @@
 
 namespace tecnocen\formgenerator\models;
 
-use tenocen\formgenerator\behaviors\Positionable;
+use tecnocen\formgenerator\behaviors\Positionable;
 
 /**
  * Model class for table `{{%formgenerator_form_section}}`
  *
  * @property integer $id
  * @property integer $form_id
+ * @property integer $position
  * @property string $name
  * @property string $label
  *

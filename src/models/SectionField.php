@@ -3,13 +3,14 @@
 namespace tecnocen\formgenerator\models;
 
 use Yii;
-use tenocen\formgenerator\behaviors\Positionable;
+use tecnocen\formgenerator\behaviors\Positionable;
 
 /**
  * Model class for table `{{%formgenerator_form_section_field}}`
  *
  * @property integer $section_id
  * @property integer $field_id
+ * @property integer $position
  * @property string $label
  *
  * @property Section $section
