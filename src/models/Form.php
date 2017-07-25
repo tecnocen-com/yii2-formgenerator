@@ -19,7 +19,7 @@ class Form extends BaseActiveRecord
     {
         return '{{%formgenerator_form}}';
     }
- 
+
     /**
      * @inheritdoc
      */

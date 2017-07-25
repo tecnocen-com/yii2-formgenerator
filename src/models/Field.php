@@ -24,7 +24,7 @@ class Field extends BaseActiveRecord
     {
         return '{{%formgenerator_field}}';
     }
- 
+
     /**
      * @inheritdoc
      */

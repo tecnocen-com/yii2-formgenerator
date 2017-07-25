@@ -23,7 +23,7 @@ class DataType extends BaseActiveRecord
     {
         return '{{%formgenerator_data_type}}';
     }
- 
+
     /**
      * @inheritdoc
      */
@@ -51,7 +51,7 @@ class DataType extends BaseActiveRecord
     protected function getCastCallable()
     {
          $values = explode(':', $this->cast, 2);
-         return isset($values[1]) 
+         return isset($values[1])
              ? [$values[0], $values[1]]
              : [static::class, $values[0]];
     }

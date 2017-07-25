@@ -25,7 +25,7 @@ class FieldRule extends BaseActiveRecord
     {
         return '{{%formgenerator_field_rule}}';
     }
- 
+
     /**
      * @inheritdoc
      */
