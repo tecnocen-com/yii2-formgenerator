@@ -36,7 +36,7 @@ class SectionFieldSearch extends SectionField implements \tecnocen\roa\ResourceS
     public function search(array $params, $formName = '')
     {
         $this->load($params, $formName);
-        $this->getValidator('position')->attachValidators = false;
+        $this->getBehavior('position')->attachValidators = false;
         if (!$this->validate()) {
             return null;
         }
