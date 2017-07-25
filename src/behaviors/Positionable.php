@@ -24,7 +24,7 @@ class Positionable extends \yii\base\Behavior
     /**
      * @var string attribute which will store the position among siblings.
      */
-    public $positionAttibute = 'position';
+    public $positionAttribute = 'position';
 
     /**
      * @inheritdoc
