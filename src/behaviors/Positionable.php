@@ -3,7 +3,7 @@
 namespace tecnocen\formgenerator\behaviors;
 
 use yii\base\InvalidConfigException;
-use yii\base\Model;
+use yii\db\ActiveRecord;
 use yii\db\ActiveRecordInterface;
 use yii\db\Expression as DbExpression;
 use yii\validators\Validator;
@@ -66,10 +66,10 @@ class Positionable extends \yii\base\Behavior
     public function events()
     {
         return [
-            Model::EVENT_BEFORE_VALIDATE => 'attachValidators',
-            Model::EVENT_BEFORE_INSERT => 'beforeInsert',
-            Model::EVENT_BEFORE_UPDATE => 'beforeUpdate',
-            Model::EVENT_AFTER_DELETE => 'afterDelete',
+            ActiveRecord::EVENT_BEFORE_VALIDATE => 'attachValidators',
+            ActiveRecord::EVENT_BEFORE_INSERT => 'beforeInsert',
+            ActiveRecord::EVENT_BEFORE_UPDATE => 'beforeUpdate',
+            ActiveRecord::EVENT_AFTER_DELETE => 'afterDelete',
         ];
     }
 
