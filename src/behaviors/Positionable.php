@@ -140,7 +140,7 @@ class Positionable extends \yii\base\Behavior
             $attribute = $positionAttribute;
             $newPosition = $this->getAttribute($attribute);
             $oldPosition = $this->getOldAttribute($attribute);
-            $this->updateSilinbsPosition(0, [$attribute => $oldPosition]);
+            $this->updateSiblingsPosition(0, [$attribute => $oldPosition]);
             if ($newPosition < $oldPosition) {
                 $this->updateSiblingsPosition(
                     new DbExpression("$attribute + 1"),
@@ -177,7 +177,7 @@ class Positionable extends \yii\base\Behavior
      * @param array $condition the extra condition to update siblings.
      * @return integer the number of updated siblings.
      */
-    protected function updateSilinbsPosition($position, array $condition)
+    protected function updateSiblingsPosition($position, array $condition)
     {
         return $this->owner->updateAll(
             [$this->positionAttribute => $position],
