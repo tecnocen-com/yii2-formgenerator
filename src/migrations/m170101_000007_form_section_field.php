@@ -1,7 +1,6 @@
 <?php
 
-class m170101_000007_form_section_field
-    extends tecnocen\formgenerator\migrations\BaseTable
+class m170101_000007_form_section_field extends tecnocen\formgenerator\migrations\BaseTable
 {
     /**
      * @inheritdoc
@@ -48,6 +47,6 @@ class m170101_000007_form_section_field
      */
     public function compositeUniqueKeys()
     {
-        return [['section_id', 'position']];
+        return ['position' => ['section_id', 'position']];
     }
 }

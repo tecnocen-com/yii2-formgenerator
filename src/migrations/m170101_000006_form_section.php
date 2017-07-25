@@ -1,7 +1,6 @@
 <?php
 
-class m170101_000006_form_section
-    extends tecnocen\formgenerator\migrations\BaseTable
+class m170101_000006_form_section extends tecnocen\formgenerator\migrations\BaseTable
 {
     /**
      * @inheritdoc
@@ -18,9 +17,9 @@ class m170101_000006_form_section
     {
         return [
             'id' => $this->primaryKey(),
+            'position' => $this->integer()->unsigned()->notNull(),
             'form_id' => $this->normalKey(),
             'name' => $this->string(16)->notNull(),
-            'position' => $this->integer()->unsigned()->notNull(),
             'label' => $this->string(64)->notNull(),
         ];
     }
@@ -38,6 +37,9 @@ class m170101_000006_form_section
      */
     public function compositeUniqueKeys()
     {
-        return [['form_id', 'name'], ['form_id', 'position']];
+        return [
+            'name' => ['form_id', 'name'],
+            'position' => ['form_id', 'position'],
+        ];
     }
 }
