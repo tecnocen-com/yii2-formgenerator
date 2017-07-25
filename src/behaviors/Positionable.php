@@ -31,25 +31,28 @@ class Positionable extends \yii\base\Behavior
      */
     public function attach($owner)
     {
-        if (null !== $this->parentAttribute) {
+        if (null === $this->parentAttribute) {
             throw new InvalidConfigException(
                 static::class . '::$parentAttribute must be set.'
             );
         }
         if (!$owner instanceof ActiveRecordInterface) {
-            throw new InvalidConfigException(static::class
+            throw new InvalidConfigException(
+                static::class
                 . '::$owner must implement'
                 .  ActiveRecordInterface::class
             );
         }
         if (!$owner->hasAttribute($this->parentAttribute)) {
-            throw new InvalidConfigException(get_class($owner) . '::$'
+            throw new InvalidConfigException(
+                get_class($owner) . '::$'
                 . $this->parentAttribute
                 . ' is not an attribute.'
             );
         }
         if (!$owner->hasAttribute($this->positionAttribute)) {
-            throw new InvalidConfigException(get_class($owner) . '::$'
+            throw new InvalidConfigException(
+                get_class($owner) . '::$'
                 . $this->positionAttribute
                 . ' is not an attribute.'
             );
@@ -118,8 +121,9 @@ class Positionable extends \yii\base\Behavior
      */
     public function beforeUpdate()
     {
-        if ($this->isAttributeChanged($this->parentAttribute)) {
-            throw new \yii\base\NotSupportedException(get_class($this->owner)
+        if ($this->owner->isAttributeChanged($this->parentAttribute)) {
+            throw new \yii\base\NotSupportedException(
+                get_class($this->owner)
                 . '::$' . $this->parentAttribute
                 . ' is not editable.'
             );
