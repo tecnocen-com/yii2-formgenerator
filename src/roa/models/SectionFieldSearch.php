@@ -13,8 +13,8 @@ class SectionFieldSearch extends SectionField implements \tecnocen\roa\ResourceS
     {
         return [
             'idAttribute' => [],
-            'parentSlugRelation' => 'field',
-            'resourceName' => 'section',
+            'resourceName' => 'field',
+            'parentSlugRelation' => 'section',
         ];
     }
 
