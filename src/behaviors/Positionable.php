@@ -190,7 +190,7 @@ class Positionable extends \yii\base\Behavior
      */
     public function getSiblings()
     {
-        return $this->owner->hasMany(get_class($owner), [
+        return $this->owner->hasMany(get_class($this->owner), [
             $this->parentAttribute => $this->parentAttribute
         ]);
     }
