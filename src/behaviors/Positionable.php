@@ -27,6 +27,11 @@ class Positionable extends \yii\base\Behavior
     public $positionAttribute = 'position';
 
     /**
+     * @var bool whether to attach validators to the `$owner` before validation.
+     */
+    public $attachValidators = true;
+
+    /**
      * @inheritdoc
      */
     public function attach($owner)
@@ -78,6 +83,9 @@ class Positionable extends \yii\base\Behavior
      */
     public function attachValidators()
     {
+        if (!$this->attachValidators) {
+            return;
+        }
         $this->owner->validators[] = Validator::createValidator(
             'default',
             $this->owner,

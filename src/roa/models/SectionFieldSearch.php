@@ -4,8 +4,7 @@ namespace tecnocen\formgenerator\roa\models;
 
 use yii\data\ActiveDataProvider;
 
-class SectionFieldSearch extends SectionField
-    implements \tecnocen\roa\ResourceSearch
+class SectionFieldSearch extends SectionField implements \tecnocen\roa\ResourceSearch
 {
     /**
      * @inhertidoc
@@ -37,6 +36,7 @@ class SectionFieldSearch extends SectionField
     public function search(array $params, $formName = '')
     {
         $this->load($params, $formName);
+        $this->getValidator('position')->attachValidators = false;
         if (!$this->validate()) {
             return null;
         }

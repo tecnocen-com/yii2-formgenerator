@@ -36,6 +36,7 @@ class SectionSearch extends Section implements \tecnocen\roa\ResourceSearch
     public function search(array $params, $formName = '')
     {
         $this->load($params, $formName);
+        $this->getValidator('position')->attachValidators = false;
         if (!$this->validate()) {
             return null;
         }
