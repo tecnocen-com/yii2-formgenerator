@@ -43,7 +43,7 @@ class SectionFieldSearch extends SectionField implements \tecnocen\roa\ResourceS
         $class = get_parent_class();
         return new ActiveDataProvider([
             'query' => $class::find()->andFilterWhere([
-                    'section_id' => $this->form_id,
+                    'section_id' => $this->section_id,
                     'created_by' => $this->created_by,
                     'position' => $this->position,
                 ])
