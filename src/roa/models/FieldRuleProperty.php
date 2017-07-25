@@ -7,8 +7,7 @@ use yii\web\Linkable;
 /**
  * ROA contract handling FieldRule records.
  */
-class FieldRuleProperty extends \tecnocen\formgenerator\models\FieldRuleProperty
-    implements Linkable
+class FieldRuleProperty extends \tecnocen\formgenerator\models\FieldRuleProperty implements Linkable
 {
     use SlugTrait;
 
@@ -29,6 +28,6 @@ class FieldRuleProperty extends \tecnocen\formgenerator\models\FieldRuleProperty
      */
     public function fields()
     {
-        return ['id', 'property', 'value'];
+        return ['property', 'value'];
     }
 }
