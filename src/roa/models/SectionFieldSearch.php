@@ -26,7 +26,7 @@ class SectionFieldSearch extends SectionField implements \tecnocen\roa\ResourceS
         return [
             [['section_id'], 'required'],
             [['section_id', 'position', 'created_by'], 'integer'],
-            [['name', 'label'], 'string'],
+            [['label'], 'string'],
         ];
     }
 
