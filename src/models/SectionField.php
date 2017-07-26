@@ -47,7 +47,7 @@ class SectionField extends BaseActiveRecord
     {
         return [
             [['section_id', 'field_id'], 'required'],
-            [['section_id', 'field_id'], 'integer'],
+            [['section_id', 'field_id', 'position'], 'integer'],
             [
                 ['section_id'],
                 'exist',

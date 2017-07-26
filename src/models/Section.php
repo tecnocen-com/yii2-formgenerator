@@ -68,7 +68,7 @@ class Section extends BaseActiveRecord
     {
         return [
             [['form_id', 'name', 'label'], 'required'],
-            [['form_id'], 'integer'],
+            [['form_id', 'position'], 'integer'],
             [
                 ['form_id'],
                 'exist',

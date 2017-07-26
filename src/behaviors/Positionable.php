@@ -214,7 +214,8 @@ class Positionable extends \yii\base\Behavior
                     ],
                     $condition,
                     $orderBy,
-                ]
+                ],
+                [] // params
             )
             . ' ' . $queryBuilder->buildOrderBy($orderBy)
         )->execute();
