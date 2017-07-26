@@ -32,6 +32,28 @@ class Positionable extends \yii\base\Behavior
     public $attachValidators = true;
 
     /**
+     * @var DbExpression sentence used to increase the position by 1.
+     */
+    protected $positionIncrease;
+
+    /**
+     * @var DbExpression sentence used to decrease the position by 1.
+     */
+    protected $positionDecrease;
+
+    /**
+     * @var string sql injected `order by` statement to be passed when updating
+     * a position to avoid collisions.
+     */
+    protected $orderByIncrease;
+
+    /**
+     * @var string sql injected `order by` statement to be passed when updating
+     * a position to avoid collisions.
+     */
+    protected $orderByDecrease;
+
+    /**
      * @inheritdoc
      */
     public function attach($owner)
@@ -63,6 +85,15 @@ class Positionable extends \yii\base\Behavior
             );
         }
         parent::attach($owner);
+        $this->positionIncrease = new DbExpression(
+            $this->positionAttribute . ' + 1'
+        );
+        $this->positionDecrease = new DbExpression(
+            $this->positionAttribute . ' + 1'
+        );
+        $orderByInjection = "1 = 1 order by {$this->positionAttribute} ";
+        $this->orderByIncrease = $orderByInjection . SORT_DESC;
+        $this->orderByDecrease = $orderByInjection . SORT_ASC;
     }
 
     /**
@@ -108,19 +139,26 @@ class Positionable extends \yii\base\Behavior
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSiblings()
+    {
+        return $this->owner->hasMany(get_class($this->owner), [
+            $this->parentAttribute => $this->parentAttribute
+        ]);
+    }
+
+    /**
      * Increases the position by 1 of siblings with equal or bigger position as
      * the new record.
      */
     public function beforeInsert()
     {
-        $this->updateSiblingsPosition(
-            new DbExpression("{$this->positionAttribute} + 1"),
-            [
-                '>=',
-                $this->positionAttribute,
-                $this->owner->getAttribute($this->positionAttribute),
-            ]
-        );
+        $this->increaseSiblingsPosition([
+            '>=',
+            $this->positionAttribute,
+            $this->owner->getAttribute($this->positionAttribute),
+        ]);
     }
 
     /**
@@ -136,19 +174,17 @@ class Positionable extends \yii\base\Behavior
                 . ' is not editable.'
             );
         }
-        if ($this->isAttributeChanged($this->positionAttribute)) {
+        if ($this->owner->isAttributeChanged($this->positionAttribute)) {
             $attribute = $positionAttribute;
             $newPosition = $this->getAttribute($attribute);
             $oldPosition = $this->getOldAttribute($attribute);
             $this->updateSiblingsPosition(0, [$attribute => $oldPosition]);
             if ($newPosition < $oldPosition) {
-                $this->updateSiblingsPosition(
-                    new DbExpression("$attribute + 1"),
+                $this->increaseSiblingsPosition(
                     ['between', $attribute, $newPosition, $oldPosition]
                 );
             } else {
-                $this->updateSiblingsPosition(
-                    new DbExpression("$attribute - 1"),
+                $this->decreaseSiblingsPosition(
                     ['between', $attribute, $oldPosition, $newPosition]
                 );
             }
@@ -161,14 +197,11 @@ class Positionable extends \yii\base\Behavior
      */
     public function afterDelete()
     {
-        $this->updateSiblingsPosition(
-            new DbExpression("{$this->positionAttribute} - 1"),
-            [
-                '>',
-                $this->positionAttribute,
-                $this->owner->getAttribute($this->positionAttribute),
-            ]
-        );
+        $this->decreaseSiblingsPosition([
+            '>',
+            $this->positionAttribute,
+            $this->owner->getAttribute($this->positionAttribute),
+        ]);
     }
 
     /**
@@ -177,8 +210,11 @@ class Positionable extends \yii\base\Behavior
      * @param array $condition the extra condition to update siblings.
      * @return integer the number of updated siblings.
      */
-    protected function updateSiblingsPosition($position, array $condition)
-    {
+    protected function updateSiblingsPosition(
+        $position,
+        array $condition,
+        $orderBy = ''
+    ) {
         return $this->owner->updateAll(
             [$this->positionAttribute => $position],
             [
@@ -189,17 +225,38 @@ class Positionable extends \yii\base\Behavior
                     )
                 ],
                 $condition,
+                $orderBy,
             ]
         );
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * Increases the position of siblings by 1.
+     *
+     * @var array $conditoin the extra condition to update siblings.
+     * @return integer the number of updated siblings.
      */
-    public function getSiblings()
+    protected function increaseSiblingsPosition(array $condition)
     {
-        return $this->owner->hasMany(get_class($this->owner), [
-            $this->parentAttribute => $this->parentAttribute
-        ]);
+        return $this->updateSiblingsPosition(
+            $this->positionIncrease,
+            $condition,
+            $this->orderByIncrease
+        );
+    }
+
+    /**
+     * Decreases the position of siblings by 1.
+     *
+     * @var array $conditoin the extra condition to update siblings.
+     * @return integer the number of updated siblings.
+     */
+    protected function decreaseSiblingsPosition(array $condition)
+    {
+        return $this->updateSiblingsPosition(
+            $this->positionDecrease,
+            $condition,
+            $this->orderByDecrease
+        );
     }
 }
