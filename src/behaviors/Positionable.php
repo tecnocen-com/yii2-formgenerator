@@ -160,9 +160,9 @@ class Positionable extends \yii\base\Behavior
             );
         }
         if ($this->owner->isAttributeChanged($this->positionAttribute)) {
-            $attribute = $positionAttribute;
-            $newPosition = $this->getAttribute($attribute);
-            $oldPosition = $this->getOldAttribute($attribute);
+            $attribute = $this->positionAttribute;
+            $newPosition = $this->owner->getAttribute($attribute);
+            $oldPosition = $this->owner->getOldAttribute($attribute);
             $this->updateSiblingsPosition(0, [$attribute => $oldPosition]);
             if ($newPosition < $oldPosition) {
                 $this->increaseSiblingsPosition(
@@ -200,6 +200,7 @@ class Positionable extends \yii\base\Behavior
         array $condition,
         array $orderBy = []
     ) {
+        $params = [];
         $queryBuilder = $this->owner->getDb()->getQueryBuilder();
         return $this->owner->getDb()->createCommand(
             $queryBuilder->update(
@@ -213,11 +214,11 @@ class Positionable extends \yii\base\Behavior
                         )
                     ],
                     $condition,
-                    $orderBy,
                 ],
-                [] // params
+                $params // params
             )
-            . ' ' . $queryBuilder->buildOrderBy($orderBy)
+            . ' ' . $queryBuilder->buildOrderBy($orderBy),
+            $params
         )->execute();
     }
 
