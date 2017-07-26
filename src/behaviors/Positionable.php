@@ -42,18 +42,6 @@ class Positionable extends \yii\base\Behavior
     protected $positionDecrease;
 
     /**
-     * @var string sql injected `order by` statement to be passed when updating
-     * a position to avoid collisions.
-     */
-    protected $orderByIncrease;
-
-    /**
-     * @var string sql injected `order by` statement to be passed when updating
-     * a position to avoid collisions.
-     */
-    protected $orderByDecrease;
-
-    /**
      * @inheritdoc
      */
     public function attach($owner)
@@ -91,9 +79,6 @@ class Positionable extends \yii\base\Behavior
         $this->positionDecrease = new DbExpression(
             $this->positionAttribute . ' + 1'
         );
-        $orderByInjection = "1 = 1 order by {$this->positionAttribute} ";
-        $this->orderByIncrease = $orderByInjection . SORT_DESC;
-        $this->orderByDecrease = $orderByInjection . SORT_ASC;
     }
 
     /**
@@ -213,21 +198,26 @@ class Positionable extends \yii\base\Behavior
     protected function updateSiblingsPosition(
         $position,
         array $condition,
-        $orderBy = ''
+        array $orderBy = []
     ) {
-        return $this->owner->updateAll(
-            [$this->positionAttribute => $position],
-            [
-                'and',
+        $queryBuilder = $this->owner->getDb()->getQueryBuilder();
+        return $this->owner->getDb()->createCommand(
+            $queryBuilder->update(
+                $this->owner->tableName(),
+                [$this->positionAttribute => $position],
                 [
-                    $this->parentAttribute => $this->owner->getAttribute(
-                        $this->parentAttribute
-                    )
-                ],
-                $condition,
-                $orderBy,
-            ]
-        );
+                    'and',
+                    [
+                        $this->parentAttribute => $this->owner->getAttribute(
+                            $this->parentAttribute
+                        )
+                    ],
+                    $condition,
+                    $orderBy,
+                ]
+            )
+            . ' ' . $queryBuilder->buildOrderBy($orderBy)
+        )->execute();
     }
 
     /**
@@ -241,7 +231,7 @@ class Positionable extends \yii\base\Behavior
         return $this->updateSiblingsPosition(
             $this->positionIncrease,
             $condition,
-            $this->orderByIncrease
+            [$this->positionAttribute => SORT_DESC]
         );
     }
 
@@ -256,7 +246,7 @@ class Positionable extends \yii\base\Behavior
         return $this->updateSiblingsPosition(
             $this->positionDecrease,
             $condition,
-            $this->orderByDecrease
+            [$this->positionAttribute => SORT_ASC]
         );
     }
 }
