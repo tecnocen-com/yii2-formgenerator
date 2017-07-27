@@ -77,7 +77,7 @@ class Positionable extends \yii\base\Behavior
             $this->positionAttribute . ' + 1'
         );
         $this->positionDecrease = new DbExpression(
-            $this->positionAttribute . ' + 1'
+            $this->positionAttribute . ' - 1'
         );
     }
 
