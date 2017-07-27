@@ -51,7 +51,7 @@ class Field extends BaseActiveRecord
                 'targetClass' => DataType::class,
                 'targetAttribute' => ['data_type_id' => 'id'],
             ],
-            [['name', 'label'], 'string', 'min' => 4],
+            [['name', 'label', 'service'], 'string', 'min' => 4],
             [['name'], 'unique'],
         ];
     }
