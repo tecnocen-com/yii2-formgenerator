@@ -12,8 +12,20 @@ namespace tecnocen\formgenerator\models;
  * @property Form $form
  * @property SolicitudeValue $values
  */
-class Solicitude extends BaseActiveRecord
+class Solicitude extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getForm()`.
+     */
+    protected $formClass = Form::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSolicitudeValues()`.
+     */
+    protected $solicitudeValueClass = SolicitudeValue::class;
+
     /**
      * @inheritdoc
      */
@@ -67,10 +79,7 @@ class Solicitude extends BaseActiveRecord
      */
     public function getForm()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Form',
-            ['id' => 'form_id']
-        );
+        return $this->hasOne($this->formClass, ['id' => 'form_id']);
     }
 
     /**
@@ -79,7 +88,7 @@ class Solicitude extends BaseActiveRecord
     public function getValues()
     {
         return $this->hasMany(
-            $this->getNamespace() . '\\SolicitudeValue',
+            $this->solicitudeValueClass,
             ['solicitude_id' => 'id']
         )->inverseOf('solicitude');
     }

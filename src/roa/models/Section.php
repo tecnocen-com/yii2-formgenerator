@@ -15,6 +15,21 @@ class Section extends \tecnocen\formgenerator\models\Section
     /**
      * @inheritdoc
      */
+    protected $formClass = Form::class;
+
+    /**
+     * @inheritdoc
+     */
+    protected $sectionFieldClass = SectionField::class;
+
+    /**
+     * @inheritdoc
+     */
+    protected $fieldClass = Field::class;
+
+    /**
+     * @inheritdoc
+     */
     protected function slugConfig()
     {
         return [

@@ -1,7 +1,6 @@
 <?php
 
-class m170101_000008_form_solicitude
-    extends tecnocen\formgenerator\migrations\BaseTable
+class m170101_000008_form_solicitude extends tecnocen\rmdb\migrations\Entity
 {
     /**
      * @inheritdoc

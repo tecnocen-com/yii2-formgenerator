@@ -4,7 +4,8 @@ namespace tecnocen\formgenerator\roa\models;
 
 use yii\data\ActiveDataProvider;
 
-class SectionFieldSearch extends SectionField implements \tecnocen\roa\ResourceSearch
+class SectionFieldSearch extends SectionField
+    implements \tecnocen\roa\ResourceSearch
 {
     /**
      * @inhertidoc

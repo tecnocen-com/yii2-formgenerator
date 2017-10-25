@@ -17,8 +17,26 @@ use tecnocen\formgenerator\behaviors\Positionable;
  * @property SectionField[] $sectionFields
  * @property Field[] $fieds
  */
-class Section extends BaseActiveRecord
+class Section extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getForm()`.
+     */
+    protected $formClass = Form::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSectionFields()`.
+     */
+    protected $sectionFieldClass = SectionField::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getFields()`.
+     */
+    protected $fieldClass = Field::class;
+
     /**
      * @inheritdoc
      */
@@ -105,10 +123,7 @@ class Section extends BaseActiveRecord
      */
     public function getForm()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Form',
-            ['id' => 'form_id']
-        );
+        return $this->hasOne($this->formClass, ['id' => 'form_id']);
     }
 
     /**
@@ -116,10 +131,8 @@ class Section extends BaseActiveRecord
      */
     public function getSectionFields()
     {
-        return $this->hasMany(
-            $this->getNamespace() . '\\SectionField',
-            ['section_id' => 'id']
-        )->inverseOf('section');
+        return $this->hasMany($this->sectionFieldClass, ['section_id' => 'id'])
+            ->inverseOf('section');
     }
 
     /**
@@ -127,9 +140,7 @@ class Section extends BaseActiveRecord
      */
     public function getFields()
     {
-        return $this->hasMany(
-            $this->getNamespace() . '\\Field',
-            ['id' => 'field_id']
-        )->via('sectionFields');
+        return $this->hasMany($this->fieldClass, ['id' => 'field_id'])
+            ->via('sectionFields');
     }
 }

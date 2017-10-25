@@ -14,8 +14,14 @@ use yii\web\UploadedFile;
  *
  * @property Field[] $fields
  */
-class DataType extends BaseActiveRecord
+class DataType extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getFields()`.
+     */
+    protected $fieldClass = Field::class;
+
     /**
      * @inheritdoc
      */
@@ -131,9 +137,7 @@ class DataType extends BaseActiveRecord
      */
     public function getFields()
     {
-        return $this->hasMany(
-            $this->getNamespace() . '\\Field',
-            ['data_type_id' => 'id']
-        )->inverseOf('dataType');
+        return $this->hasMany($this->fieldClass, ['data_type_id' => 'id'])
+            ->inverseOf('dataType');
     }
 }

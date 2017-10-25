@@ -15,8 +15,20 @@ use yii\base\Model;
  * @property DataType $dataType
  * @property Rules[] $rules
  */
-class Field extends BaseActiveRecord
+class Field extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getDataType()`.
+     */
+    protected $dataTypeClass = DataType::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getRules()`.
+     */
+    protected $ruleClass = FieldRule::class;
+
     /**
      * @inheritdoc
      */
@@ -74,10 +86,7 @@ class Field extends BaseActiveRecord
      */
     public function getDataType()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\DataType',
-            ['id' => 'data_type_id']
-        );
+        return $this->hasOne($this->dataTypeClass, ['id' => 'data_type_id']);
     }
 
     /**
@@ -85,10 +94,8 @@ class Field extends BaseActiveRecord
      */
     public function getRules()
     {
-        return $this->hasMany(
-            $this->getNamespace() . '\\FieldRule',
-            ['field_id' => 'id']
-        )->inverseOf('field');
+        return $this->hasMany($this->ruleClass, ['field_id' => 'id'])
+            ->inverseOf('field');
     }
 
     /**

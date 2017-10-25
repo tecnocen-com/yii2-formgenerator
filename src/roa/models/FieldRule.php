@@ -2,8 +2,6 @@
 
 namespace tecnocen\formgenerator\roa\models;
 
-use yii\helpers\Url;
-use yii\web\Link;
 use yii\web\Linkable;
 
 /**
@@ -14,6 +12,15 @@ class FieldRule extends \tecnocen\formgenerator\models\FieldRule
 {
     use SlugTrait;
 
+    /**
+     * @inheritdoc
+     */
+    protected $fieldClass = Field::class;
+
+    /**
+     * @inheritdoc
+     */
+    protected $propertyClass = FieldRuleProperty::class;
     /**
      * @inheritdoc
      */
@@ -34,25 +41,11 @@ class FieldRule extends \tecnocen\formgenerator\models\FieldRule
         return $this->getSlugLinks() + [
             'properties' => $selfLink . '/property',
             'curies' => [
-                'expand' => new Link([
-                    'href' => Url::to([$selfLink, 'expand' => '{rel}']),
-                    'name' => 'expand',
-                    'templated' => true,
-                    'title' => 'expand values to embed at the resource.',
-                ]),   
+                'expand' => Url::to($selfLink, ['expand' => '{rel}']),
             ],
             'expand:properties' => 'properties',
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function fields()
-    {
-        return ['id', 'class'];
-    }
-   
 
     /**
      * @inheritdoc

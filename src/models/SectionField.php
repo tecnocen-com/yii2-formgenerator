@@ -19,8 +19,26 @@ use tecnocen\formgenerator\behaviors\Positionable;
  * @property array $solicitudeValuesData
  * @property array $solicitudeValuesDataDetail
  */
-class SectionField extends BaseActiveRecord
+class SectionField extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSection()`.
+     */
+    protected $sectionClass = Section::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getField()`.
+     */
+    protected $fieldClass = Field::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSolicitudeValues()`.
+     */
+    protected $solicitudeValueClass = SolicitudeValue::class;
+
     /**
      * @inheritdoc
      */
@@ -114,10 +132,7 @@ class SectionField extends BaseActiveRecord
      */
     public function getSection()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Section',
-            ['id' => 'section_id']
-        );
+        return $this->hasOne($this->sectionClass, ['id' => 'section_id']);
     }
 
     /**
@@ -125,10 +140,7 @@ class SectionField extends BaseActiveRecord
      */
     public function getField()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Field',
-            ['id' => 'field_id']
-        );
+        return $this->hasOne($this->fieldClass, ['id' => 'field_id']);
     }
 
     /**
@@ -136,13 +148,10 @@ class SectionField extends BaseActiveRecord
      */
     public function getSolicitudeValues()
     {
-        return $this->hasMany(
-            $this->getNamespace() . '\\SolicitudeValue',
-            [
-                'field_id' => 'field_id',
-                'section_id' => 'section_id',
-            ]
-        )->inverseOf('sectionField');
+        return $this->hasMany($this->solicitudeValueClass, [
+            'field_id' => 'field_id',
+            'section_id' => 'section_id',
+        ])->inverseOf('sectionField');
     }
 
     /**

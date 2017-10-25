@@ -15,6 +15,11 @@ class DataType extends \tecnocen\formgenerator\models\DataType
     /**
      * @inheritdoc
      */
+    protected $fieldClass = Field::class;
+
+    /**
+     * @inheritdoc
+     */
     protected function slugConfig()
     {
         return ['resourceName' => 'data-type'];
