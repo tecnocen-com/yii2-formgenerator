@@ -1,6 +1,6 @@
 <?php
 
-class m170101_000007_form_section_field extends tecnocen\rmdb\migrations\Entity
+class m170101_000007_form_section_field extends tecnocen\rmdb\migrations\CreateEntity
 {
     /**
      * @inheritdoc

@@ -1,6 +1,6 @@
 <?php
 
-class m170101_000005_field_rule_property extends tecnocen\rmdb\migrations\Entity
+class m170101_000005_field_rule_property extends tecnocen\rmdb\migrations\CreateEntity
 {
     /**
      * @inheritdoc
