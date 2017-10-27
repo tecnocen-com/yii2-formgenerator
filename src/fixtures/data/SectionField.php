@@ -8,21 +8,27 @@ return [
         'field_id' => 1,
         'position' => 1,
         'created_by' => 1,
-        'created_at' => $now
+        'created_at' => $now,
+        'updated_by' => 1,
+        'updated_at' => $now,
     ],
     [
         'section_id' => 1,
         'field_id' => 2,
         'position' => 2,
         'created_by' => 1,
-        'created_at' => $now
+        'created_at' => $now,
+        'updated_by' => 1,
+        'updated_at' => $now,
     ],
     [
         'section_id' => 1,
         'field_id' => 3,
         'position' => 3,
         'created_by' => 1,
-        'created_at' => $now
+        'created_at' => $now,
+        'updated_by' => 1,
+        'updated_at' => $now,
     ],
     [
         'section_id' => 1,
@@ -30,7 +36,9 @@ return [
         'position' => 4,
         'label' => 'Registration e-mail',
         'created_by' => 1,
-        'created_at' => $now
+        'created_at' => $now,
+        'updated_by' => 1,
+        'updated_at' => $now,
     ],
     [
         'section_id' => 2,
@@ -38,7 +46,9 @@ return [
         'position' => 1,
         'label' => 'Country of residence',
         'created_by' => 1,
-        'created_at' => $now
+        'created_at' => $now,
+        'updated_by' => 1,
+        'updated_at' => $now,
     ],
     [
         'section_id' => 2,
@@ -46,6 +56,8 @@ return [
         'position' => 2,
         'label' => 'Brute Income',
         'created_by' => 1,
-        'created_at' => $now
+        'created_at' => $now,
+        'updated_by' => 1,
+        'updated_at' => $now,
     ],
 ];
