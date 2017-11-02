@@ -5,6 +5,7 @@ $now = new yii\db\Expression('now()');
 return [
     [
         'name' => 'string',
+        'Label' => 'String',
         'cast' => 'stringCast',
         'created_by' => 1,
         'created_at' => $now,
@@ -13,6 +14,7 @@ return [
     ],
     [
         'name' => 'integer',
+        'label' => 'Integer',
         'cast' => 'integerCast',
         'created_by' => 1,
         'created_at' => $now,
@@ -21,6 +23,7 @@ return [
     ],
     [
         'name' => 'float',
+        'label' => 'Decimal',
         'cast' => 'floatCast',
         'created_by' => 1,
         'created_at' => $now,
@@ -29,6 +32,7 @@ return [
     ],
     [
         'name' => 'boolean',
+        'label' => 'Boolean',
         'cast' => 'booleanCast',
         'created_by' => 1,
         'created_at' => $now,
@@ -37,6 +41,7 @@ return [
     ],
     [
         'name' => 'file',
+        'label' => 'File',
         'cast' => 'fileCast',
         'created_by' => 1,
         'created_at' => $now,
