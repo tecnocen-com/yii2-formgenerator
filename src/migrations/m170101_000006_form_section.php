@@ -20,8 +20,7 @@ class m170101_000006_form_section extends tecnocen\rmdb\migrations\CreateEntity
             'position' => $this->integer()->unsigned()->notNull(),
             'form_id' => $this->normalKey(),
             'name' => $this->string(16)->notNull(),
-            'label' => $this->string(64)->notNull()
-                ->comment('When not set it will use the label on field.'),
+            'label' => $this->string(64)->notNull(),
         ];
     }
 
