@@ -1,7 +1,7 @@
 <?php
 
 class m170101_000003_field
-    extends tecnocen\formgenerator\migrations\BaseTable
+    extends tecnocen\rmdb\migrations\CreatePivot
 {
     /**
      * @inheritdoc

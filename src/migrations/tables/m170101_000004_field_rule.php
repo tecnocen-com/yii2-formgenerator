@@ -1,14 +1,14 @@
 <?php
 
-class m170101_000008_form_solicitude
-    extends tecnocen\formgenerator\migrations\BaseTable
+class m170101_000004_field_rule
+    extends tecnocen\rmdb\migrations\CreatePivot
 {
     /**
      * @inheritdoc
      */
     public function getTableName()
     {
-        return 'formgenerator_solicitude';
+        return 'formgenerator_field_rule';
     }
 
     /**
@@ -18,7 +18,8 @@ class m170101_000008_form_solicitude
     {
         return [
             'id' => $this->primaryKey(),
-            'form_id' => $this->normalKey(),
+            'field_id' => $this->normalKey(),
+            'class' => $this->string(64)->notNull(),
         ];
     }
 
@@ -27,6 +28,6 @@ class m170101_000008_form_solicitude
      */
     public function foreignKeys()
     {
-        return ['form_id' => 'formgenerator_form'];
+        return ['field_id' => 'formgenerator_field'];
     }
 }

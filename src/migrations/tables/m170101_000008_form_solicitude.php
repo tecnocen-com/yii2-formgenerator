@@ -1,14 +1,14 @@
 <?php
 
-class m170101_000006_form_section
-    extends tecnocen\formgenerator\migrations\BaseTable
+class m170101_000008_form_solicitude
+    extends tecnocen\rmdb\migrations\CreatePivot
 {
     /**
      * @inheritdoc
      */
     public function getTableName()
     {
-        return 'formgenerator_form_section';
+        return 'formgenerator_solicitude';
     }
 
     /**
@@ -19,8 +19,6 @@ class m170101_000006_form_section
         return [
             'id' => $this->primaryKey(),
             'form_id' => $this->normalKey(),
-            'name' => $this->string(16)->unique()->notNull(),
-            'label' => $this->string(64)->notNull(),            
         ];
     }
 
