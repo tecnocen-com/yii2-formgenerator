@@ -1,7 +1,6 @@
 <?php
 
-class m170101_000007_form_section_field
-    extends tecnocen\rmdb\migrations\CreatePivot
+class m170101_000007_form_section_field extends tecnocen\rmdb\migrations\CreateEntity
 {
     /**
      * @inheritdoc
@@ -19,7 +18,9 @@ class m170101_000007_form_section_field
         return [
             'section_id' => $this->normalKey(),
             'field_id' => $this->normalKey(),
-            'label' => $this->string(64)->notNull(),            
+            'position' => $this->integer()->unsigned()->notNull(),
+            'label' => $this->string(64)->defaultValue(null)
+                ->comment('When not set it will use the label on field.'),
         ];
     }
 
@@ -40,5 +41,13 @@ class m170101_000007_form_section_field
     public function compositePrimaryKeys()
     {
         return ['section_id', 'field_id'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function compositeUniqueKeys()
+    {
+        return ['position' => ['section_id', 'position']];
     }
 }

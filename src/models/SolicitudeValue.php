@@ -15,8 +15,32 @@ namespace tecnocen\formgenerator\models;
  * @property Field $field
  * @property Solicitude $solicitude
  */
-class SolicitudeValue extends BaseActiveRecord
+class SolicitudeValue extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSectionField()`.
+     */
+    protected $sectionFieldClass = SectionField::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSection()`.
+     */
+    protected $sectionClass = Section::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getField()`.
+     */
+    protected $fieldClass = Field::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSolicitude()`.
+     */
+    protected $solicitudeClass = Solicitude::class;
+
     /**
      * @inheritdoc
      */
@@ -142,7 +166,7 @@ class SolicitudeValue extends BaseActiveRecord
     public function getSectionField()
     {
         return $this->hasOne(
-            $this->getNamespace() . '\\SectionField',
+            $this->sectionFieldClass,
             ['section_id' => 'section_id', 'field_id' => 'field_id']
         );
     }
@@ -152,10 +176,7 @@ class SolicitudeValue extends BaseActiveRecord
      */
     public function getSection()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Section',
-            ['id' => 'section_id']
-        );
+        return $this->hasOne($this->sectionClass, ['id' => 'section_id']);
     }
 
     /**
@@ -163,10 +184,7 @@ class SolicitudeValue extends BaseActiveRecord
      */
     public function getField()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Field',
-            ['id' => 'field_id']
-        );
+        return $this->hasOne($this->fieldClass, ['id' => 'field_id']);
     }
 
     /**
@@ -174,23 +192,6 @@ class SolicitudeValue extends BaseActiveRecord
      */
     public function getSolicitude()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Solicitude',
-            ['id' => 'solicitude_id']
-        );
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSectionField()
-    {
-        return $this->hasOne(
-            $this->getNamespace() . '\\SectionField',
-            [
-                'field_id' => 'field_id',
-                'section_id' => 'section_id',
-            ]
-        );
+        return $this->hasOne($this->solicitudeClass, ['id' => 'solicitude_id']);
     }
 }

@@ -2,11 +2,15 @@
 
 namespace tecnocen\formgenerator\models;
 
+use Yii;
+use tecnocen\formgenerator\behaviors\Positionable;
+
 /**
  * Model class for table `{{%formgenerator_form_section_field}}`
  *
  * @property integer $section_id
  * @property integer $field_id
+ * @property integer $position
  * @property string $label
  *
  * @property Section $section
@@ -15,8 +19,26 @@ namespace tecnocen\formgenerator\models;
  * @property array $solicitudeValuesData
  * @property array $solicitudeValuesDataDetail
  */
-class SectionField extends BaseActiveRecord
+class SectionField extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSection()`.
+     */
+    protected $sectionClass = Section::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getField()`.
+     */
+    protected $fieldClass = Field::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSolicitudeValues()`.
+     */
+    protected $solicitudeValueClass = SolicitudeValue::class;
+
     /**
      * @inheritdoc
      */
@@ -43,7 +65,7 @@ class SectionField extends BaseActiveRecord
     {
         return [
             [['section_id', 'field_id'], 'required'],
-            [['section_id', 'field_id'], 'integer'],
+            [['section_id', 'field_id', 'position'], 'integer'],
             [
                 ['section_id'],
                 'exist',
@@ -73,6 +95,29 @@ class SectionField extends BaseActiveRecord
     /**
      * @inheritdoc
      */
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return parent::behaviors() + [
+            'position' => [
+                'class' => Positionable::class,
+                'parentAttribute' => 'section_id',
+            ]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function attributeLabels()
     {
         return array_merge([
@@ -87,10 +132,7 @@ class SectionField extends BaseActiveRecord
      */
     public function getSection()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Section',
-            ['id' => 'section_id']
-        );
+        return $this->hasOne($this->sectionClass, ['id' => 'section_id']);
     }
 
     /**
@@ -98,10 +140,7 @@ class SectionField extends BaseActiveRecord
      */
     public function getField()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Field',
-            ['id' => 'field_id']
-        );
+        return $this->hasOne($this->fieldClass, ['id' => 'field_id']);
     }
 
     /**
@@ -109,13 +148,10 @@ class SectionField extends BaseActiveRecord
      */
     public function getSolicitudeValues()
     {
-        return $this->hasMany(
-            $this->getNamespace() . '\\SolicitudeValue',
-            [
-                'field_id' => 'field_id',
-                'section_id' => 'section_id',
-            ]
-        )->inverseOf('sectionField');
+        return $this->hasMany($this->solicitudeValueClass, [
+            'field_id' => 'field_id',
+            'section_id' => 'section_id',
+        ])->inverseOf('sectionField');
     }
 
     /**
@@ -123,10 +159,13 @@ class SectionField extends BaseActiveRecord
      */
     public function getSolicitudeValuesData()
     {
-        return $this->getSolicitudeValue()
+        return Yii::configure(
+                $this->getSolicitudeValues(),
+                ['multiple' => false]
+            )
             ->select([
-                'countValues' => 'count(value)',
-                'countDistinctValues' => 'count(distinct value)',
+                'amount' => 'count(value)',
+                'amountDistinct' => 'count(distinct value)',
             ])
             ->groupBy(['section_id', 'field_id'])
             ->inverseOf(null)
@@ -138,12 +177,12 @@ class SectionField extends BaseActiveRecord
      */
     public function getSolicitudeValuesDataDetail()
     {
-        return $this->getSolicitudeValue()
+        return $this->getSolicitudeValues()
             ->select([
                 'field_id',
                 'section_id',
                 'value',
-                'countValues', 'amount' => 'count(value)',
+                'amount' => 'count(value)',
             ])
             ->groupBy(['field_id', 'section_id', 'value'])
             ->inverseOf(null)

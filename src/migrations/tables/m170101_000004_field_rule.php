@@ -1,7 +1,6 @@
 <?php
 
-class m170101_000004_field_rule
-    extends tecnocen\rmdb\migrations\CreatePivot
+class m170101_000004_field_rule extends tecnocen\rmdb\migrations\CreateEntity
 {
     /**
      * @inheritdoc

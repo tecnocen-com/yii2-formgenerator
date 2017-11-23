@@ -16,8 +16,20 @@ use yii\validators\Validator;
  * @property Field $field
  * @property FieldRuleProperty[] $properties
  */
-class FieldRule extends BaseActiveRecord
+class FieldRule extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getField()`.
+     */
+    protected $fieldClass = Field::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getProperties()`.
+     */
+    protected $propertyClass = FieldRuleProperty::class;
+
     /**
      * @inheritdoc
      */
@@ -25,7 +37,7 @@ class FieldRule extends BaseActiveRecord
     {
         return '{{%formgenerator_field_rule}}';
     }
- 
+
     /**
      * @inheritdoc
      */
@@ -73,10 +85,7 @@ class FieldRule extends BaseActiveRecord
      */
     public function getField()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Field',
-            ['id' => 'field_id']
-        );
+        return $this->hasOne($this->fieldClass, ['id' => 'field_id']);
     }
 
     /**
@@ -84,10 +93,8 @@ class FieldRule extends BaseActiveRecord
      */
     public function getProperties()
     {
-        return $this->hasMany(
-                $this->getNamespace() . '\\FieldRuleProperty',
-                ['rule_id' => 'id']
-            )->inverseOf('rule');
+        return $this->hasMany($this->propertyClass, ['rule_id' => 'id'])
+            ->inverseOf('rule');
     }
 
     public function buildValidator(Model $model, $attributes)

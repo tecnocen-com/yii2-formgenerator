@@ -15,6 +15,11 @@ class FieldRuleProperty extends \tecnocen\formgenerator\models\FieldRuleProperty
     /**
      * @inheritdoc
      */
+    protected $ruleClass = FieldRule::class;
+
+    /**
+     * @inheritdoc
+     */
     protected function slugConfig()
     {
         return [
@@ -22,5 +27,13 @@ class FieldRuleProperty extends \tecnocen\formgenerator\models\FieldRuleProperty
             'resourceName' => 'property',
             'parentSlugRelation' => 'rule',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function fields()
+    {
+        return ['property', 'value'];
     }
 }

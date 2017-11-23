@@ -6,7 +6,7 @@
         "framework",
         "form",
         "roa",
-        "generator" 
+        "generator"
     ],
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
@@ -49,5 +49,5 @@
             "tecnocen\\formgenerator\\": "src/"
         }
     }
-    
+
 }

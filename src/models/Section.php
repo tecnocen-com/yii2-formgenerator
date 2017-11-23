@@ -1,11 +1,15 @@
 <?php
 
 namespace tecnocen\formgenerator\models;
+
+use tecnocen\formgenerator\behaviors\Positionable;
+
 /**
  * Model class for table `{{%formgenerator_form_section}}`
  *
  * @property integer $id
  * @property integer $form_id
+ * @property integer $position
  * @property string $name
  * @property string $label
  *
@@ -13,8 +17,26 @@ namespace tecnocen\formgenerator\models;
  * @property SectionField[] $sectionFields
  * @property Field[] $fieds
  */
-class Section extends BaseActiveRecord
+class Section extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getForm()`.
+     */
+    protected $formClass = Form::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSectionFields()`.
+     */
+    protected $sectionFieldClass = SectionField::class;
+
+    /**
+     * @var string full class name of the model used in the relation
+     * `getFields()`.
+     */
+    protected $fieldClass = Field::class;
+
     /**
      * @inheritdoc
      */
@@ -37,11 +59,34 @@ class Section extends BaseActiveRecord
     /**
      * @inheritdoc
      */
+    public function transactions()
+    {
+        return [
+            self::SCENARIO_DEFAULT => self::OP_ALL,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return parent::behaviors() + [
+            'position' => [
+                'class' => Positionable::class,
+                'parentAttribute' => 'form_id',
+            ]
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function rules()
     {
         return [
             [['form_id', 'name', 'label'], 'required'],
-            [['form_id'], 'integer'],
+            [['form_id', 'position'], 'integer'],
             [
                 ['form_id'],
                 'exist',
@@ -78,10 +123,7 @@ class Section extends BaseActiveRecord
      */
     public function getForm()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\Form',
-            ['id' => 'form_id']
-        );
+        return $this->hasOne($this->formClass, ['id' => 'form_id']);
     }
 
     /**
@@ -89,10 +131,8 @@ class Section extends BaseActiveRecord
      */
     public function getSectionFields()
     {
-        return $this->hasMany(
-            $this->getNamespace() . '\\SectionField',
-            ['section_id' => 'id']
-        )->inverseOf('section');
+        return $this->hasMany($this->sectionFieldClass, ['section_id' => 'id'])
+            ->inverseOf('section');
     }
 
     /**
@@ -100,9 +140,7 @@ class Section extends BaseActiveRecord
      */
     public function getFields()
     {
-        return $this->hasMany(
-            $this->getNamespace() . '\\Field',
-            ['id' => 'field_id']
-        )->via('sectionFields');
+        return $this->hasMany($this->fieldClass, ['id' => 'field_id'])
+            ->via('sectionFields');
     }
 }

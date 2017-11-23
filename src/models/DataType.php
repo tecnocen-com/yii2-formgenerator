@@ -9,12 +9,19 @@ use yii\web\UploadedFile;
  *
  * @property integer $id
  * @property string $name
+ * @property string $label
  * @property string $cast
  *
- * @property Section[] $sections
+ * @property Field[] $fields
  */
-class DataType extends BaseActiveRecord
+class DataType extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getFields()`.
+     */
+    protected $fieldClass = Field::class;
+
     /**
      * @inheritdoc
      */
@@ -22,7 +29,7 @@ class DataType extends BaseActiveRecord
     {
         return '{{%formgenerator_data_type}}';
     }
- 
+
     /**
      * @inheritdoc
      */
@@ -37,8 +44,8 @@ class DataType extends BaseActiveRecord
     public function rules()
     {
         return [
-            [['name', 'cast'], 'required'],
-            [['name', 'cast'], 'string', 'min' => 4],
+            [['name', 'label', 'cast'], 'required'],
+            [['name', 'label', 'cast',], 'string', 'min' => 4],
             [['name'], 'unique'],
             [['cast'], 'verifyCast'],
         ];
@@ -50,17 +57,28 @@ class DataType extends BaseActiveRecord
     protected function getCastCallable()
     {
          $values = explode(':', $this->cast, 2);
-         return isset($values[1]) 
+         return isset($values[1])
              ? [$values[0], $values[1]]
              : [static::class, $values[0]];
     }
 
+    /**
+     * Cast the value of an attribute in a model.
+     *
+     * @param SolicitudeValue $model
+     * @param string $attribute
+     */
     public function castValue(SolicitudeValue $model, $attribute)
     {
          $callable = $this->getCastCallable();
          $model->$attribute = $callable($model->$attribute, $attribute);
     }
 
+    /**
+     * Verify that the cast saved is callable.
+     *
+     * @param string $attribute
+     */
     public function verifyCast($attribute)
     {
          if (!is_callable($this->getCastCallable())) {
@@ -109,6 +127,7 @@ class DataType extends BaseActiveRecord
         return array_merge([
             'id' => 'ID',
             'name' => 'Data Type name',
+            'label' => 'Label',
             'cast' => 'Type Cast Method',
         ], parent::attributeLabels());
     }
@@ -118,9 +137,7 @@ class DataType extends BaseActiveRecord
      */
     public function getFields()
     {
-        return $this->hasMany(
-            $this->getNamespace() . '\\Field',
-            ['data_type_id' => 'id']
-        )->inverseOf('dataType');
+        return $this->hasMany($this->fieldClass, ['data_type_id' => 'id'])
+            ->inverseOf('dataType');
     }
 }

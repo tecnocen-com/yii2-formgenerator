@@ -11,8 +11,14 @@ namespace tecnocen\formgenerator\models;
  *
  * @property FieldRule $rule
  */
-class FieldRuleProperty extends BaseActiveRecord
+class FieldRuleProperty extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getRules()`.
+     */
+    protected $ruleClass = FieldRule::class;
+
     /**
      * @inheritdoc
      */
@@ -72,9 +78,6 @@ class FieldRuleProperty extends BaseActiveRecord
      */
     public function getRule()
     {
-        return $this->hasOne(
-            $this->getNamespace() . '\\FieldRule',
-            ['id' => 'rule_id']
-        );
+        return $this->hasOne($this->ruleClass, ['id' => 'rule_id']);
     }
 }

@@ -15,6 +15,11 @@ class Form extends \tecnocen\formgenerator\models\Form
     /**
      * @inheritdoc
      */
+    protected $sectionClass = Section::class;
+
+    /**
+     * @inheritdoc
+     */
     protected function slugConfig()
     {
         return ['resourceName' => 'form'];

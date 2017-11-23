@@ -4,9 +4,10 @@ namespace tecnocen\formgenerator\roa\resources\form\section;
 
 use Yii;
 use tecnocen\formgenerator\roa\models\SectionField;
+use tecnocen\formgenerator\roa\models\SectionFieldSearch;
 
 /**
- * CRUD resource for `SectionField` records 
+ * CRUD resource for `SectionField` records
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
 class FieldResource extends \tecnocen\roa\controllers\OAuth2Resource
@@ -20,6 +21,11 @@ class FieldResource extends \tecnocen\roa\controllers\OAuth2Resource
      * @inheritdoc
      */
     public $modelClass = SectionField::class;
+
+    /**
+     * @inheritdoc
+     */
+    public $searchClass = SectionFieldSearch::class;
 
     /**
      * @inheritdoc

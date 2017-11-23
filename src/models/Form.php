@@ -10,8 +10,14 @@ namespace tecnocen\formgenerator\models;
  *
  * @property Section[] $sections
  */
-class Form extends BaseActiveRecord
+class Form extends \tecnocen\rmdb\models\Entity
 {
+    /**
+     * @var string full class name of the model used in the relation
+     * `getSections()`.
+     */
+    protected $sectionClass = Section::class;
+
     /**
      * @inheritdoc
      */
@@ -19,7 +25,7 @@ class Form extends BaseActiveRecord
     {
         return '{{%formgenerator_form}}';
     }
- 
+
     /**
      * @inheritdoc
      */
@@ -56,9 +62,7 @@ class Form extends BaseActiveRecord
      */
     public function getSections()
     {
-        return $this->hasMany(
-            $this->getNamespace() . '\\Section',
-            ['section_id' => 'id']
-        )->inverseOf('form');
+        return $this->hasMany($this->sectionClass, ['section_id' => 'id'])
+            ->inverseOf('form');
     }
 }

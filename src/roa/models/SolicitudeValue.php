@@ -15,6 +15,26 @@ class SolicitudeValue extends \tecnocen\formgenerator\models\SolicitudeValue
     /**
      * @inheritdoc
      */
+    protected $sectionFieldClass = SectionField::class;
+
+    /**
+     * @inheritdoc
+     */
+    protected $sectionClass = Section::class;
+
+    /**
+     * @inheritdoc
+     */
+    protected $fieldClass = Field::class;
+
+    /**
+     * @inheritdoc
+     */
+    protected $solicitudeClass = Solicitude::class;
+
+    /**
+     * @inheritdoc
+     */
     protected function slugConfig()
     {
         return [

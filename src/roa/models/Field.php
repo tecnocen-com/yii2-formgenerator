@@ -2,6 +2,7 @@
 
 namespace tecnocen\formgenerator\roa\models;
 
+use yii\helpers\Url;
 use yii\web\Linkable;
 
 /**
@@ -15,6 +16,15 @@ class Field extends \tecnocen\formgenerator\models\Field
     /**
      * @inheritdoc
      */
+    protected $dataTypeClass = DataType::class;
+
+    /**
+     * @inheritdoc
+     */
+    protected $ruleClass = FieldRule::class;
+    /**
+     * @inheritdoc
+     */
     protected function slugConfig()
     {
         return ['resourceName' => 'field'];
@@ -25,8 +35,22 @@ class Field extends \tecnocen\formgenerator\models\Field
      */
     public function getLinks()
     {
-        return $this->getSlugLinks() + [
-            'rules' => $this->getSelfLink() . '/rule',
-        ];
+      $selfLink = $this->getSelfLink();
+      return $this->getSlugLinks() + [
+          'rules' => $selfLink . '/rule',
+          'dataType' => $this->dataType->getSelfLink(),
+          'curies' => [
+              'expand' => Url::to($selfLink, ['expand' => '{rel}']),
+          ],
+          'expand:properties' => 'properties',
+      ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['dataType'];
     }
 }
