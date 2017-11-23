@@ -11,15 +11,38 @@
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Angel (Faryshta) Guevara",
+            "email": "aguevara@solmipro.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
     "require": {
         "php": ">=5.6",
         "yiisoft/yii2": "~2.0.10",
-        "tecnocen/yii2-roa": "~0.0.2",
-        "tecnocen/yii2-migrate": ">=1.0.1"
+        "tecnocen/yii2-roa": "~0.2.0",
+        "tecnocen/yii2-rmdb": "~0.1.0"
     },
     "require-dev": {
         "codeception/base": "^2.2.11",
         "codeception/verify": "~0.3.1"
+    },
+    "scripts": {
+        "deploy-tests": [
+            "@composer update --prefer-stable",
+            "@php tests/_app/yii.php migrate -p=@tecnocen/oauth2server/migrations/tables --interactive=0",
+            "@php tests/_app/yii.php migrate -p=@tecnocen/formgenerator/migrations/tables --interactive=0",
+            "@php tests/_app/yii.php migrate -p=@app/migrations/ --interactive=0"
+        ],
+        "run-tests": [
+            "@php vendor/bin/codecept run --steps"
+        ]
     },
     "autoload": {
         "psr-4": {
