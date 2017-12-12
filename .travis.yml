@@ -32,7 +32,7 @@ before_script:
   - mysql --version
             
   # initialize database
-  - mysql -e "create database yii2_workflow_test"
+  - mysql -e "create database yii2_formgenerator_test"
 
   # enable code coverage on PHP 7.1, only one PHP version needs to generate coverage data
   - |
