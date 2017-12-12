@@ -1,6 +1,6 @@
 {
     "name": "tecnocen/yii2-formgenerator",
-    "description": "Yii 2 Library to configure workflows",
+    "description": "Yii 2 Library to configure form generator",
     "keywords": [
         "yii2",
         "framework",
