@@ -3,7 +3,7 @@ Tecnocen Form Generator
 
 Library to dynamically generate forms in database.
 
-Instalation
+Installation
 -----------
 
 You can use composer to install the library `tecnocen/yii2-formgenerator` by running
