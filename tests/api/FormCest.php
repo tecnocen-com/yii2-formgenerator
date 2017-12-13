@@ -1,9 +1,9 @@
 <?php
 
 use app\fixtures\OauthAccessTokensFixture;
+use app\fixtures\FormFixture;
 use Codeception\Example;
 use Codeception\Util\HttpCode;
-use tecnocen\formgenerator\fixtures\FormFixture;
 
 class FormCest extends \tecnocen\roa\test\AbstractResourceCest
 {
