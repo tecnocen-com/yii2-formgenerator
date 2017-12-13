@@ -17,4 +17,6 @@ coverage:
     enabled: true
     whitelist:
         include:
-            - src/*
+            - src/behaviors/*
+            - src/models/*
+            - src/roa/*
