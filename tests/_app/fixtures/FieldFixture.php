@@ -1,6 +1,6 @@
 <?php
 
-namespace tecnocen\formgenerator\fixtures;
+namespace app\fixtures;
 
 use tecnocen\formgenerator\models\Field;
 
