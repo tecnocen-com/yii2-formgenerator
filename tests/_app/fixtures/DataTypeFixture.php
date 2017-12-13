@@ -1,6 +1,6 @@
 <?php
 
-namespace tecnocen\formgenerator\fixtures;
+namespace app\fixtures;
 
 use tecnocen\formgenerator\models\DataType;
 
@@ -18,5 +18,5 @@ class DataTypeFixture extends \yii\test\ActiveFixture
     /**
      * @inheritdoc
      */
-    public $dataFile = __DIR__ . '/data/DataType.php';
+    public $dataFile = __DIR__ . '/data/data_type.php';
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace tecnocen\formgenerator\fixtures;
+namespace app\fixtures;
 
 use tecnocen\formgenerator\models\Form;
 
@@ -18,5 +18,5 @@ class FormFixture extends \yii\test\ActiveFixture
     /**
      * @inheritdoc
      */
-    public $dataFile = __DIR__ . '/data/Form.php';
+    public $dataFile = __DIR__ . '/data/form.php';
 }

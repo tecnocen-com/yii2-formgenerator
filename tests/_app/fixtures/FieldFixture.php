@@ -18,7 +18,7 @@ class FieldFixture extends \yii\test\ActiveFixture
     /**
      * @inheritdoc
      */
-    public $dataFile = __DIR__ . '/data/Field.php';
+    public $dataFile = __DIR__ . '/data/field.php';
 
     /**
      * @inheritdoc

@@ -1,6 +1,6 @@
 <?php
 
-namespace tecnocen\formgenerator\fixtures;
+namespace app\fixtures;
 
 use tecnocen\formgenerator\models\SolicitudeValue;
 
@@ -18,7 +18,7 @@ class SolicitudeValueFixture extends \yii\test\ActiveFixture
     /**
      * @inheritdoc
      */
-    public $dataFile = __DIR__ . '/data/SolicitudeValue.php';
+    public $dataFile = __DIR__ . '/data/solicitude_value.php';
 
     /**
      * @inheritdoc

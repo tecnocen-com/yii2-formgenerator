@@ -1,6 +1,6 @@
 <?php
 
-namespace tecnocen\formgenerator\fixtures;
+namespace app\fixtures;
 
 use tecnocen\formgenerator\models\FieldRuleProperty;
 
@@ -18,7 +18,7 @@ class FieldRulePropertyFixture extends \yii\test\ActiveFixture
     /**
      * @inheritdoc
      */
-    public $dataFile = __DIR__ . '/data/FieldRuleProperty.php';
+    public $dataFile = __DIR__ . '/data/field_rule_property.php';
 
     /**
      * @inheritdoc

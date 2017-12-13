@@ -1,6 +1,6 @@
 <?php
 
-namespace tecnocen\formgenerator\fixtures;
+namespace app\fixtures;
 
 use tecnocen\formgenerator\models\Section;
 
@@ -18,7 +18,7 @@ class SectionFixture extends \yii\test\ActiveFixture
     /**
      * @inheritdoc
      */
-    public $dataFile = __DIR__ . '/data/Section.php';
+    public $dataFile = __DIR__ . '/data/section.php';
     /**
      * @inheritdoc
      */
