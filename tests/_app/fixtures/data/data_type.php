@@ -5,7 +5,7 @@ $now = new yii\db\Expression('now()');
 return [
     [
         'name' => 'string',
-        'Label' => 'String',
+        'label' => 'String',
         'cast' => 'stringCast',
         'created_by' => 1,
         'created_at' => $now,
