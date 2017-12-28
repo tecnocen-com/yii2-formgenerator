@@ -19,8 +19,8 @@ class m170101_000003_field extends tecnocen\rmdb\migrations\CreateEntity
             'id' => $this->primaryKey(),
             'data_type_id' => $this->normalKey(),
             'name' => $this->string(32)->unique()->notNull(),
-            'label' => $this->string(64)->notNull(),
-            'service' => $this->string(512)->defaultValue(null)
+            'label' => $this->text()->notNull(),
+            'service' => $this->text()->defaultValue(null)
                 ->comment('url for a web service to provide searcheable data'),
         ];
     }

@@ -18,7 +18,7 @@ class m170101_000002_data_type extends tecnocen\rmdb\migrations\CreateEntity
         return [
             'id' => $this->primaryKey(),
             'name' => $this->string(32)->notNull()->unique(),
-            'label' => $this->string(128)->notNull(),
+            'label' => $this->text()->notNull(),
             'cast' => $this->string(64)->notNull(),
         ];
     }

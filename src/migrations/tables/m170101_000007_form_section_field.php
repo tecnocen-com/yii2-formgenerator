@@ -19,7 +19,7 @@ class m170101_000007_form_section_field extends tecnocen\rmdb\migrations\CreateE
             'section_id' => $this->normalKey(),
             'field_id' => $this->normalKey(),
             'position' => $this->integer()->unsigned()->notNull(),
-            'label' => $this->string(64)->defaultValue(null)
+            'label' => $this->text()->defaultValue(null)
                 ->comment('When not set it will use the label on field.'),
         ];
     }
