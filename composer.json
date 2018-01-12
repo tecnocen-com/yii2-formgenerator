@@ -9,12 +9,17 @@
         "generator"
     ],
     "type": "yii2-extension",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "minimum-stability": "dev",
     "authors": [
         {
             "name": "Angel (Faryshta) Guevara",
             "email": "aguevara@solmipro.com"
+        },
+        {
+            "name": "Carlos (neverabe) Llamosas",
+            "email": "carlos@tecnocen.com",
+            "homepage": "http://tecnocen.com"
         }
     ],
     "repositories": [
@@ -24,14 +29,15 @@
         }
     ],
     "require": {
-        "php": ">=5.6",
-        "yiisoft/yii2": "~2.0.10",
-        "tecnocen/yii2-roa": "~0.2.0",
-        "tecnocen/yii2-rmdb": "~0.1.0"
+        "php": "^7.1",
+        "tecnocen/yii2-roa": "~0.2.3",
+        "tecnocen/yii2-rmdb": "*",
+        "yiisoft/yii2": "~2.0.10"
     },
     "require-dev": {
         "codeception/base": "^2.2.11",
-        "codeception/verify": "~0.3.1"
+        "codeception/verify": "~0.3.1",
+        "phpunit/php-code-coverage": "5.3.*"
     },
     "scripts": {
         "deploy-tests": [
@@ -42,6 +48,9 @@
         ],
         "run-tests": [
             "@php vendor/bin/codecept run --steps"
+        ],
+        "run-coverage": [
+            "@php vendor/bin/codecept run --steps --coverage --coverage-xml"
         ]
     },
     "autoload": {
