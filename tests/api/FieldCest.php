@@ -107,7 +107,7 @@ class FieldCest extends \tecnocen\roa\test\AbstractResourceCest
                 'url' => '/field/1',
                 'httpCode' => HttpCode::OK,
             ],
-            'not found credit record' => [
+            'not found field record' => [
                 'url' => '/field/8',
                 'httpCode' => HttpCode::NOT_FOUND,
             ],

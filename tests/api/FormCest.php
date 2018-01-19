@@ -58,6 +58,7 @@ class FormCest extends \tecnocen\roa\test\AbstractResourceCest
             'filter by author' => [
                 'urlParams' => [
                     'created_by' => 1,
+                    'expand' => 'sections'
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
@@ -102,10 +103,20 @@ class FormCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'single record' => [
-                'url' => '/form/1',
+                'urlParams' => [
+                    'id' => 1,
+                    'expand' => 'sections'
+                ],
                 'httpCode' => HttpCode::OK,
+                'response' => [
+                    '_embedded' => [
+                        'sections' => [
+                            ['id' => 1],
+                        ],
+                    ],
+                ],                
             ],
-            'not found credit record' => [
+            'not found form record' => [
                 'url' => '/form/8',
                 'httpCode' => HttpCode::NOT_FOUND,
             ],

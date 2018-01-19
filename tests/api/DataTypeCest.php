@@ -106,7 +106,7 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
                 'url' => '/data-type/1',
                 'httpCode' => HttpCode::OK,
             ],
-            'not found credit record' => [
+            'not found data type record' => [
                 'url' => '/data-type/8',
                 'httpCode' => HttpCode::NOT_FOUND,
             ],
