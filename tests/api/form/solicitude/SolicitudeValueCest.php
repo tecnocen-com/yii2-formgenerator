@@ -1,5 +1,7 @@
 <?php
 
+namespace app\api\form\solicitude;
+
 use app\fixtures\OauthAccessTokensFixture;
 use app\fixtures\SolicitudeValueFixture;
 use Codeception\Example;
@@ -21,7 +23,7 @@ class SolicitudeValueCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         $I->haveFixtures([
             'access_tokens' => OauthAccessTokensFixture::class,
-            'form' => SolicitudeValueFixture::class,
+            'solicitude_value' => SolicitudeValueFixture::class,
         ]);
     }
 
