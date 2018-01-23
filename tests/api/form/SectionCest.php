@@ -6,7 +6,7 @@ use Codeception\Example;
 use Codeception\Util\HttpCode;
 
 /**
- * Cest to form resource.
+ * Cest to form/<form_id:\d+>/section resource.
  *
  * @author Carlos (neverabe) Llamosas <carlos@tecnocen.com>
  */
