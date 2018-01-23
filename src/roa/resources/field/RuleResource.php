@@ -20,4 +20,15 @@ class RuleResource extends \tecnocen\roa\controllers\OAuth2Resource
      * @inheritdoc
      */
     public $filterParams = ['field_id', 'class', 'created_by'];
+
+    /**
+     * @inheritdoc
+     */
+    public function verbs()
+    {
+        $verbs = parent::verbs();
+        unset($verbs['update']);
+
+        return $verbs;
+    }
 }
