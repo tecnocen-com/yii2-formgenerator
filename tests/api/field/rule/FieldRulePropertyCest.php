@@ -6,7 +6,7 @@ use Codeception\Example;
 use Codeception\Util\HttpCode;
 
 /**
- * Cest to field/<field_id:\d+>/rule resource.
+ * Cest to field/<field_id:\d+>/rule/<rule_id:\d+>/property resource.
  *
  * @author Carlos (neverabe) Llamosas <carlos@tecnocen.com>
  */
