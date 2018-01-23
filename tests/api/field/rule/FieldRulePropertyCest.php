@@ -200,26 +200,12 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'update field 1' => [
-                'urlParams' => [
-                    'field_id' => 3,
-                    'rule_id' => 3,
-                    'property' => 'max',
+                'url' => '/field/3/rule/3/property/max',
+                'data' => [
                     'value' => 60
                 ],
                 'httpCode' => HttpCode::OK,
-            ],
-            'to short' => [
-                'urlParams' => [
-                    'field_id' => 3,
-                    'rule_id' => 3,
-                    'property' => '',
-                    'value' => 60
-                ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-                'validationErrors' => [
-                    'property' => 'Property cannot be blank.',
-                ],
-            ],
+            ]
         ];
     }
 
@@ -243,25 +229,15 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'delete field 1' => [
-                'urlParams' => [
-                    'field_id' => 3,
-                    'rule_id' => 3,
-                    'property' => 'max',
-                    'value' => 60
-                ],
-                'httpCode' => HttpCode::METHOD_NOT_ALLOWED,
+                'url' => '/field/3/rule/3/property/max',
+                'httpCode' => HttpCode::NO_CONTENT,
             ],
             'not found' => [
-                'urlParams' => [
-                    'field_id' => 3,
-                    'rule_id' => 3,
-                    'property' => 'max',
-                    'value' => 60
-                ],
-                'httpCode' => HttpCode::METHOD_NOT_ALLOWED,
+                'url' => '/field/3/rule/3/property/max',
+                'httpCode' => HttpCode::NOT_FOUND,
                 'validationErrors' => [
-                    'name' => 'The record "1" does not exists.'
-                ],
+                    'property' => 'The record max does not exists.',
+                ],                
             ],
         ];
     }
