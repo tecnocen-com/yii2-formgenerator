@@ -72,19 +72,8 @@ class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
                     'X-Pagination-Total-Count' => 4,
                 ],
             ],
-            'filter by field' => [
-                'urlParams' => [
-                    'form_id' => 1,
-                    'section_id' => 1,
-                    'id' => 4
-                ],
-                'httpCode' => HttpCode::OK,
-            ],
             'rule form_id' => [
-                'urlParams' => [
-                    'form_id' => 'fi',
-                    'section_id' => 1,
-                ],
+                'url' => 'form/fi/section/1/field',
                 'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
             ],
         ];
@@ -209,7 +198,7 @@ class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
             'update field 1' => [
                 'url' => '/form/1/section/1/field/2',
                 'data' => [
-                    'field_id'=> 5,
+                    'label'=> 'Label Updated',
                 ],
                 'httpCode' => HttpCode::OK,
             ],
