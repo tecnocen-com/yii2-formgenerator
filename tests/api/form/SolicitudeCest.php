@@ -179,30 +179,12 @@ class SolicitudeCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'update form 1' => [
-                'urlParams' => [
-                    'form_id' => 1,
-                    'id' => 1,
-                ],
+                'url' => '/form/1/solicitude/1',
                 'data' => [
                     'name' => 'asignatures2',
                     'label' => 'Asignatures 2',
                 ],
                 'httpCode' => HttpCode::OK,
-            ],
-            'to short' => [
-                'urlParams' => [
-                    'form_id' => 1,
-                    'id' => 1,
-                ],
-                'data' => [
-                    'name' => 'fo',
-                    'label' => 'Fo',
-                ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-                'validationErrors' => [
-                    'name' => 'Solicitude name should contain at least 6 characters.',
-                    'label' => 'Solicitude label should contain at least 6 characters.',
-                ],
             ],
         ];
     }
