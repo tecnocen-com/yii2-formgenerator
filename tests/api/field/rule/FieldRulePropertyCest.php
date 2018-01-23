@@ -21,7 +21,7 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         $I->haveFixtures([
             'access_tokens' => OauthAccessTokensFixture::class,
-            'field_rule' => FieldRulePropertyFixture::class,
+            'field_rule_property' => FieldRulePropertyFixture::class,
         ]);
     }
 

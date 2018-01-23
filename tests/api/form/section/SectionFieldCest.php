@@ -21,7 +21,7 @@ class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         $I->haveFixtures([
             'access_tokens' => OauthAccessTokensFixture::class,
-            'field_rule' => SectionFieldFixture::class,
+            'section_field' => SectionFieldFixture::class,
         ]);
     }
 

@@ -21,7 +21,7 @@ class SolicitudeCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         $I->haveFixtures([
             'access_tokens' => OauthAccessTokensFixture::class,
-            'form' => SolicitudeFixture::class,
+            'solicitude' => SolicitudeFixture::class,
         ]);
     }
 
