@@ -79,12 +79,6 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
                     'X-Pagination-Total-Count' => 1,
                 ],
             ],
-            'rule field_by' => [
-                'urlParams' => [
-                    'field_id' => 'fi',
-                ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-            ],
         ];
     }
 
@@ -143,43 +137,10 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
         return [
             'create field 1' => [
                 'urlParams' => [
-                    'data_type_id' => 1,
-                    'name' => 'complete_name',
-                    'label' => 'Complete Name',
+                    'field_id' => 1,
                 ],
+                'data' => ['class' => 'string'],
                 'httpCode' => HttpCode::CREATED,
-            ],
-            'unique and invalid id' => [
-                'urlParams' => [
-                    'data_type_id' => 15,
-                    'name' => 'complete_name',
-                    'label' => 'Complete Name',
-                ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-                'validationErrors' => [
-                    'data_type_id' => 'Data Type ID is invalid.',
-                    'name' => 'FieldRule name "complete_name" has already been taken.',
-                ],
-            ],
-            'to short' => [
-                'urlParams' => [
-                    'data_type_id' => 1,
-                    'name' => 'co',
-                    'label' => 'Co',
-                ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-                'validationErrors' => [
-                    'name' => 'FieldRule name should contain at least 4 characters.',
-                    'label' => 'FieldRule label should contain at least 4 characters.',
-                ],
-            ],
-            'not blank' => [
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-                'validationErrors' => [
-                    'data_type_id' => 'Data Type ID cannot be blank.',
-                    'name' => 'FieldRule name cannot be blank.',
-                    'label' => 'FieldRule label cannot be blank.',
-                ],
             ],
         ];
     }
@@ -203,25 +164,13 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
     protected function updateDataProvider()
     {
         return [
-            'update field 1' => [
-                'urlParams' => ['id' => '1'],
-                'data' => [
-                    'name' => 'first_name',
-                    'label' => 'First Name'
+            'update field rule 1' => [
+                'urlParams' => [
+                    'field_id' => 1,
+                    'id' => '1',
                 ],
-                'httpCode' => HttpCode::OK,
-            ],
-            'to short' => [
-                'urlParams' => ['id' => '1'],
-                'data' => [
-                    'name' => 'fi',
-                    'label' => 'Fi',
-                ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-                'validationErrors' => [
-                    'name' => 'FieldRule name should contain at least 4 characters.',
-                    'label' => 'FieldRule label should contain at least 4 characters.',
-                ],
+                'httpCode' => HttpCode::METHOD_NOT_ALLOWED,
+                'data' => [],
             ],
         ];
     }
@@ -245,16 +194,19 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
     protected function deleteDataProvider()
     {
         return [
-            'delete field 1' => [
-                'urlParams' => ['id' => '1'],
+            'delete field rule 1' => [
+                'urlParams' => [
+                    'field_id' => 1,
+                    'id' => 16,
+                ],
                 'httpCode' => HttpCode::NO_CONTENT,
             ],
             'not found' => [
-                'urlParams' => ['id' => '1'],
-                'httpCode' => HttpCode::NOT_FOUND,
-                'validationErrors' => [
-                    'name' => 'The record "1" does not exists.'
+                'urlParams' => [
+                    'field_id' => 1,
+                    'id' => 16,
                 ],
+                'httpCode' => HttpCode::NOT_FOUND,
             ],
         ];
     }

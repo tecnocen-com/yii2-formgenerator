@@ -100,7 +100,8 @@ class Section extends \tecnocen\rmdb\models\Entity
                 ['name'],
                 'unique',
                 'targetAttribute' => ['form_id', 'name'],
-                'message' => 'Name already in use for this form.',
+                'message' => 'Section name "{value}" already in use '
+                    . 'for this form.',
             ],
         ];
     }
