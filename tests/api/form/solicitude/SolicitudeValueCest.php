@@ -227,18 +227,16 @@ class SolicitudeValueCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'update form 1' => [
-                'url' => '/form/1/solicitude/2/value/6',
+                'url' => '/form/1/solicitude/2/value/1/2',
                 'data' => [
-                    'field_id' => 1,
                     'value' => 'Value Test Updated',
                 ],
                 'httpCode' => HttpCode::OK,
             ],
             'to short' => [
-                'url' => '/form/1/solicitude/2/value/6',
+                'url' => '/form/1/solicitude/2/value/1/2',
                 'data' => [
-                    'field_id' => 1,
-                    'value' => 'Va',
+                    'value' => '',
                 ],
                 'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
                 'validationErrors' => [
@@ -268,11 +266,11 @@ class SolicitudeValueCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'delete form 1' => [
-                'url' => '/form/1/solicitude/2/value/6',
+                'url' => '/form/1/solicitude/2/value/1/2',
                 'httpCode' => HttpCode::NO_CONTENT,
             ],
             'not found' => [
-                'url' => '/form/1/solicitude/2/value/6',
+                'url' => '/form/1/solicitude/2/value/1/2',
                 'httpCode' => HttpCode::NOT_FOUND,
                 'validationErrors' => [
                     'name' => 'The record "6" does not exists.'
