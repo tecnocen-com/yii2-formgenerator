@@ -51,4 +51,17 @@ class SolicitudeValue extends \tecnocen\formgenerator\models\SolicitudeValue
     {
         return $this->getSlugLinks();
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return [
+            'sectionField', 
+            'section', 
+            'field', 
+            'solicitude'
+        ];
+    }
 }

@@ -34,6 +34,6 @@ class FieldRuleProperty extends \tecnocen\formgenerator\models\FieldRuleProperty
      */
     public function fields()
     {
-        return ['property', 'value'];
+        return ['rule'];
     }
 }

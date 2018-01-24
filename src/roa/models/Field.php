@@ -51,6 +51,6 @@ class Field extends \tecnocen\formgenerator\models\Field
      */
     public function extraFields()
     {
-        return ['dataType'];
+        return ['dataType', 'rules'];
     }
 }

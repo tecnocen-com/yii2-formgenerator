@@ -111,6 +111,9 @@ class SolicitudeValueCest extends \tecnocen\roa\test\AbstractResourceCest
                     'solicitude_id' => 1,
                     'value' => 'Manuel'
                 ],
+                'data' => [
+                    'expand' => 'sectionField, section, field, solicitude',
+                ],
                 'httpCode' => HttpCode::OK,            
             ],
             'not found form' => [

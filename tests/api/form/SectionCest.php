@@ -50,7 +50,7 @@ class SectionCest extends \tecnocen\roa\test\AbstractResourceCest
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
-                    'X-Pagination-Total-Count' => 2,
+                    'X-Pagination-Total-Count' => 3,
                 ],
             ],
             'not found form' => [
@@ -66,7 +66,7 @@ class SectionCest extends \tecnocen\roa\test\AbstractResourceCest
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
-                    'X-Pagination-Total-Count' => 2,
+                    'X-Pagination-Total-Count' => 3,
                 ],
             ],
             'filter by name' => [
@@ -109,10 +109,9 @@ class SectionCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'single record' => [
-                'urlParams' => [
-                    'form_id' => 1,
-                    'id' => 1,
-                    'expand' => 'sections'
+                'url' => '/form/1/section/1',
+                'data' => [
+                    'expand' => 'form, sectionFields, fields',
                 ],
                 'httpCode' => HttpCode::OK,
                 'response' => [
@@ -246,6 +245,7 @@ class SectionCest extends \tecnocen\roa\test\AbstractResourceCest
                 'data' => [
                     'name' => 'asignatures2',
                     'label' => 'Asignatures 2',
+                    'position' => 1
                 ],
                 'httpCode' => HttpCode::OK,
             ],

@@ -103,7 +103,7 @@ class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
                     'form_id' => 1,
                     'section_id' => 1,
                     'id' => 4,
-                    'expand' => 'solicitudeValuesData, solicitudeValuesDataDetail'
+                    'expand' => 'field, solicitudeValue, solicitudeValuesData, solicitudeValuesDataDetail'
                 ],
                 'httpCode' => HttpCode::OK,
             ],

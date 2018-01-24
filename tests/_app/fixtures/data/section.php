@@ -23,4 +23,14 @@ return [
         'updated_by' => 1,
         'updated_at' => $now,
     ],
+    [
+        'form_id' => 1,
+        'position' => 3,
+        'name' => 'credit',
+        'label' => 'Credit Information',
+        'created_by' => 1,
+        'created_at' => $now,
+        'updated_by' => 1,
+        'updated_at' => $now,
+    ],
 ];

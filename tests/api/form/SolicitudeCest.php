@@ -99,8 +99,9 @@ class SolicitudeCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'single record' => [
-                'urlParams' => [
-                    'form_id' => 1,
+                'url' => '/form/1/solicitude',
+                'data' => [
+                    'expand' => 'form, values',
                 ],
                 'httpCode' => HttpCode::OK,              
             ],

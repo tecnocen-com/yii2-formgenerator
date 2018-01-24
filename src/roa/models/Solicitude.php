@@ -42,4 +42,12 @@ class Solicitude extends \tecnocen\formgenerator\models\Solicitude
             'values' => $this->getSelfLink() . '/value',
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['form', 'values'];
+    }
 }

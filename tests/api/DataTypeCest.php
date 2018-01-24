@@ -48,7 +48,7 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
                 'url' => '/data-type',
                 'httpCode' => HttpCode::OK,
                 'headers' => [
-                    'X-Pagination-Total-Count' => 5,
+                    'X-Pagination-Total-Count' => 1,
                 ],
             ],
             'not found data-type' => [
@@ -61,7 +61,7 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
-                    'X-Pagination-Total-Count' => 5,
+                    'X-Pagination-Total-Count' => 1,
                 ],
             ],
             'filter by name' => [
@@ -104,6 +104,9 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
         return [
             'single record' => [
                 'url' => '/data-type/1',
+                'data' => [
+                    'expand' => 'fields'
+                ],
                 'httpCode' => HttpCode::OK,
             ],
             'not found data type record' => [
@@ -132,11 +135,35 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
     protected function createDataProvider()
     {
         return [
-            'create data-type 6' => [
+            'booleanCast' => [
                 'urlParams' => [
-                    'name' => 'hello',
-                    'label' => 'Hello',
-                    'cast' => 'helloCast'
+                    'name' => 'boolean',
+                    'label' => 'Boolean',
+                    'cast' => 'booleanCast'
+                ],
+                'httpCode' => HttpCode::CREATED,
+            ],
+            'integerCast' => [
+                'urlParams' => [
+                    'name' => 'integer',
+                    'label' => 'Integer',
+                    'cast' => 'integerCast'
+                ],
+                'httpCode' => HttpCode::CREATED,
+            ],
+            'floatCast' => [
+                'urlParams' => [
+                    'name' => 'float',
+                    'label' => 'Decimal',
+                    'cast' => 'floatCast'
+                ],
+                'httpCode' => HttpCode::CREATED,
+            ],
+            'fileCast' => [
+                'urlParams' => [
+                    'name' => 'file',
+                    'label' => 'File',
+                    'cast' => 'fileCast'
                 ],
                 'httpCode' => HttpCode::CREATED,
             ],
@@ -197,9 +224,9 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
             'update data-type 1' => [
                 'urlParams' => ['id' => '1'],
                 'data' => [
-                    'name' => 'test',
-                    'label' => 'Test',
-                    'cast' => 'testCast'
+                    'name' => 'integer',
+                    'label' => 'Integer',
+                    'cast' => 'integerCast'
                 ],
                 'httpCode' => HttpCode::OK,
             ],

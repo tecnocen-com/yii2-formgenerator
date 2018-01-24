@@ -103,8 +103,8 @@ class FormCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'single record' => [
-                'urlParams' => [
-                    'id' => 1,
+                'url' => '/form/1',
+                'data' => [
                     'expand' => 'sections'
                 ],
                 'httpCode' => HttpCode::OK,

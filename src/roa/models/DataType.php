@@ -24,4 +24,12 @@ class DataType extends \tecnocen\formgenerator\models\DataType
     {
         return ['resourceName' => 'data-type'];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['fields'];
+    }
 }

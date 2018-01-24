@@ -106,7 +106,7 @@ class FieldCest extends \tecnocen\roa\test\AbstractResourceCest
             'single record' => [
                 'url' => '/field/1',
                 'data' => [
-                    'expand' => 'dataType',
+                    'expand' => 'dataType, rules',
                 ],
                 'httpCode' => HttpCode::OK,
             ],

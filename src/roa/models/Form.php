@@ -34,4 +34,12 @@ class Form extends \tecnocen\formgenerator\models\Form
             'sections' => $this->getSelfLink() . '/section',
         ];
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['sections'];
+    }
 }

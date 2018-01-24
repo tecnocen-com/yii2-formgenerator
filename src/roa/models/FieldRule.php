@@ -53,6 +53,6 @@ class FieldRule extends \tecnocen\formgenerator\models\FieldRule
      */
     public function extraFields()
     {
-        return ['properties'];
+        return ['field', 'properties'];
     }
 }
