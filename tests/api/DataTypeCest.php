@@ -228,7 +228,7 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
                     'label' => 'Integer',
                     'cast' => 'integerCast'
                 ],
-                'httpCode' => HttpCode::OK,
+                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
             ],
             'to short' => [
                 'urlParams' => ['id' => '1'],
