@@ -50,7 +50,7 @@ class SolicitudeCest extends \tecnocen\roa\test\AbstractResourceCest
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
-                    'X-Pagination-Total-Count' => 1,
+                    'X-Pagination-Total-Count' => 2,
                 ],
             ],
             'not found form' => [
@@ -66,7 +66,7 @@ class SolicitudeCest extends \tecnocen\roa\test\AbstractResourceCest
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
-                    'X-Pagination-Total-Count' => 1,
+                    'X-Pagination-Total-Count' => 2,
                 ],
             ],
             'rule created_by' => [
