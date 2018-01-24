@@ -1,7 +1,5 @@
 <?php
 
-namespace app\api;
-
 use app\fixtures\OauthAccessTokensFixture;
 use app\fixtures\SolicitudeValueFixture;
 use Codeception\Example;
@@ -12,7 +10,7 @@ use Codeception\Util\HttpCode;
  *
  * @author Carlos (neverabe) Llamosas <carlos@tecnocen.com>
  */
-class FormCest extends \tecnocen\roa\test\AbstractResourceCest
+class SearchValueCest extends \tecnocen\roa\test\AbstractResourceCest
 {
     protected function authToken(ApiTester $I)
     {

@@ -1,7 +1,5 @@
 <?php
 
-namespace app\api\form\solicitude;
-
 use app\fixtures\OauthAccessTokensFixture;
 use app\fixtures\SolicitudeValueFixture;
 use Codeception\Example;
