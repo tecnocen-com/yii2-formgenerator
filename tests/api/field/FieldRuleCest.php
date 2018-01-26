@@ -17,6 +17,9 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
         $I->amBearerAuthenticated(OauthAccessTokensFixture::SIMPLE_TOKEN);
     }
 
+    /**
+     * @depends FieldCest:fixtures
+     */
     public function fixtures(ApiTester $I)
     {
         $I->haveFixtures([
