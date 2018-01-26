@@ -17,12 +17,17 @@ class FieldCest extends \tecnocen\roa\test\AbstractResourceCest
         $I->amBearerAuthenticated(OauthAccessTokensFixture::SIMPLE_TOKEN);
     }
 
+    /**
+     * @depends DataTypeCest:fixtures
+     */ 
     public function fixtures(ApiTester $I)
     {
         $I->haveFixtures([
-            'access_tokens' => OauthAccessTokensFixture::class,
-            'field' => FieldFixture::class,
-        ]);
+            'field' => [
+                'class' => FieldFixture::class,
+                'depends' => [],
+            ],
+	]);
     }
 
     /**

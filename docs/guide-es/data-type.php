@@ -16,12 +16,13 @@ Examples
 - `stringCast`
 - `app\models\DataType:json`
 
-By default he following casts are supported.
+To enable the default supported data types you need to run fixture
+`tecnocen\formgenerator\fixtures\DataTypeFixture` which provides data types
 
-- string
-- integer
-- float
-- boolean
-- uploaded-file
+- String data type with cast as string
+- Integer data type with cast as integer
+- Decimal data type with cast as float
+- Boolean data type with cast as boolean
+- File data type with cast as yii\web\UploadedFile
 
 You can find the full list of data types on the resource `data-type`.

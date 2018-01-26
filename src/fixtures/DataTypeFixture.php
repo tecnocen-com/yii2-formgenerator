@@ -1,6 +1,6 @@
 <?php
 
-namespace app\fixtures;
+namespace tecnocen\formgenerator\fixtures;
 
 use tecnocen\formgenerator\models\DataType;
 

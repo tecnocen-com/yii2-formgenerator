@@ -2,6 +2,7 @@
 
 namespace app\fixtures;
 
+use tecnocen\formgenerator\fixtures\DataTypeFixture;
 use tecnocen\formgenerator\models\Field;
 
 /**
