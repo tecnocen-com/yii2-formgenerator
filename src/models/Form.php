@@ -62,7 +62,7 @@ class Form extends \tecnocen\rmdb\models\Entity
      */
     public function getSections()
     {
-        return $this->hasMany($this->sectionClass, ['section_id' => 'id'])
+        return $this->hasMany($this->sectionClass, ['form_id' => 'id'])
             ->inverseOf('form');
     }
 }
