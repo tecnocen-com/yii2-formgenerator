@@ -32,7 +32,7 @@ class FieldRuleProperty extends \tecnocen\formgenerator\models\FieldRuleProperty
     /**
      * @inheritdoc
      */
-    public function fields()
+    public function extraFields()
     {
         return ['rule'];
     }

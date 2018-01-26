@@ -24,10 +24,13 @@ class PropertyResource extends \tecnocen\roa\controllers\OAuth2Resource
     /**
      * @inheritdoc
      */
+    public $filterParams = ['field_id', 'rule_id'];
+
+    /**
+     * @inheritdoc
+     */
     public function baseQuery()
     {
-        return parent::baseQuery()->andWhere([
-            'rule_id' => Yii::$app->request->getQueryParam('rule_id'),
-        ]);
+        return parent::baseQuery()->innerJoinWith(['rule']);
     }
 }
