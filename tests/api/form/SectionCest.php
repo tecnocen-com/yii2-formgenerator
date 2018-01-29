@@ -1,5 +1,7 @@
 <?php
+namespace form;
 
+use ApiTester;
 use app\fixtures\OauthAccessTokensFixture;
 use app\fixtures\SectionFixture;
 use Codeception\Example;
@@ -17,11 +19,16 @@ class SectionCest extends \tecnocen\roa\test\AbstractResourceCest
         $I->amBearerAuthenticated(OauthAccessTokensFixture::SIMPLE_TOKEN);
     }
 
+    /**
+     * @depends FormCest:fixtures
+     */
     public function fixtures(ApiTester $I)
     {
         $I->haveFixtures([
-            'access_tokens' => OauthAccessTokensFixture::class,
-            'section' => SectionFixture::class,
+            'section' => [
+                'class' => SectionFixture::class,
+                'depends' => [],
+            ],
         ]);
     }
 
@@ -120,7 +127,7 @@ class SectionCest extends \tecnocen\roa\test\AbstractResourceCest
                             ['id' => 1],
                         ],
                     ],
-                ],                
+                ],
             ],
             'not found form and section' => [
                 'urlParams' => [

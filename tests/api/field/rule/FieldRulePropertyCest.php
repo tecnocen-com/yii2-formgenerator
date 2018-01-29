@@ -80,13 +80,6 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
                     'X-Pagination-Total-Count' => 1,
                 ],
             ],
-            'rule field_by' => [
-                'urlParams' => [
-                    'field_id' => 'fi',
-                    'rule_id' => 'ru',
-                ],
-                'httpCode' => HttpCode::NOT_FOUND,
-            ],
         ];
     }
 
@@ -199,7 +192,7 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'update field 1' => [
-                'url' => '/field/3/rule/3/property/max',
+                'url' => '/field/1/rule/3/property/max',
                 'data' => [
                     'value' => 60
                 ],
@@ -228,15 +221,12 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'delete field 1' => [
-                'url' => '/field/3/rule/3/property/max',
+                'url' => '/field/1/rule/3/property/max',
                 'httpCode' => HttpCode::NO_CONTENT,
             ],
             'not found' => [
-                'url' => '/field/3/rule/3/property/max',
+                'url' => '/field/1/rule/3/property/max',
                 'httpCode' => HttpCode::NOT_FOUND,
-                'validationErrors' => [
-                    'property' => 'The record max does not exists.',
-                ],
             ],
         ];
     }

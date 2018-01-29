@@ -17,10 +17,12 @@ class FormCest extends \tecnocen\roa\test\AbstractResourceCest
         $I->amBearerAuthenticated(OauthAccessTokensFixture::SIMPLE_TOKEN);
     }
 
+    /**
+     * @depends DataTypeCest:fixtures
+     */
     public function fixtures(ApiTester $I)
     {
         $I->haveFixtures([
-            'access_tokens' => OauthAccessTokensFixture::class,
             'form' => FormFixture::class,
         ]);
     }
@@ -114,7 +116,7 @@ class FormCest extends \tecnocen\roa\test\AbstractResourceCest
                             ['id' => 1],
                         ],
                     ],
-                ],                
+                ],
             ],
             'not found form record' => [
                 'url' => '/form/8',

@@ -1,5 +1,8 @@
 <?php
 
+namespace section\field;
+
+use ApiTester;
 use app\fixtures\OauthAccessTokensFixture;
 use app\fixtures\SectionFieldFixture;
 use Codeception\Example;
@@ -10,17 +13,19 @@ use Codeception\Util\HttpCode;
  *
  * @author Carlos (neverabe) Llamosas <carlos@tecnocen.com>
  */
-class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
+class SectionFieldCest extends \tecnocen\roa\test\AbstractResourceCest
 {
     protected function authToken(ApiTester $I)
     {
         $I->amBearerAuthenticated(OauthAccessTokensFixture::SIMPLE_TOKEN);
     }
 
+    /**
+     * @depends form\SectionCest:fixtures
+     */
     public function fixtures(ApiTester $I)
     {
         $I->haveFixtures([
-            'access_tokens' => OauthAccessTokensFixture::class,
             'section_field' => SectionFieldFixture::class,
         ]);
     }
@@ -34,7 +39,7 @@ class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
      */
     public function index(ApiTester $I, Example $example)
     {
-        $I->wantTo('Retrieve list of SectionFieldFixture records.');
+        $I->wantTo('Retrieve list of SectionField records.');
         $this->internalIndex($I, $example);
     }
 
@@ -88,7 +93,7 @@ class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
      */
     public function view(ApiTester $I, Example $example)
     {
-        $I->wantTo('Retrieve SectionFieldFixture single record.');
+        $I->wantTo('Retrieve SectionField single record.');
         $this->internalView($I, $example);
     }
 
@@ -103,7 +108,7 @@ class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
                     'form_id' => 1,
                     'section_id' => 1,
                     'id' => 4,
-                    'expand' => 'field, solicitudeValue, solicitudeValuesData, solicitudeValuesDataDetail'
+                    'expand' => 'field,solicitudeValue,solicitudeValuesData,solicitudeValuesDataDetail'
                 ],
                 'httpCode' => HttpCode::OK,
             ],
@@ -135,7 +140,7 @@ class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
      */
     public function create(ApiTester $I, Example $example)
     {
-        $I->wantTo('Create a SectionFieldFixture record.');
+        $I->wantTo('Create a SectionField record.');
         $this->internalCreate($I, $example);
     }
 
@@ -186,7 +191,7 @@ class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
      */
     public function update(ApiTester $I, Example $example)
     {
-        $I->wantTo('Update a SectionFieldFixture record.');
+        $I->wantTo('Update a SectionField record.');
         $this->internalUpdate($I, $example);
     }
 
@@ -215,7 +220,7 @@ class SectionFieldFixtureCest extends \tecnocen\roa\test\AbstractResourceCest
      */
     public function delete(ApiTester $I, Example $example)
     {
-        $I->wantTo('Delete a SectionFieldFixture record.');
+        $I->wantTo('Delete a SectionField record.');
         $this->internalDelete($I, $example);
     }
 
