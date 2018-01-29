@@ -1,5 +1,8 @@
 <?php
 
+namespace field\rule;
+
+use ApiTester;
 use app\fixtures\OauthAccessTokensFixture;
 use app\fixtures\FieldRulePropertyFixture;
 use Codeception\Example;
@@ -17,11 +20,16 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
         $I->amBearerAuthenticated(OauthAccessTokensFixture::SIMPLE_TOKEN);
     }
 
+    /**
+     * @depends field\FieldRuleCest:fixtures
+     */
     public function fixtures(ApiTester $I)
     {
         $I->haveFixtures([
-            'access_tokens' => OauthAccessTokensFixture::class,
-            'field_rule_property' => FieldRulePropertyFixture::class,
+            'field_rule_property' => [
+                'class' =>FieldRulePropertyFixture::class,
+                'depends' => [],
+            ],
         ]);
     }
 
@@ -46,7 +54,7 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
         return [
             'list' => [
                 'urlParams' => [
-                    'field_id' => 3,
+                    'field_id' => 1,
                     'rule_id' => 3
                 ],
                 'httpCode' => HttpCode::OK,
@@ -63,7 +71,7 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
             ],
             'filter by author' => [
                 'urlParams' => [
-                    'field_id' => 3,
+                    'field_id' => 1,
                     'rule_id' => 3,
                     'created_by' => 1,
                 ],
@@ -77,7 +85,7 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
                     'field_id' => 'fi',
                     'rule_id' => 'ru',
                 ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
+                'httpCode' => HttpCode::NOT_FOUND,
             ],
         ];
     }
@@ -240,7 +248,7 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
                 'httpCode' => HttpCode::NOT_FOUND,
                 'validationErrors' => [
                     'property' => 'The record max does not exists.',
-                ],                
+                ],
             ],
         ];
     }

@@ -1,5 +1,8 @@
 <?php
 
+namespace field;
+
+use ApiTester;
 use app\fixtures\OauthAccessTokensFixture;
 use app\fixtures\FieldRuleFixture;
 use Codeception\Example;
