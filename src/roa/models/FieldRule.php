@@ -30,6 +30,9 @@ class FieldRule extends \tecnocen\formgenerator\models\FieldRule
         return [
             'resourceName' => 'rule',
             'parentSlugRelation' => 'field',
+            'checkAccess' => function ($params) {
+                if (isset($params{}))
+            }
         ];
     }
 

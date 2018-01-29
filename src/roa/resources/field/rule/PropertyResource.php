@@ -2,11 +2,11 @@
 
 namespace tecnocen\formgenerator\roa\resources\field\rule;
 
-use Yii;
 use tecnocen\formgenerator\roa\models\FieldRuleProperty;
+use Yii;
 
 /**
- * CRUD resource for `FieldRuleProperty` records 
+ * CRUD resource for `FieldRuleProperty` records
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
 class PropertyResource extends \tecnocen\roa\controllers\OAuth2Resource
@@ -15,7 +15,7 @@ class PropertyResource extends \tecnocen\roa\controllers\OAuth2Resource
      * @inheritdoc
      */
     public $idAttribute = 'property';
-    
+
     /**
      * @inheritdoc
      */

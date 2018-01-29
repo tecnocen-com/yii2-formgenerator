@@ -3,6 +3,7 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use yii\web\Linkable;
+use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling FieldRule records.
