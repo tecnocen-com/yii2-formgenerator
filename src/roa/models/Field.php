@@ -35,15 +35,16 @@ class Field extends \tecnocen\formgenerator\models\Field
      */
     public function getLinks()
     {
-      $selfLink = $this->getSelfLink();
-      return $this->getSlugLinks() + [
-          'rules' => $selfLink . '/rule',
-          'dataType' => $this->dataType->getSelfLink(),
-          'curies' => [
-              'expand' => Url::to($selfLink, ['expand' => '{rel}']),
-          ],
-          'expand:properties' => 'properties',
-      ];
+        $selfLink = $this->getSelfLink();
+
+        return $this->getSlugLinks() + [
+            'rules' => $selfLink . '/rule',
+            'dataType' => $this->dataType->getSelfLink(),
+            'curies' => [
+                'expand' => Url::to($selfLink, ['expand' => '{rel}']),
+            ],
+            'expand:properties' => 'properties',
+        ];
     }
 
     /**

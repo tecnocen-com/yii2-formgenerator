@@ -3,6 +3,7 @@
 namespace tecnocen\formgenerator\roa\resources\field\rule;
 
 use tecnocen\formgenerator\roa\models\FieldRuleProperty;
+use tecnocen\formgenerator\roa\models\FieldRulePropertySearch;
 use Yii;
 
 /**
@@ -20,6 +21,11 @@ class PropertyResource extends \tecnocen\roa\controllers\OAuth2Resource
      * @inheritdoc
      */
     public $modelClass = FieldRuleProperty::class;
+
+    /**
+     * @inheritdoc
+     */
+    public $searchClass = FieldRulePropertySearch::class;
 
     /**
      * @inheritdoc
