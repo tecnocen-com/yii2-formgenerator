@@ -31,7 +31,13 @@ class FieldRule extends \tecnocen\formgenerator\models\FieldRule
             'resourceName' => 'rule',
             'parentSlugRelation' => 'field',
             'checkAccess' => function ($params) {
-                if (isset($params{}))
+                if (isset($params['field_id'])
+                    && $params['field_id'] != $this->field_id
+                ) {
+                    throw new NotFoundHttpException(
+                        'Rule not associated to the field.'
+                    );
+                }
             }
         ];
     }
