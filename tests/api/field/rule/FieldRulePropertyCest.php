@@ -110,27 +110,15 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'single record' => [
-                'urlParams' => [
-                    'field_id' => 3,
-                    'rule_id' => 3
-                ],
-                'data' => [
-                    'expand' => 'rule',
-                ],
+                'url' => '/field/1/rule/3/property/min?expand=rule',
                 'httpCode' => HttpCode::OK,
             ],
             'not found field record' => [
-                'urlParams' => [
-                    'field_id' => 500,
-                    'rule_id' => 3
-                ],
+                'url' => '/field/250/rule/3/property/min?expand=rule',
                 'httpCode' => HttpCode::NOT_FOUND,
             ],
             'not found rule record' => [
-                'urlParams' => [
-                    'field_id' => 1,
-                    'rule_id' => 500
-                ],
+                'url' => '/field/1/rule/3/property/asdf?expand=rule',
                 'httpCode' => HttpCode::NOT_FOUND,
             ],
         ];
@@ -157,16 +145,16 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
         return [
             'create field 1' => [
                 'urlParams' => [
-                    'field_id' => 3,
+                    'field_id' => 1,
                     'rule_id' => 3,
                     'property' => 'max',
-                    'value' => 50
+                    'value' => 50,
                 ],
                 'httpCode' => HttpCode::CREATED,
             ],
             'unique and invalid id' => [
                 'urlParams' => [
-                    'field_id' => 3,
+                    'field_id' => 1,
                     'rule_id' => 3,
                     'property' => 'max',
                     'value' => 50
@@ -178,7 +166,7 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
             ],
             'not blank' => [
                 'urlParams' => [
-                    'field_id' => 3,
+                    'field_id' => 1,
                     'rule_id' => 3,
                     'property' => '',
                     'value' => 50
