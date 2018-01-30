@@ -157,34 +157,17 @@ class SectionField extends \tecnocen\rmdb\models\Entity
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSolicitudeValuesData()
+    public function getSolicitudeValuesDetail()
     {
         return Yii::configure(
                 $this->getSolicitudeValues(),
                 ['multiple' => false]
             )
             ->select([
-                'amount' => 'count(value)',
-                'amountDistinct' => 'count(distinct value)',
+                'count' => 'count(value)',
+                'countDistinct' => 'count(distinct value)',
             ])
             ->groupBy(['section_id', 'field_id'])
-            ->inverseOf(null)
-            ->asArray();
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSolicitudeValuesDataDetail()
-    {
-        return $this->getSolicitudeValues()
-            ->select([
-                'field_id',
-                'section_id',
-                'value',
-                'amount' => 'count(value)',
-            ])
-            ->groupBy(['field_id', 'section_id', 'value'])
             ->inverseOf(null)
             ->asArray();
     }
