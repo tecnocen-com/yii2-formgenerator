@@ -41,6 +41,7 @@ class SectionFieldSearch extends SectionField
         if (!$this->validate()) {
             return null;
         }
+        $this->checkAccess($params);
         $class = get_parent_class();
         return new ActiveDataProvider([
             'query' => $class::find()->andFilterWhere([
