@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 /**
  * ROA collection for SolicitudeValue records.
  */
-class SolicitudeValueSearch extends SolicitudeValue
+class SolicitudeValueSimpleSearch extends SolicitudeValue
     implements \tecnocen\roa\ResourceSearch
 {
     /**
@@ -18,9 +18,17 @@ class SolicitudeValueSearch extends SolicitudeValue
     {
         return [
             'idAttribute' => [],
-            'parentSlugRelation' => 'solicitude',
-            'resourceName' => 'value',
+            'parentSlugRelation' => null,
+            'resourceName' => 'solicitude-value',
         ];
+    }
+
+    /**
+     * @inhertidoc
+     */
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['form_id']);
     }
 
     /**
@@ -29,8 +37,7 @@ class SolicitudeValueSearch extends SolicitudeValue
     public function rules()
     {
         return [
-            [['solicitude_id'], 'required'],
-            [['solicitude_id', 'section_id', 'field_id'], 'integer'],
+            [['form_id', 'solicitude_id', 'section_id', 'field_id'], 'integer'],
             [['value'], 'safe'],
         ];
     }
@@ -49,6 +56,7 @@ class SolicitudeValueSearch extends SolicitudeValue
         return new ActiveDataProvider([
             'query' => $class::find()->innerJoinWith(['solicitude'])
                 ->andFilterWhere([
+                    'form_id' => $this->form_id,
                     'solicitude_id' => $this->solicitude_id,
                     'section_id' => $this->section_id,
                     'field_id' => $this->field_id,

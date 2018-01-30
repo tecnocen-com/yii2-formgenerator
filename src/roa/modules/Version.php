@@ -67,7 +67,7 @@ class Version extends \tecnocen\roa\modules\ApiVersion
             ],
         ],
         self::SOLICITUDE_VALUE_SEARCH_ROUTE => [
-            'class' => resources\form\solicitude\ValueResource::class,
+            'class' => resources\SolicitudeValueResource::class,
             'urlRule' => [
                 'tokens' => [
                 ],
