@@ -18,8 +18,8 @@ class SolicitudeValueSearch extends SolicitudeValue
     {
         return [
             'idAttribute' => [],
-            'parentSlugRelation' => null,
-            'resourceName' => 'solicitude-value',
+            'parentSlugRelation' => 'solicitude',
+            'resourceName' => 'value',
         ];
     }
 
@@ -37,6 +37,7 @@ class SolicitudeValueSearch extends SolicitudeValue
     public function rules()
     {
         return [
+            [['form_id', 'solicitude_id'], 'required'],
             [['form_id', 'solicitude_id', 'section_id', 'field_id'], 'integer'],
             [['value'], 'safe'],
         ];
@@ -51,6 +52,7 @@ class SolicitudeValueSearch extends SolicitudeValue
         if (!$this->validate()) {
             return null;
         }
+        $this->checkAccess($params);
         $class = get_parent_class();
         return new ActiveDataProvider([
             'query' => $class::find()->innerJoinWith(['solicitude'])
