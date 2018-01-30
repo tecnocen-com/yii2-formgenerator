@@ -160,7 +160,7 @@ class SectionFieldCest extends \tecnocen\roa\test\AbstractResourceCest
                     'section_id' => 2,
                     'field_id' => 1
                 ],
-                'httpCode' => HttpCode::OK,
+                'httpCode' => HttpCode::CREATED,
             ],
             'invalid form id' => [
                 'urlParams' => [
