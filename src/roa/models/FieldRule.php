@@ -4,7 +4,6 @@ namespace tecnocen\formgenerator\roa\models;
 
 use yii\helpers\Url;
 use yii\web\Linkable;
-use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling FieldRule records.
@@ -31,15 +30,6 @@ class FieldRule extends \tecnocen\formgenerator\models\FieldRule
         return [
             'resourceName' => 'rule',
             'parentSlugRelation' => 'field',
-            'checkAccess' => function ($params) {
-                if (isset($params['field_id'])
-                    && $params['field_id'] != $this->field_id
-                ) {
-                    throw new NotFoundHttpException(
-                        'Rule not associated to the field.'
-                    );
-                }
-            }
         ];
     }
 

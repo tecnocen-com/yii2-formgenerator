@@ -4,6 +4,7 @@ namespace tecnocen\formgenerator\roa\models;
 
 use yii\helpers\Url;
 use yii\web\Linkable;
+use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling Field records.
@@ -27,7 +28,18 @@ class Field extends \tecnocen\formgenerator\models\Field
      */
     protected function slugConfig()
     {
-        return ['resourceName' => 'field'];
+        return [
+            'resourceName' => 'field',
+            'checkAccess' => function ($params) {
+                if (isset($params['field_id'])
+                    && $params['field_id'] != $this->id
+                ) {
+                    throw new NotFoundHttpException(
+                        'Field doesnt contain the requested route.'
+                    );
+                }
+            }
+        ];
     }
 
     /**
