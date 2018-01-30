@@ -78,7 +78,11 @@ class SectionFieldCest extends \tecnocen\roa\test\AbstractResourceCest
                 ],
             ],
             'rule form_id' => [
-                'url' => 'form/fi/section/1/field',
+                'urlParams' => [
+                    'form_id' => 1,
+                    'section_id' => 1,
+                    'created_by' => 'foo',
+                ],
                 'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
             ],
         ];
@@ -108,7 +112,7 @@ class SectionFieldCest extends \tecnocen\roa\test\AbstractResourceCest
                     'form_id' => 1,
                     'section_id' => 1,
                     'id' => 4,
-                    'expand' => 'field,solicitudeValue,solicitudeValuesData,solicitudeValuesDataDetail'
+                    'expand' => 'field,solicitudeValuesDetail'
                 ],
                 'httpCode' => HttpCode::OK,
             ],
@@ -152,15 +156,23 @@ class SectionFieldCest extends \tecnocen\roa\test\AbstractResourceCest
         return [
             'create field 1' => [
                 'urlParams' => [
+                    'form_id' => 1,
+                    'section_id' => 2,
+                    'field_id' => 1
+                ],
+                'httpCode' => HttpCode::OK,
+            ],
+            'create field 1' => [
+                'urlParams' => [
                     'form_id' => 2,
                     'section_id' => 2,
                     'field_id' => 1
                 ],
-                'httpCode' => HttpCode::CREATED,
+                'httpCode' => HttpCode::NOT_FOUND,
             ],
             'already associated field' => [
                 'urlParams' => [
-                    'form_id' => 2,
+                    'form_id' => 1,
                     'section_id' => 1,
                     'field_id' => 4
                 ],
@@ -171,7 +183,7 @@ class SectionFieldCest extends \tecnocen\roa\test\AbstractResourceCest
             ],
             'not blank' => [
                 'urlParams' => [
-                    'form_id' => 2,
+                    'form_id' => 1,
                     'section_id' => 1
                 ],
                 'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
