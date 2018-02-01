@@ -89,9 +89,11 @@ class SolicitudeSearch extends Solicitude implements \tecnocen\roa\ResourceSearc
                 SolicitudeValue::find()->andWhere([
                     'and',
                     'solicitude_id = id',
+                    ['field_id' => $field_id],
                     [
-                        'field_id' => $field_id,
-                        'value' => $value,
+                        'like',
+                        'value',
+                        $value,
                     ],
                 ])
             ]);

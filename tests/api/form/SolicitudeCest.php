@@ -69,6 +69,16 @@ class SolicitudeCest extends \tecnocen\roa\test\AbstractResourceCest
                     'X-Pagination-Total-Count' => 2,
                 ],
             ],
+            'filter by values' => [
+                'urlParams' => [
+                    'form_id' => 1,
+                    'value' => [1 => 'Manuel'],
+                ],
+                'httpCode' => HttpCode::OK,
+                'headers' => [
+                    'X-Pagination-Total-Count' => 1,
+                ],
+            ],
             'rule created_by' => [
                 'urlParams' => [
                     'form_id' => 1,
@@ -103,7 +113,7 @@ class SolicitudeCest extends \tecnocen\roa\test\AbstractResourceCest
                 'data' => [
                     'expand' => 'form, values',
                 ],
-                'httpCode' => HttpCode::OK,              
+                'httpCode' => HttpCode::OK,
             ],
             'not found form and solicitude' => [
                 'urlParams' => [
