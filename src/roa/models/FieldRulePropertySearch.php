@@ -2,6 +2,7 @@
 
 namespace tecnocen\formgenerator\roa\models;
 
+use tecnocen\roa\ResourceSearch;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
@@ -9,8 +10,8 @@ use yii\web\NotFoundHttpException;
  * Contract to filter and sort collections of `Form` records.
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
-class FieldRulePropertySearch extends FieldRuleProperty
-    implements \tecnocen\roa\ResourceSearch
+class FieldRulePropertySearch extends FieldRuleProperty implements
+    ResourceSearch
 {
     /**
      * @inhertidoc

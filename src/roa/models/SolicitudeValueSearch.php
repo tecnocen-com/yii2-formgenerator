@@ -2,14 +2,14 @@
 
 namespace tecnocen\formgenerator\roa\models;
 
+use tecnocen\roa\ResourceSearch;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
  * ROA collection for SolicitudeValue records.
  */
-class SolicitudeValueSearch extends SolicitudeValue
-    implements \tecnocen\roa\ResourceSearch
+class SolicitudeValueSearch extends SolicitudeValue implements ResourceSearch
 {
     /**
      * @inhertidoc

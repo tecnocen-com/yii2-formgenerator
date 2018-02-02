@@ -2,13 +2,14 @@
 
 namespace tecnocen\formgenerator\roa\models;
 
+use tecnocen\roa\ResourceSearch;
 use yii\data\ActiveDataProvider;
 
 /**
  * Contract to filter and sort collections of `DataType` records.
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
-class DataTypeSearch extends DataType implements \tecnocen\roa\ResourceSearch
+class DataTypeSearch extends DataType implements ResourceSearch
 {
     /**
      * @inhertidoc

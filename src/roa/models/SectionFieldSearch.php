@@ -2,10 +2,10 @@
 
 namespace tecnocen\formgenerator\roa\models;
 
+use tecnocen\roa\ResourceSearch;
 use yii\data\ActiveDataProvider;
 
-class SectionFieldSearch extends SectionField
-    implements \tecnocen\roa\ResourceSearch
+class SectionFieldSearch extends SectionField implements ResourceSearch
 {
     /**
      * @inhertidoc

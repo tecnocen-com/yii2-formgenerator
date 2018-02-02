@@ -8,8 +8,8 @@ use yii\data\ActiveDataProvider;
 /**
  * ROA collection for SolicitudeValue records.
  */
-class SolicitudeValueSimpleSearch extends SolicitudeValue
-    implements \tecnocen\roa\ResourceSearch
+class SolicitudeValueSimpleSearch extends SolicitudeValue implements
+    \tecnocen\roa\ResourceSearch
 {
     /**
      * @inhertidoc

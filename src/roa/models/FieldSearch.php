@@ -2,13 +2,14 @@
 
 namespace tecnocen\formgenerator\roa\models;
 
+use tecnocen\roa\ResourceSearch;
 use yii\data\ActiveDataProvider;
 
 /**
  * Contract to filter and sort collections of `Field` records.
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
-class FieldSearch extends Field implements \tecnocen\roa\ResourceSearch
+class FieldSearch extends Field implements ResourceSearch
 {
     /**
      * @inhertidoc

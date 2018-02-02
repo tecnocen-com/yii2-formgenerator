@@ -2,15 +2,17 @@
 
 namespace tecnocen\formgenerator\roa\models;
 
+use tecnocen\formgenerator\models as base;
 use yii\helpers\Url;
 use yii\web\Linkable;
 use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling Field records.
+ *
+ * @method void checkAccess(array $params)
  */
-class Field extends \tecnocen\formgenerator\models\Field
-    implements Linkable
+class Field extends base\Field implements Linkable
 {
     use SlugTrait;
 

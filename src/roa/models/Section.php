@@ -2,13 +2,15 @@
 
 namespace tecnocen\formgenerator\roa\models;
 
+use tecnocen\formgenerator\models as base;
 use yii\web\Linkable;
 
 /**
  * ROA contract handling form Section records.
+ *
+ * @method void checkAccess(array $params)
  */
-class Section extends \tecnocen\formgenerator\models\Section
-    implements Linkable
+class Section extends base\Section implements Linkable
 {
     use SlugTrait;
 
