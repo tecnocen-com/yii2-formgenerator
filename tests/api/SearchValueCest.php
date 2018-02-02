@@ -53,6 +53,12 @@ class SearchValueCest extends \tecnocen\roa\test\AbstractResourceCest
                     'X-Pagination-Total-Count' => 2,
                 ],
             ],
+            'invalid search' => [
+                'urlParams' => [
+                    'form_id' => 'foo',
+                ],
+                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
+            ],
         ];
     }
 
