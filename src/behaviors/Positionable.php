@@ -4,7 +4,6 @@ namespace tecnocen\formgenerator\behaviors;
 
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
-use yii\db\ActiveRecordInterface;
 use yii\db\Expression as DbExpression;
 use yii\validators\Validator;
 
@@ -12,7 +11,7 @@ use yii\validators\Validator;
  * Handles position for a record and its siblings determined by a common
  * `$parentAttribute`.
  *
- * @property ActiveRecordInterface $owner
+ * @property ActiveRecord $owner
  */
 class Positionable extends \yii\base\Behavior
 {
@@ -51,11 +50,9 @@ class Positionable extends \yii\base\Behavior
                 static::class . '::$parentAttribute must be set.'
             );
         }
-        if (!$owner instanceof ActiveRecordInterface) {
+        if (!$owner instanceof ActiveRecord) {
             throw new InvalidConfigException(
-                static::class
-                . '::$owner must implement'
-                .  ActiveRecordInterface::class
+                static::class . '::$owner must extend ' .  ActiveRecord::class
             );
         }
         if (!$owner->hasAttribute($this->parentAttribute)) {
