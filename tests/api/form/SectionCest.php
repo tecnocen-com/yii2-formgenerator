@@ -54,6 +54,7 @@ class SectionCest extends \tecnocen\roa\test\AbstractResourceCest
             'list' => [
                 'urlParams' => [
                     'form_id' => 1,
+                    'expand' => 'form',
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
