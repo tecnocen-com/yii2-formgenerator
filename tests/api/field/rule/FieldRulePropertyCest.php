@@ -55,7 +55,7 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
             'list' => [
                 'urlParams' => [
                     'field_id' => 1,
-                    'rule_id' => 3
+                    'rule_id' => 3,
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
@@ -65,7 +65,14 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
             'not found field' => [
                 'urlParams' => [
                     'field_id' => 250,
-                    'rule_id' => 3
+                    'rule_id' => 3,
+                ],
+                'httpCode' => HttpCode::NOT_FOUND,
+            ],
+            'not found rule' => [
+                'urlParams' => [
+                    'field_id' => 1,
+                    'rule_id' => 250,
                 ],
                 'httpCode' => HttpCode::NOT_FOUND,
             ],
@@ -79,6 +86,14 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
                 'headers' => [
                     'X-Pagination-Total-Count' => 1,
                 ],
+            ],
+            'invalid author' => [
+                'urlParams' => [
+                    'field_id' => 1,
+                    'rule_id' => 3,
+                    'created_by' => 'foo',
+                ],
+                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
             ],
         ];
     }

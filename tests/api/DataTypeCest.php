@@ -103,8 +103,8 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'single record' => [
-                'url' => '/data-type/1',
-                'data' => [
+                'urlParams' => [
+                    'id' => 1,
                     'expand' => 'fields'
                 ],
                 'httpCode' => HttpCode::OK,
