@@ -49,6 +49,7 @@ class FieldRulePropertySearch extends FieldRuleProperty implements
         }
         $this->rule->checkAccess($params);
         $class = get_parent_class();
+
         return new ActiveDataProvider([
             'query' => $class::find()->andFilterWhere([
                     'rule_id' => $this->rule_id,
