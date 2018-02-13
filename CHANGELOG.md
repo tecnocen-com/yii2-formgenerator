@@ -1,7 +1,12 @@
 Yii2 Form Generator Change Log
 ==========================
 
-0.2.0 under development
+0.3.0 under development
+------------------------
+
+- Enh: Use Cases to use Yii2 Formgenerator
+
+0.2.0 February 3, 2018
 ------------------------
 
 - Enh: #12 Add tests
