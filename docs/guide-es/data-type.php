@@ -1,28 +1,30 @@
-Data Type
+Data Type (Tipo de Dato)
 =========
 
-Each field has a data type which helps casting values and organize them
-depending on how they are stored internally on the database.
+Cada campo tiene un tipo de dato que ayuda a convertir los valores y
+organizarlos en como deben ser almacenados internamente en la base de datos.
 
-Each record of data type contain a unique `name` and a valid `cast`.
+Cada registro de 'tipo de dato' contiene un name unico y un cast valido
 
-The cast must be the name of an static method on the class
-`tecnocen\formgenerator\models\DataType` or a signature of the type
-`full\class\Name:method` where `full\class\Name` is a namespaced autoloadable
-class and `method` is the name of an static method on the previous class.
+El cast debe de ser el nombre de un metodo estatico de la clase
+`tecnocen\formgenerator\models\DataType` o una firma del tipo
+`ruta\completa\Clase:metodo` donde `ruta\completa\Clase` es una clase auto
+cargable incluyendo namespace y `metodo` es el nombre de un metodo estatico y
+publico en la clase anterior.
 
-Examples
+Ejemplos
 
 - `stringCast`
 - `app\models\DataType:json`
 
-To enable the default supported data types you need to run fixture
-`tecnocen\formgenerator\fixtures\DataTypeFixture` which provides data types
+Para habilitar los tipos de datos soportados por defectos necesitas correr el
+fixture `tecnocen\formgenerator\fixtures\DataTypeFixture` que proporciona Ejemplos
+tipos de datos.
 
-- String data type with cast as string
-- Integer data type with cast as integer
-- Decimal data type with cast as float
-- Boolean data type with cast as boolean
-- File data type with cast as yii\web\UploadedFile
+- String tipo de dato con cast como string
+- Integer tipo de dato con cast como integer
+- Decimal tipo de dato con cast como float
+- Boolean tipo de dato con cast como boolean
+- File tipo de dato con cast como yii\web\UploadedFile
 
-You can find the full list of data types on the resource `data-type`.
+Puedes encontrar la lista completa de tipos de datos en el recurso `data-type`.
