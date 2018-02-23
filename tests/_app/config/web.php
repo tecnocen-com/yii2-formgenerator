@@ -5,10 +5,19 @@ return yii\helpers\ArrayHelper::merge(
     [
         'id' => 'yii2-formgenerator-demo',
         'bootstrap' => ['debug'],
+        'aliases' => [
+            '@vendor' => VENDOR_DIR,
+            '@bower' => VENDOR_DIR . '/bower-asset',
+        ],
         'modules' => [
             'debug' => [
                 'class' => yii\debug\Module::class,
             ],
         ],
+        'components' => [
+            'assetManager' => [
+               'basePath' => dirname(__DIR__) . '/assets',
+           ],
+        ]
     ]
 );
