@@ -2,20 +2,17 @@
 
 namespace tecnocen\formgenerator\models;
 
-use yii\web\UploadedFile;
-
 /**
- * Model class for table `{{%formgenerator_form}}`
+ * Model class for table `{{%formgenerator_data_type}}`
  *
- * @property integer $id
  * @property string $name
- * @property string $label
- * @property string $cast
+ * @property string $class
  *
  * @property Field[] $fields
  */
 class DataType extends \tecnocen\rmdb\models\Entity
 {
+    protected $strategy;
     /**
      * @var string full class name of the model used in the relation
      * `getFields()`.
@@ -33,90 +30,50 @@ class DataType extends \tecnocen\rmdb\models\Entity
     /**
      * @inheritdoc
      */
-    protected function attributeTypecast()
+    public function rules()
     {
-        return parent::attributeTypecast() + ['id' => 'integer'];
+        return [
+            [['name', 'class'], 'required'],
+            [['name', 'class'], 'string', 'min' => 4],
+            [['name'], 'unique'],
+            [['class'], 'verifyClass'],
+        ];
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function afterFind()
     {
-        return [
-            [['name', 'label', 'cast'], 'required'],
-            [['name', 'label', 'cast',], 'string', 'min' => 4],
-            [['name'], 'unique'],
-            [['cast'], 'verifyCast'],
-        ];
+        parent::afterFind();
+        $this->ensureStrategy();
     }
 
-    /**
-     * @return Callable
-     */
-    protected function getCastCallable()
+    protected function ensureStrategy()
     {
-         $values = explode(':', $this->cast, 2);
-         return isset($values[1])
-             ? [$values[0], $values[1]]
-             : [static::class, $values[0]];
-    }
-
-    /**
-     * Cast the value of an attribute in a model.
-     *
-     * @param SolicitudeValue $model
-     * @param string $attribute
-     */
-    public function castValue(SolicitudeValue $model, $attribute)
-    {
-         $callable = $this->getCastCallable();
-         $model->$attribute = $callable($model->$attribute, $attribute);
-    }
-
-    /**
-     * Verify that the cast saved is callable.
-     *
-     * @param string $attribute
-     */
-    public function verifyCast($attribute)
-    {
-         if (!is_callable($this->getCastCallable())) {
-             $this->addError(
-                 $attribute,
-                 '`cast` must be an statically callable method.'
-             );
-         }
-    }
-
-    public static function booleanCast($value, $attribute)
-    {
-        return (bool)$value;
-    }
-
-    public static function integerCast($value, $attribute)
-    {
-        return (int)$value;
-    }
-
-    public static function stringCast($value, $attribute)
-    {
-        return (string)$value;
-    }
-
-    public static function floatCast($value, $attribute)
-    {
-        return (float)$value;
-    }
-
-    public static function fileCast($value, $attribute)
-    {
-        if (null !== ($uploadedFile = UploadedFile::getInstanceByName(
-            $attribute
-        ))) {
-            return $uploadedFile;
+        $strategyClass = $this->class;
+        $this->strategy = new $strategyClass();
+        if (!$this->strategy instanceof DataTypeInterface) {
+            throw new InvalidParamException(
+                static::class . "::\$class '{$strategyClass}' must implement "
+                    . DataTypeInterface::class
+            );
         }
-        return $value;
+    }
+
+    public function loadFieldValue(Model $model, $params, $formName)
+    {
+        return $this->strategy->load($model, $params, $formName);
+    }
+
+    public function storeFieldValue(Model $model, $raw)
+    {
+        return $this->strategy->store($model, $raw);
+    }
+
+    public function readFieldValue($raw)
+    {
+        return $this->strategy->read($raw);
     }
 
     /**
@@ -125,10 +82,8 @@ class DataType extends \tecnocen\rmdb\models\Entity
     public function attributeLabels()
     {
         return array_merge([
-            'id' => 'ID',
             'name' => 'Data Type name',
-            'label' => 'Label',
-            'cast' => 'Type Cast Method',
+            'class' => 'Data Type PHP Class',
         ], parent::attributeLabels());
     }
 
@@ -137,7 +92,7 @@ class DataType extends \tecnocen\rmdb\models\Entity
      */
     public function getFields()
     {
-        return $this->hasMany($this->fieldClass, ['data_type_id' => 'id'])
+        return $this->hasMany($this->fieldClass, ['data_type' => 'name'])
             ->inverseOf('dataType');
     }
 }

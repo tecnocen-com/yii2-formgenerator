@@ -20,7 +20,7 @@ class User extends \yii\db\ActiveRecord
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id]);
+        return static::findOne(['id' => $ids]);
     }
 
     /**

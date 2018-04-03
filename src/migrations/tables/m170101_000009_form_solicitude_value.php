@@ -19,7 +19,7 @@ class m170101_000009_form_solicitude_value extends tecnocen\rmdb\migrations\Crea
             'solicitude_id' => $this->normalKey(),
             'section_id' => $this->normalKey(),
             'field_id' => $this->normalKey(),
-            'value' => $this->string(128),
+            'raw' => $this->string(128),
         ];
     }
 

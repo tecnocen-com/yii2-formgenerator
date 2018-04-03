@@ -118,34 +118,40 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
                 },
                 'message' => 'Field already filled.',
             ],
-            [['value'], 'trim'],
+            [['raw'], 'trim'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function afterValidate()
+    public function getValue()
     {
-        if (!$this->hasErrors()) {
-            $field = $this->getField()
-                ->with([
-                    'dataType',
-                    'rules' => function ($query) {
-                        $query->modelClass = 'tecnocen\\formgenerator\\models\\FieldRule';
-                    },
-                    'rules.properties',
-                ])
-                ->one();
-            $this->populateRelation('field', $field);
-            foreach ($field->buildValidators($this, 'value')
-                as $validator
-            ) {
-                $validator->validateAttributes($this, ['value']);
-            }
-            $field->dataType->castValue($this, 'value');
+        if (null === $this->value) {
+            // memento
+            $this->value = $this->field->dataType->readFieldValue($this->raw);
         }
-        parent::afterValidate();
+
+        return $this->value;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave()
+    {
+        parent::beforeSave();
+        $this->raw = $this->field->dataType->storeFieldValue($this, $this->raw);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function load($params, $formName)
+    {
+        parent::load($params, $formName);
+        $this->raw = $this->field->dataType
+            ->loadFieldValue($model, $params, $formName);
     }
 
     /**
