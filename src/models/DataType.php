@@ -2,6 +2,9 @@
 
 namespace tecnocen\formgenerator\models;
 
+use tecnocen\formgenerator\dataTypes\DataTypeInterface;
+use yii\base\InvalidConfigException;
+
 /**
  * Model class for table `{{%formgenerator_data_type}}`
  *
@@ -10,7 +13,7 @@ namespace tecnocen\formgenerator\models;
  *
  * @property Field[] $fields
  */
-class DataType extends \tecnocen\rmdb\models\Entity
+class DataType extends \tecnocen\rmdb\models\Pivot
 {
     protected $strategy;
     /**
@@ -54,7 +57,7 @@ class DataType extends \tecnocen\rmdb\models\Entity
         $strategyClass = $this->class;
         $this->strategy = new $strategyClass();
         if (!$this->strategy instanceof DataTypeInterface) {
-            throw new InvalidParamException(
+            throw new InvalidConfigException(
                 static::class . "::\$class '{$strategyClass}' must implement "
                     . DataTypeInterface::class
             );

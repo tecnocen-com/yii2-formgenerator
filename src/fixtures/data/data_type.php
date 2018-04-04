@@ -1,5 +1,7 @@
 <?php
 
+use tecnocen\formgenerator\dataTypes;
+
 $now = new yii\db\Expression('now()');
 
 

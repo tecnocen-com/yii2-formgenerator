@@ -30,7 +30,7 @@ class FileDataType implements DataTypeInterface
         $name = $this->getName($value);
         $value->saveAs(Yii::getAlias($this->filePath . '/' . $name));
 
-        return $name
+        return $name;
     }
 
     public function read($raw)

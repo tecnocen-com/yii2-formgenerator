@@ -45,4 +45,3 @@ class m170101_000010_data_type_translation extends tecnocen\rmdb\migrations\Crea
         return ['data_type', 'lang'];
     }
 }
-T

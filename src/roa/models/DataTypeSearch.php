@@ -28,7 +28,7 @@ class DataTypeSearch extends DataType implements ResourceSearch
     public function rules()
     {
         return [
-            [['name', 'label'], 'string'],
+            [['name'], 'string'],
             [['created_by'], 'integer'],
         ];
     }
@@ -47,8 +47,7 @@ class DataTypeSearch extends DataType implements ResourceSearch
             'query' => $class::find()->andFilterWhere([
                     'created_by' => $this->created_by,
                 ])
-                ->andFilterWhere(['like', 'name', $this->name])
-                ->andFilterWhere(['like', 'label', $this->label]),
+                ->andFilterWhere(['like', 'name', $this->name]),
         ]);
     }
 }

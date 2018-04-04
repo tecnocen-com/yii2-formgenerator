@@ -2,7 +2,7 @@
 
 namespace tecnocen\formgenerator\dataTypes;
 
-use yii\base\Model;
+use tecnocen\formgenerator\models\SolicitudeValue;
 use yii\helpers\ArrayHelper;
 
 class BooleanDataType implements DataTypeInterface
@@ -11,20 +11,31 @@ class BooleanDataType implements DataTypeInterface
     {
     }
 
-    public function load(Model $model, $data, $formName = null)
+    public function load(SolicitudeValue $model, $data, $formName = null)
     {
-        if ('' === $formName) {
-            return ArrayHelper::getValue($data, 'raw');
+        $scope = $formName === null ? $model->formName() : $formName;
+        if (empty($data)) {
+            return false;
         }
-        if ($formName === null) {
-            $formName = $model->formName();
+
+        if ($scope === '') {
+            if (isset($data['raw'])) {
+                $model->raw = $data['raw'];
+                return true;
+            }
+
+            return false;
+        } elseif (isset($data[$scope]['raw'])) {
+            $model->raw = $data[$scope]['raw'];
+            return true;
         }
-        return ArrayHelper::getValue($data, $formName . '.raw');
+
+        return false;
     }
 
     public function store(Model $model, $value)
     {
-        if (null === $raw) {
+        if (null === $raw || '' === $raw) {
             return null;
         }
 

@@ -30,7 +30,7 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.0",
         "tecnocen/yii2-roa": "~0.2.3",
         "tecnocen/yii2-rmdb": "*",
         "yiisoft/yii2": "~2.0.10"

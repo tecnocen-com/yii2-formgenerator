@@ -138,10 +138,14 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
     /**
      * @inheritdoc
      */
-    public function beforeSave()
+    public function beforeSave($insert)
     {
-        parent::beforeSave();
-        $this->raw = $this->field->dataType->storeFieldValue($this, $this->raw);
+        if (parent::beforeSave($insert)) {
+            $this->raw = $this->field->dataType->storeFieldValue($this, $this->raw);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -150,7 +154,7 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
     public function load($params, $formName)
     {
         parent::load($params, $formName);
-        $this->raw = $this->field->dataType
+        $this->field->dataType
             ->loadFieldValue($model, $params, $formName);
     }
 
