@@ -1,17 +1,17 @@
 <?php
 
-namespace tecnocen\formgenerator\dataTypes;
+namespace tecnocen\formgenerator\dataStrategies;
 
-use yii\base\Model;
+use tecnocen\formgenerator\models\SolicitudeValue;
 use yii\helpers\ArrayHelper;
 
-class DecimalDataType implements DataTypeInterface
+class IntegerDataStrategy implements DataStrategy
 {
     public function __construct()
     {
     }
 
-    public function load(Model $model, $data, $formName = null)
+    public function load(SolicitudeValue $model, $data, $formName = null)
     {
         if ('' === $formName) {
             return ArrayHelper::getValue($data, 'raw');
@@ -22,13 +22,13 @@ class DecimalDataType implements DataTypeInterface
         return ArrayHelper::getValue($data, $formName . '.raw');
     }
 
-    public function store(Model $model, $value)
+    public function store(SolicitudeValue $model, $value)
     {
-        if (null === $value) {
+        if (null === $raw) {
             return null;
         }
 
-        return (float)$value;
+        return (int)$value;
     }
 
     public function read($raw)
@@ -37,6 +37,6 @@ class DecimalDataType implements DataTypeInterface
             return null;
         }
 
-        return (float)$value;
+        return (int)$raw;
     }
 }

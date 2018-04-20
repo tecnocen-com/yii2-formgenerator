@@ -1,31 +1,31 @@
 <?php
 
-namespace tecnocen\formgenerator\dataTypes;
+namespace tecnocen\formgenerator\dataStrategies;
 
-use yii\base\Model;
+use tecnocen\formgenerator\models\SolicitudeValue;
 use yii\helpers\ArrayHelper;
 
-class FileDataType implements DataTypeInterface
+class FileDataStrategy implements DataStrategy
 {
     /**
      * @var string folder where the file will be stored. Can be an alias.
      */
-    protected $filePath = '@webroot';
+    protected $filePath = '@webroot/uploads';
 
     /**
      * @var string url to access the saved file. Can be an alias.
      */
-    protected $fileUrl = '@web';
+    protected $fileUrl = '@web/uploads';
 
     public function __construct()
     {
     }
 
-    public function load(Model $model, $data, $formName = null)
+    public function load(SolicitudeValue $model, $data, $formName = null)
     {
     }
 
-    public function store(Model $model, $value)
+    public function store(SolicitudeValue $model, $value)
     {
         $name = $this->getName($value);
         $value->saveAs(Yii::getAlias($this->filePath . '/' . $name));

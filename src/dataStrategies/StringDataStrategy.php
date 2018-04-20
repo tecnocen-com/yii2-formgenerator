@@ -1,17 +1,17 @@
 <?php
 
-namespace tecnocen\formgenerator\dataTypes;
+namespace tecnocen\formgenerator\dataStrategies;
 
-use yii\base\Model;
+use tecnocen\formgenerator\models\SolicitudeValue;
 use yii\helpers\ArrayHelper;
 
-class BooleanDataType implements DataTypeInterface
+class StringDataStrategy implements DataStrategy
 {
     public function __construct()
     {
     }
 
-    public function load(Model $model, $data, $formName = null)
+    public function load(SolicitudeValue $model, $data, $formName = null)
     {
         if ('' === $formName) {
             return ArrayHelper::getValue($data, 'raw');
@@ -22,7 +22,7 @@ class BooleanDataType implements DataTypeInterface
         return ArrayHelper::getValue($data, $formName . '.raw');
     }
 
-    public function store(Model $model, $value)
+    public function store(SolicitudeValue $model, $value)
     {
         return $value;
     }

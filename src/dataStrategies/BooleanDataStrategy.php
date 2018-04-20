@@ -1,11 +1,11 @@
 <?php
 
-namespace tecnocen\formgenerator\dataTypes;
+namespace tecnocen\formgenerator\dataStrategies;
 
 use tecnocen\formgenerator\models\SolicitudeValue;
 use yii\helpers\ArrayHelper;
 
-class BooleanDataType implements DataTypeInterface
+class BooleanDataStrategy implements DataStrategy
 {
     public function __construct()
     {
@@ -33,7 +33,7 @@ class BooleanDataType implements DataTypeInterface
         return false;
     }
 
-    public function store(Model $model, $value)
+    public function store(SolicitudeValue $model, $value)
     {
         if (null === $raw || '' === $raw) {
             return null;

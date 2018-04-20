@@ -51,10 +51,6 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
                     'X-Pagination-Total-Count' => 5,
                 ],
             ],
-            'not found data-type' => [
-                'url' => '/data-type/15',
-                'httpCode' => HttpCode::NOT_FOUND,
-            ],
             'filter by author' => [
                 'urlParams' => [
                     'created_by' => 1,
@@ -67,7 +63,6 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
             'filter by name' => [
                 'urlParams' => [
                     'name' => 'string',
-                    'label' => 'String'
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
@@ -104,154 +99,14 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
         return [
             'single record' => [
                 'urlParams' => [
-                    'id' => 1,
+                    'id' => 'string',
                     'expand' => 'fields'
                 ],
                 'httpCode' => HttpCode::OK,
             ],
             'not found data type record' => [
-                'url' => '/data-type/8',
+                'url' => '/data-type/1',
                 'httpCode' => HttpCode::NOT_FOUND,
-            ],
-        ];
-    }
-
-    /**
-     * @param  ApiTester $I
-     * @param  Example $example
-     * @dataprovider createDataProvider
-     * @depends fixtures
-     * @before authToken
-     */
-    public function create(ApiTester $I, Example $example)
-    {
-        $I->wantTo('Create a DataType record.');
-        $this->internalCreate($I, $example);
-    }
-
-    /**
-     * @return array<string,array> data for test `create()`.
-     */
-    protected function createDataProvider()
-    {
-        return [
-            'integerCast' => [
-                'data' => [
-                    'name' => 'positive-integer',
-                    'label' => 'Positive Integer',
-                    'cast' => 'integerCast'
-                ],
-                'httpCode' => HttpCode::CREATED,
-            ],
-            'unique' => [
-                'urlParams' => [
-                    'name' => 'string',
-                    'label' => 'String',
-                    'cast' => 'stringCast'
-                ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-                'validationErrors' => [
-                    'name' => 'Data Type name "string" has already been taken.'
-                ],
-            ],
-            'to short' => [
-                'urlParams' => [
-                    'name' => 'as',
-                    'label' => 'as',
-                    'cast' => 'as'
-                ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-                'validationErrors' => [
-                    'name' => 'Data Type name should contain at least 4 characters.',
-                    'label' => 'Label should contain at least 4 characters.',
-                    'cast' => 'Type Cast Method should contain at least 4 characters.'
-                ],
-            ],
-            'not blank' => [
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-                'validationErrors' => [
-                    'name' => 'Data Type name cannot be blank.',
-                    'label' => 'Label cannot be blank.',
-                    'cast' => 'Type Cast Method cannot be blank.',
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @param  ApiTester $I
-     * @param  Example $example
-     * @dataprovider updateDataProvider
-     * @depends fixtures
-     * @before authToken
-     */
-    public function update(ApiTester $I, Example $example)
-    {
-        $I->wantTo('Update a DataType record.');
-        $this->internalUpdate($I, $example);
-    }
-
-    /**
-     * @return array[] data for test `update()`.
-     */
-    protected function updateDataProvider()
-    {
-        return [
-            'update data-type 1' => [
-                'urlParams' => ['id' => '1'],
-                'data' => [
-                    'name' => 'integer',
-                    'label' => 'Integer',
-                    'cast' => 'integerCast'
-                ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-            ],
-            'to short' => [
-                'urlParams' => ['id' => '1'],
-                'data' => [
-                    'name' => 'da',
-                    'label' => 'Da',
-                    'cast' => 'ca',
-                ],
-                'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
-                'validationErrors' => [
-                    'name' => 'Data Type name should contain at least 4 characters.',
-                    'label' => 'Label should contain at least 4 characters.',
-                    'cast' => 'Type Cast Method should contain at least 4 characters.',
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * @param  ApiTester $I
-     * @param  Example $example
-     * @dataprovider deleteDataProvider
-     * @depends fixtures
-     * @before authToken
-     */
-    public function delete(ApiTester $I, Example $example)
-    {
-        $I->wantTo('Delete a DataType record.');
-        $this->internalDelete($I, $example);
-    }
-
-    /**
-     * @return array[] data for test `delete()`.
-     */
-    protected function deleteDataProvider()
-    {
-        return [
-            'delete data-type 1' => [
-                'urlParams' => ['id' => 6],
-                'httpCode' => HttpCode::NO_CONTENT,
-            ],
-            'not found' => [
-                'urlParams' => ['id' => 6],
-                'httpCode' => HttpCode::NOT_FOUND,
-                'validationErrors' => [
-                    'name' => 'The record "1" does not exists.'
-                ],
             ],
         ];
     }
@@ -262,10 +117,8 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
     protected function recordJsonType()
     {
         return [
-            'id' => 'integer:>0',
             'name' => 'string',
-            'label' => 'string',
-            'cast' => 'string',
+            'class' => 'string',
         ];
     }
 

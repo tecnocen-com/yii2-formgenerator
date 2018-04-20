@@ -2,7 +2,7 @@
 
 namespace tecnocen\formgenerator\models;
 
-use tecnocen\formgenerator\dataTypes\DataTypeInterface;
+use tecnocen\formgenerator\dataStrategies\DataStrategy;
 use yii\base\InvalidConfigException;
 
 /**
@@ -15,7 +15,7 @@ use yii\base\InvalidConfigException;
  */
 class DataType extends \tecnocen\rmdb\models\Pivot
 {
-    protected $strategy;
+    protected $dataStrategy;
     /**
      * @var string full class name of the model used in the relation
      * `getFields()`.
@@ -39,7 +39,12 @@ class DataType extends \tecnocen\rmdb\models\Pivot
             [['name', 'class'], 'required'],
             [['name', 'class'], 'string', 'min' => 4],
             [['name'], 'unique'],
-            [['class'], 'verifyClass'],
+            [['class'], function ($model, $attribute) {
+                if (is_subclass_of($model->$attribute, DataStrategy::class)) {
+                    return;
+                }
+                $model->addErrors($attribute, 'Must implement DataStrategy.');
+            }],
         ];
     }
 
@@ -54,29 +59,29 @@ class DataType extends \tecnocen\rmdb\models\Pivot
 
     protected function ensureStrategy()
     {
-        $strategyClass = $this->class;
-        $this->strategy = new $strategyClass();
-        if (!$this->strategy instanceof DataTypeInterface) {
+        $class = $this->class;
+        $this->dataStrategy = new $class();
+        if (!$this->dataStrategy instanceof DataStrategy) {
             throw new InvalidConfigException(
-                static::class . "::\$class '{$strategyClass}' must implement "
-                    . DataTypeInterface::class
+                static::class . "::\$class '{$class}' must implement "
+                    . DataStrategy::class
             );
         }
     }
 
-    public function loadFieldValue(Model $model, $params, $formName)
+    public function loadFieldValue(SolicitudeValue $model, $params, $formName)
     {
-        return $this->strategy->load($model, $params, $formName);
+        return $this->dataStrategy->load($model, $params, $formName);
     }
 
-    public function storeFieldValue(Model $model, $raw)
+    public function storeFieldValue(SolicitudeValue $model, $raw)
     {
-        return $this->strategy->store($model, $raw);
+        return $this->dataStrategy->store($model, $raw);
     }
 
-    public function readFieldValue($raw)
+    public function readValue($raw)
     {
-        return $this->strategy->read($raw);
+        return $this->dataStrategy->read($raw);
     }
 
     /**

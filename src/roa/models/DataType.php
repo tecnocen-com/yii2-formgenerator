@@ -25,7 +25,10 @@ class DataType extends base\DataType implements
      */
     protected function slugConfig()
     {
-        return ['resourceName' => 'data-type'];
+        return [
+            'resourceName' => 'data-type',
+            'idAttribute' => 'name',
+        ];
     }
 
     /**

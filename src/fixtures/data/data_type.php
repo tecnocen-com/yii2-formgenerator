@@ -1,6 +1,6 @@
 <?php
 
-use tecnocen\formgenerator\dataTypes;
+use tecnocen\formgenerator\dataStrategies;
 
 $now = new yii\db\Expression('now()');
 
@@ -8,31 +8,31 @@ $now = new yii\db\Expression('now()');
 return [
     [
         'name' => 'string',
-        'class' => dataTypes\StringDataType::class,
+        'class' => dataStrategies\StringDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
     ],
     [
         'name' => 'integer',
-        'class' => dataTypes\IntegerDataType::class,
+        'class' => dataStrategies\IntegerDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
     ],
     [
-        'name' => 'float',
-        'class' => dataTypes\DecimalDataType::class,
+        'name' => 'decimal',
+        'class' => dataStrategies\DecimalDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
     ],
     [
         'name' => 'boolean',
-        'class' => dataTypes\BooleanDataType::class,
+        'class' => dataStrategies\BooleanDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
     ],
     [
         'name' => 'public-file',
-        'class' => dataTypes\FileDataType::class,
+        'class' => dataStrategies\FileDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
     ],
