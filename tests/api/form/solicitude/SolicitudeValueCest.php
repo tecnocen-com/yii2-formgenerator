@@ -17,11 +17,16 @@ class SolicitudeValueCest extends \tecnocen\roa\test\AbstractResourceCest
         $I->amBearerAuthenticated(OauthAccessTokensFixture::SIMPLE_TOKEN);
     }
 
+    /**
+     * @depends Solicitude:fixtures
+     */
     public function fixtures(ApiTester $I)
     {
         $I->haveFixtures([
-            'access_tokens' => OauthAccessTokensFixture::class,
-            'solicitude_value' => SolicitudeValueFixture::class,
+            'solicitude_value' => [
+                'class' => SolicitudeValueFixture::class,
+                'depends' => [],
+            ],
         ]);
     }
 
@@ -114,7 +119,7 @@ class SolicitudeValueCest extends \tecnocen\roa\test\AbstractResourceCest
                 'data' => [
                     'expand' => 'sectionField, section, field, solicitude',
                 ],
-                'httpCode' => HttpCode::OK,            
+                'httpCode' => HttpCode::OK,
             ],
             'not found form' => [
                 'urlParams' => [

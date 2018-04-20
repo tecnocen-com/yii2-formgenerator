@@ -19,7 +19,7 @@ class FieldCest extends \tecnocen\roa\test\AbstractResourceCest
 
     /**
      * @depends DataTypeCest:fixtures
-     */ 
+     */
     public function fixtures(ApiTester $I)
     {
         $I->haveFixtures([
@@ -141,29 +141,29 @@ class FieldCest extends \tecnocen\roa\test\AbstractResourceCest
     protected function createDataProvider()
     {
         return [
-            'create field 1' => [
-                'urlParams' => [
-                    'data_type_id' => 1,
+            'create string field' => [
+                'data' => [
+                    'data_type' => 'string',
                     'name' => 'complete_name',
                     'label' => 'Complete Name',
                 ],
                 'httpCode' => HttpCode::CREATED,
             ],
-            'unique and invalid id' => [
-                'urlParams' => [
-                    'data_type_id' => 15,
+            'invalid data type' => [
+                'data' => [
+                    'data_type' => 'foo',
                     'name' => 'complete_name',
                     'label' => 'Complete Name',
                 ],
                 'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
                 'validationErrors' => [
-                    'data_type_id' => 'Data Type ID is invalid.',
+                    'data_type' => 'Unsupported Data Type "foo".',
                     'name' => 'Field name "complete_name" has already been taken.',
                 ],
             ],
             'to short' => [
                 'urlParams' => [
-                    'data_type_id' => 1,
+                    'data_type' => 'string',
                     'name' => 'co',
                     'label' => 'Co',
                 ],
@@ -176,7 +176,7 @@ class FieldCest extends \tecnocen\roa\test\AbstractResourceCest
             'not blank' => [
                 'httpCode' => HttpCode::UNPROCESSABLE_ENTITY,
                 'validationErrors' => [
-                    'data_type_id' => 'Data Type ID cannot be blank.',
+                    'data_type' => 'Data Type cannot be blank.',
                     'name' => 'Field name cannot be blank.',
                     'label' => 'Field label cannot be blank.',
                 ],

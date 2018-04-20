@@ -8,7 +8,8 @@ namespace tecnocen\formgenerator\models;
  * @property integer $section_id
  * @property integer $field_id
  * @property integer $solicitude_id
- * @property string $value
+ * @property-read mixed $value
+ * @property string $raw
  *
  * @property SectionField $sectionField
  * @property Section $section
@@ -125,11 +126,35 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
     /**
      * @inheritdoc
      */
+    public function afterValidate()
+    {
+        if (!$this->hasErrors()) {
+            $field = $this->getField()
+                ->with([
+                    'dataType',
+                    'rules' => function ($query) {
+                        $query->modelClass = 'tecnocen\\formgenerator\\models\\FieldRule';
+                    },
+                    'rules.properties',
+                ])
+                ->one();
+            $this->populateRelation('field', $field);
+            foreach ($field->buildValidators($this, 'raw')
+                as $validator
+            ) {
+                $validator->validateAttributes($this, ['raw']);
+            }
+        }
+        parent::afterValidate();
+    }
+    /**
+     * @inheritdoc
+     */
     public function getValue()
     {
         if (null === $this->value) {
             // memento
-            $this->value = $this->field->dataType->readFieldValue($this->raw);
+            $this->value = $this->field->dataType->readValue($this->raw);
         }
 
         return $this->value;
@@ -151,10 +176,11 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
     /**
      * @inheritdoc
      */
-    public function load($params, $formName)
+    public function load($params, $formName = null)
     {
         parent::load($params, $formName);
-        $this->field->dataType
+        $this->field
+            ->dataType
             ->loadFieldValue($model, $params, $formName);
     }
 

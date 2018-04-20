@@ -28,8 +28,8 @@ class FieldSearch extends Field implements ResourceSearch
     public function rules()
     {
         return [
-            [['data_type_id', 'created_by'], 'integer'],
-            [['name', 'label'], 'string'],
+            [['created_by'], 'integer'],
+            [['name', 'data_type', 'label'], 'string'],
         ];
     }
 
@@ -46,9 +46,9 @@ class FieldSearch extends Field implements ResourceSearch
         return new ActiveDataProvider([
             'query' => $class::find()->andFilterWhere([
                     'created_by' => $this->created_by,
-                    'data_type_id' => $this->data_type_id,
                 ])
                 ->andFilterWhere(['like', 'name', $this->name])
+                ->andFilterWhere(['like', 'data_type', $this->data_type])
                 ->andFilterWhere(['like', 'label', $this->label]),
         ]);
     }

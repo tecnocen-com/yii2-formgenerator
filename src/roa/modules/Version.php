@@ -36,7 +36,9 @@ class Version extends \tecnocen\roa\modules\ApiVersion
         self::SECTION_ROUTE,
         self::SECTION_FIELD_ROUTE,
 
-        self::DATA_TYPE_ROUTE,
+        self::DATA_TYPE_ROUTE => [
+            'urlRule' => ['tokens' => ['{id}' => '<id:\w+>']],
+        ],
 
         self::FIELD_ROUTE,
         self::FIELD_RULE_ROUTE,
