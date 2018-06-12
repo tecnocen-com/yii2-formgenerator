@@ -8,10 +8,10 @@ trait SectionFieldConditionSupport
     {
         return [
             'condition_value' => $this->string(32)->defaultValue(null),
-            'condition_operator' => $this->string(8)->defaultValue(null),
+            'condition_operator' => $this->string(32)->defaultValue(null),
             'condition_section_id' => $this->normalKey()->defaultValue(null),
             'condition_field_id' => $this->normalKey()->defaultValue(null),
-            'condition_effect' => $this->string(8)->defaultValue(null)
+            'condition_effect' => $this->string(32)->defaultValue(null)
         ];
     }
 
