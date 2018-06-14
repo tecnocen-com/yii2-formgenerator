@@ -42,6 +42,7 @@ class Solicitude extends \tecnocen\rmdb\models\Entity
         return parent::attributeTypecast() + [
             'id' => 'integer',
             'form_id' => 'integer',
+            'current_section_id' => 'integer',
         ];
     }
 
@@ -71,6 +72,7 @@ class Solicitude extends \tecnocen\rmdb\models\Entity
         return array_merge([
             'id' => 'ID',
             'form_id' => 'Form ID',
+            'current_section_id' => 'Current Section ID',
         ], parent::attributeLabels());
     }
 
