@@ -55,6 +55,6 @@ class Section extends base\Section implements Linkable
      */
     public function extraFields()
     {
-        return ['form'];
+        return ['form', 'fields'];
     }
 }
