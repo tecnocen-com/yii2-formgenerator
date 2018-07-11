@@ -3,6 +3,8 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
+use yii\helpers\Url;
+use yii\web\Link;
 use yii\web\Linkable;
 
 /**
@@ -28,7 +30,32 @@ class SectionField extends base\SectionField implements Linkable
      * @inheritdoc
      */
     protected $solicitudeValueClass = SolicitudeValue::class;
+    /**
+     * @inheritdoc
+     */
+    public function getLinks()
+    {
+        $selfLink = $this->getSelfLink();
 
+        return array_merge($this->getSlugLinks(), [
+            'field' => $this->field->getSelfLink(),
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+                new Link([
+                    'name' => 'nestable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and Nestable related resources.',
+                ]),
+            ],
+            'embeddable:solicitudeValuesDetail' => 'solicitudeValuesDetail',
+            'nestable:field' => 'field',
+            'nestable:section' => 'section',
+        ]);
+    }
     /**
      * @inheritdoc
      */
@@ -44,19 +71,8 @@ class SectionField extends base\SectionField implements Linkable
     /**
      * @inheritdoc
      */
-    public function getLinks()
-    {
-        return $this->getSlugLinks() + ['field' => $this->field->getSelfLink()];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function extraFields()
     {
-        return [
-            'field',
-            'solicitudeValuesDetail',
-        ];
+        return ['field', 'section', 'solicitudeValuesDetail'];
     }
 }

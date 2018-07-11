@@ -3,12 +3,14 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
+use yii\helpers\Url;
+use yii\web\Link;
 use yii\web\Linkable;
 use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling Form records.
- * 
+ *
  * @method void checkAccess(array $params)
  */
 class Form extends base\Form implements Linkable
@@ -19,6 +21,25 @@ class Form extends base\Form implements Linkable
      * @inheritdoc
      */
     protected $sectionClass = Section::class;
+    /**
+     * @inheritdoc
+     */
+    public function getLinks()
+    {
+        $selfLink = $this->getSelfLink();
+
+        return array_merge($this->getSlugLinks(), [
+            'sections' => $selfLink . '/section',
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+            ],
+            'embeddable:sections' => 'sections',
+        ]);
+    }
 
     /**
      * @inheritdoc
@@ -36,16 +57,6 @@ class Form extends base\Form implements Linkable
                     );
                 }
             },
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getLinks()
-    {
-        return $this->getSlugLinks() + [
-            'sections' => $this->getSelfLink() . '/section',
         ];
     }
 
