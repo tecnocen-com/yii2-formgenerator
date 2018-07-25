@@ -3,6 +3,8 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
+use yii\helpers\Url;
+use yii\web\Link;
 use yii\web\Linkable;
 
 /**
@@ -28,7 +30,31 @@ class Section extends base\Section implements Linkable
      * @inheritdoc
      */
     protected $fieldClass = Field::class;
+    /**
+     * @inheritdoc
+     */
+    public function getLinks()
+    {
+        $selfLink = $this->getSelfLink();
 
+        return array_merge($this->getSlugLinks(), [
+            'fields' => $selfLink . '/field',
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+                new Link([
+                    'name' => 'nestable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and Nestable related resources.',
+                ]),
+            ],
+            'embeddable:fields' => 'fields',
+            'nestable:form' => 'form',
+        ]);
+    }
     /**
      * @inheritdoc
      */
@@ -37,16 +63,6 @@ class Section extends base\Section implements Linkable
         return [
             'resourceName' => 'section',
             'parentSlugRelation' => 'form',
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getLinks()
-    {
-        return $this->getSlugLinks() + [
-            'fields' => $this->getSelfLink() . '/field',
         ];
     }
 

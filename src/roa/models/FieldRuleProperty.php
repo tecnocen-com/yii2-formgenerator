@@ -3,6 +3,8 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
+use yii\helpers\Url;
+use yii\web\Link;
 use yii\web\Linkable;
 use yii\web\NotFoundHttpException;
 
@@ -19,6 +21,26 @@ class FieldRuleProperty extends base\FieldRuleProperty implements Linkable
      * @inheritdoc
      */
     protected $ruleClass = FieldRule::class;
+
+    /**
+     * @inheritdoc
+     */
+    public function getLinks()
+    {
+        $selfLink = $this->getSelfLink();
+
+        return array_merge($this->getSlugLinks(), [
+            'properties' => $selfLink . '/property',
+            'curies' => [
+                new Link([
+                    'name' => 'nestable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and Nestable related resources.',
+                ]),
+            ],
+            'nestable:rule' => 'rule',
+        ]);
+    }
 
     /**
      * @inheritdoc

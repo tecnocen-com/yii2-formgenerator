@@ -3,6 +3,8 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
+use yii\helpers\Url;
+use yii\web\Link;
 use yii\web\Linkable;
 
 /**
@@ -27,21 +29,37 @@ class Solicitude extends base\Solicitude implements Linkable
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+    public function getLinks()
     {
-        return [
-            'resourceName' => 'solicitude',
-            'parentSlugRelation' => 'form',
-        ];
+        $selfLink = $this->getSelfLink();
+
+        return array_merge($this->getSlugLinks(), [
+            'values' => $selfLink . '/value',
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+                new Link([
+                    'name' => 'nestable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and Nestable related resources.',
+                ]),
+            ],
+            'embeddable:values' => 'values',
+            'nestable:form' => 'form',
+        ]);
     }
 
     /**
      * @inheritdoc
      */
-    public function getLinks()
+    protected function slugConfig()
     {
-        return $this->getSlugLinks() + [
-            'values' => $this->getSelfLink() . '/value',
+        return [
+            'resourceName' => 'solicitude',
+            'parentSlugRelation' => 'form',
         ];
     }
 
