@@ -10,7 +10,7 @@ use Yii;
  * CRUD resource for `FieldRuleProperty` records
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
-class PropertyResource extends \tecnocen\roa\controllers\OAuth2Resource
+class PropertyResource extends \tecnocen\roa\controllers\Resource
 {
     /**
      * @inheritdoc

@@ -9,7 +9,7 @@ use tecnocen\formgenerator\roa\models\SolicitudeValueSimpleSearch;
  * Search resource for `SolicitudeValue` records
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
-class SolicitudeValueResource extends \tecnocen\roa\controllers\OAuth2Resource
+class SolicitudeValueResource extends \tecnocen\roa\controllers\Resource
 {
     /**
      * @inheritdoc
