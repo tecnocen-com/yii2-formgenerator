@@ -3,6 +3,7 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\roa\behaviors\Slug;
+use tecnocen\roa\behaviors\Curies;
 
 /**
  * Trait with contract methods for ROA
@@ -18,7 +19,8 @@ trait SlugTrait
     public function behaviors()
     {
         return parent::behaviors() + [
-            'slug' => ['class' => Slug::class] + $this->slugConfig()
+            'slug' => ['class' => Slug::class] + $this->slugConfig(),
+            'curies' => Curies::class,
         ];
     }
 
@@ -27,7 +29,8 @@ trait SlugTrait
      */
     public function getLinks()
     {
-        return $this->getSlugLinks();
+        return $this->getBehavior('slug')->getSlugLinks()
+            + $this->getBehavior('curies')->getCuriesLinks();
     }
 
     /**
