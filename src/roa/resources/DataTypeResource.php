@@ -9,7 +9,7 @@ use tecnocen\formgenerator\roa\models\DataTypeSearch;
  * CRUD resource for `DataType` records
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
-class DataTypeResource extends \tecnocen\roa\controllers\OAuth2Resource
+class DataTypeResource extends \tecnocen\roa\controllers\Resource
 {
     /**
      * @inheritdoc

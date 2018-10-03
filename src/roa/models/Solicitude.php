@@ -3,16 +3,18 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use yii\web\Linkable;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
+use yii\web\NotFoundHttpException;
 
 /**
- * ROA contract handling Field records.
- *
- * @method void checkAccess(array $params)
+ * ROA contract handling Solicitude records.
  */
-class Solicitude extends base\Solicitude implements Linkable
+class Solicitude extends base\Solicitude implements Contract
 {
-    use SlugTrait;
+    use ContractTrait {
+        getLinks as getContractLinks;
+    }
 
     /**
      * @inheritdoc
@@ -27,21 +29,30 @@ class Solicitude extends base\Solicitude implements Linkable
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+    public function getLinks()
     {
-        return [
-            'resourceName' => 'solicitude',
-            'parentSlugRelation' => 'form',
-        ];
+        return array_merge($this->getContractLinks(), [
+            'values' => $this->getSelfLink() . '/value',
+        ]);
     }
 
     /**
      * @inheritdoc
      */
-    public function getLinks()
+    protected function slugBehaviorConfig()
     {
-        return $this->getSlugLinks() + [
-            'values' => $this->getSelfLink() . '/value',
+        return [
+            'resourceName' => 'solicitude',
+            'parentSlugRelation' => 'form',
+            'checkAccess' => function ($params) {
+                if (isset($params['solicitude_id'])
+                    && $params['solicitude_id'] != $this->id
+                ) {
+                    throw new NotFoundHttpException(
+                        'Solicitude doesnt contain the requested route.'
+                    );
+                }
+            },
         ];
     }
 

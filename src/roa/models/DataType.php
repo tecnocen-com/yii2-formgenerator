@@ -3,17 +3,15 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use yii\web\Linkable;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
 
 /**
- * ROA contract handling Form records.
- *
- * @method void checkAccess(array $params)
+ * ROA contract handling DataType records.
  */
-class DataType extends base\DataType implements
-    Linkable
+class DataType extends base\DataType implements Contract
 {
-    use SlugTrait;
+    use ContractTrait;
 
     /**
      * @inheritdoc
@@ -23,19 +21,11 @@ class DataType extends base\DataType implements
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig()
     {
         return [
             'resourceName' => 'data-type',
             'idAttribute' => 'name',
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function extraFields()
-    {
-        return ['fields'];
     }
 }

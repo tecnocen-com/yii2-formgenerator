@@ -7,8 +7,9 @@ use OAuth2\Storage\UserCredentialsInterface;
 use Yii;
 use yii\web\IdentityInterface;
 
-class User extends \yii\db\ActiveRecord
-    implements UserCredentialsInterface, IdentityInterface
+class User extends \yii\db\ActiveRecord implements
+    UserCredentialsInterface,
+    IdentityInterface
 {
     public static function tableName()
     {
@@ -20,7 +21,7 @@ class User extends \yii\db\ActiveRecord
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $ids]);
+        return static::findOne(['id' => $id]);
     }
 
     /**

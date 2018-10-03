@@ -3,17 +3,18 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use yii\helpers\Url;
-use yii\web\Linkable;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
+use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling FieldRule records.
- *
- * @method void checkAccess(array $params)
  */
-class FieldRule extends base\FieldRule implements Linkable
+class FieldRule extends base\FieldRule implements Contract
 {
-    use SlugTrait;
+    use ContractTrait {
+        getLinks as getContractLinks;
+    }
 
     /**
      * @inheritdoc
@@ -24,14 +25,24 @@ class FieldRule extends base\FieldRule implements Linkable
      * @inheritdoc
      */
     protected $propertyClass = FieldRuleProperty::class;
+
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig()
     {
         return [
             'resourceName' => 'rule',
             'parentSlugRelation' => 'field',
+            'checkAccess' => function ($params) {
+                if (isset($params['rule_id'])
+                    && $params['rule_id'] != $this->id
+                ) {
+                    throw new NotFoundHttpException(
+                        'Field Rule doesnt contain the requested route.'
+                    );
+                }
+            }
         ];
     }
 
@@ -40,14 +51,9 @@ class FieldRule extends base\FieldRule implements Linkable
      */
     public function getLinks()
     {
-        $selfLink = $this->getSelfLink();
-        return $this->getSlugLinks() + [
-            'properties' => $selfLink . '/property',
-            'curies' => [
-                'expand' => Url::to($selfLink, ['expand' => '{rel}']),
-            ],
-            'expand:properties' => 'properties',
-        ];
+        return array_merge($this->getContractLinks(), [
+            'properties' => $this->getSelfLink() . '/property',
+        ]);
     }
 
     /**

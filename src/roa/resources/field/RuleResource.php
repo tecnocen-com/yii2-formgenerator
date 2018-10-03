@@ -9,7 +9,7 @@ use tecnocen\formgenerator\roa\models\FieldRule;
  * CRUD resource for `FieldRule` records
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
-class RuleResource extends \tecnocen\roa\controllers\OAuth2Resource
+class RuleResource extends \tecnocen\roa\controllers\Resource
 {
     /**
      * @inheritdoc

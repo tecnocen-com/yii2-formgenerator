@@ -3,16 +3,17 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use yii\web\Linkable;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
 
 /**
- * ROA contract handling Field records.
- *
- * @method void checkAccess(array $params)
+ * ROA contract handling SolicitudeValue records.
  */
-class SolicitudeValue extends base\SolicitudeValue implements Linkable
+class SolicitudeValue extends base\SolicitudeValue implements Contract
 {
-    use SlugTrait;
+    use ContractTrait {
+        getLinks as getContractLinks;
+    }
 
     /**
      * @inheritdoc
@@ -37,7 +38,18 @@ class SolicitudeValue extends base\SolicitudeValue implements Linkable
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+    public function getLinks()
+    {
+        return array_merge($this->getContractLinks(), [
+            'field' => $this->field->getSelfLink(),
+            'section' => $this->section->getSelfLink(),
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function slugBehaviorConfig()
     {
         return [
             'idAttribute' => ['section_id', 'field_id'],
@@ -49,20 +61,12 @@ class SolicitudeValue extends base\SolicitudeValue implements Linkable
     /**
      * @inheritdoc
      */
-    public function getLinks()
-    {
-        return $this->getSlugLinks();
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function extraFields()
     {
         return [
-            'sectionField',
-            'section',
             'field',
+            'section',
+            'sectionField',
             'solicitude',
         ];
     }
