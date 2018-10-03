@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 
 /**
  * Contract to filter and sort collections of `Form` records.
+ *
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
 class FormSearch extends Form implements ResourceSearch
@@ -14,7 +15,7 @@ class FormSearch extends Form implements ResourceSearch
     /**
      * @inhertidoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig()
     {
         return [
             'idAttribute' => [],
@@ -43,6 +44,7 @@ class FormSearch extends Form implements ResourceSearch
             return null;
         }
         $class = get_parent_class();
+
         return new ActiveDataProvider([
             'query' => $class::find()->andFilterWhere([
                     'created_by' => $this->created_by,
