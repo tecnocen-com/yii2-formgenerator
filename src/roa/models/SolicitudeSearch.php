@@ -5,12 +5,17 @@ namespace tecnocen\formgenerator\roa\models;
 use tecnocen\roa\ResourceSearch;
 use yii\data\ActiveDataProvider;
 
+/**
+ * Contract to filter and sort collections of `Solicitude` records.
+ *
+ * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
+ */
 class SolicitudeSearch extends Solicitude implements ResourceSearch
 {
     /**
      * @inhertidoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig()
     {
         return [
             'idAttribute' => [],
@@ -99,6 +104,7 @@ class SolicitudeSearch extends Solicitude implements ResourceSearch
                 ])
             ]);
         }
+
         return new ActiveDataProvider(['query' => $query]);
     }
 }

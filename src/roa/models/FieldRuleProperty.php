@@ -3,19 +3,15 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use yii\helpers\Url;
-use yii\web\Link;
-use yii\web\Linkable;
-use yii\web\NotFoundHttpException;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
 
 /**
- * ROA contract handling FieldRule records.
- *
- * @method void checkAccess(array $params)
+ * ROA contract handling FieldRuleProperty records.
  */
-class FieldRuleProperty extends base\FieldRuleProperty implements Linkable
+class FieldRuleProperty extends base\FieldRuleProperty implements Contract
 {
-    use SlugTrait;
+    use ContractTrait;
 
     /**
      * @inheritdoc
@@ -25,27 +21,7 @@ class FieldRuleProperty extends base\FieldRuleProperty implements Linkable
     /**
      * @inheritdoc
      */
-    public function getLinks()
-    {
-        $selfLink = $this->getSelfLink();
-
-        return array_merge($this->getSlugLinks(), [
-            'properties' => $selfLink . '/property',
-            'curies' => [
-                new Link([
-                    'name' => 'nestable',
-                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
-                    'title' => 'Embeddable and Nestable related resources.',
-                ]),
-            ],
-            'nestable:rule' => 'rule',
-        ]);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    protected function slugConfig()
+    protected function slugBehaviorConfig()
     {
         return [
             'idAttribute' => 'property',

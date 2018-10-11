@@ -3,18 +3,18 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use yii\helpers\Url;
-use yii\web\Link;
-use yii\web\Linkable;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
+use yii\web\NotFoundHttpException;
 
 /**
- * ROA contract handling Field records.
- *
- * @method void checkAccess(array $params)
+ * ROA contract handling Solicitude records.
  */
-class Solicitude extends base\Solicitude implements Linkable
+class Solicitude extends base\Solicitude implements Contract
 {
-    use SlugTrait;
+    use ContractTrait {
+        getLinks as getContractLinks;
+    }
 
     /**
      * @inheritdoc
@@ -31,35 +31,28 @@ class Solicitude extends base\Solicitude implements Linkable
      */
     public function getLinks()
     {
-        $selfLink = $this->getSelfLink();
-
-        return array_merge($this->getSlugLinks(), [
-            'values' => $selfLink . '/value',
-            'curies' => [
-                new Link([
-                    'name' => 'embeddable',
-                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
-                    'title' => 'Embeddable and not Nestable related resources.',
-                ]),
-                new Link([
-                    'name' => 'nestable',
-                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
-                    'title' => 'Embeddable and Nestable related resources.',
-                ]),
-            ],
-            'embeddable:values' => 'values',
-            'nestable:form' => 'form',
+        return array_merge($this->getContractLinks(), [
+            'values' => $this->getSelfLink() . '/value',
         ]);
     }
 
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig()
     {
         return [
             'resourceName' => 'solicitude',
             'parentSlugRelation' => 'form',
+            'checkAccess' => function ($params) {
+                if (isset($params['solicitude_id'])
+                    && $params['solicitude_id'] != $this->id
+                ) {
+                    throw new NotFoundHttpException(
+                        'Solicitude doesnt contain the requested route.'
+                    );
+                }
+            },
         ];
     }
 

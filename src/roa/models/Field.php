@@ -3,19 +3,18 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use yii\helpers\Url;
-use yii\web\Link;
-use yii\web\Linkable;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
 use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling Field records.
- *
- * @method void checkAccess(array $params)
  */
-class Field extends base\Field implements Linkable
+class Field extends base\Field implements Contract
 {
-    use SlugTrait;
+    use ContractTrait {
+        getLinks as getContractLinks;
+    }
 
     /**
      * @inheritdoc
@@ -26,10 +25,11 @@ class Field extends base\Field implements Linkable
      * @inheritdoc
      */
     protected $ruleClass = FieldRule::class;
+
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig()
     {
         return [
             'resourceName' => 'field',
@@ -41,7 +41,7 @@ class Field extends base\Field implements Linkable
                         'Field doesnt contain the requested route.'
                     );
                 }
-            }
+            },
         ];
     }
 
@@ -50,24 +50,8 @@ class Field extends base\Field implements Linkable
      */
     public function getLinks()
     {
-        $selfLink = $this->getSelfLink();
-
-        return array_merge($this->getSlugLinks(), [
-            'rules' => $selfLink . '/rule',
-            'curies' => [
-                new Link([
-                    'name' => 'embeddable',
-                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
-                    'title' => 'Embeddable and not Nestable related resources.',
-                ]),
-                new Link([
-                    'name' => 'nestable',
-                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
-                    'title' => 'Embeddable and Nestable related resources.',
-                ]),
-            ],
-            'embeddable:rules' => 'rules',
-            'nestable:dataType' => 'dataType',
+        return array_merge($this->getContractLinks(), [
+            'rules' => $this->getSelfLink(). '/rule',
         ]);
     }
 

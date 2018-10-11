@@ -3,18 +3,17 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use yii\helpers\Url;
-use yii\web\Link;
-use yii\web\Linkable;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
 
 /**
- * ROA contract handling form Section records.
- *
- * @method void checkAccess(array $params)
+ * ROA contract handling Section records.
  */
-class Section extends base\Section implements Linkable
+class Section extends base\Section implements Contract
 {
-    use SlugTrait;
+    use ContractTrait {
+        getLinks as getContractLinks;
+    }
 
     /**
      * @inheritdoc
@@ -30,35 +29,21 @@ class Section extends base\Section implements Linkable
      * @inheritdoc
      */
     protected $fieldClass = Field::class;
+
     /**
      * @inheritdoc
      */
     public function getLinks()
     {
-        $selfLink = $this->getSelfLink();
-
-        return array_merge($this->getSlugLinks(), [
-            'fields' => $selfLink . '/field',
-            'curies' => [
-                new Link([
-                    'name' => 'embeddable',
-                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
-                    'title' => 'Embeddable and not Nestable related resources.',
-                ]),
-                new Link([
-                    'name' => 'nestable',
-                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
-                    'title' => 'Embeddable and Nestable related resources.',
-                ]),
-            ],
-            'embeddable:fields' => 'fields',
-            'nestable:form' => 'form',
+        return array_merge($this->getContractLinks(), [
+            'fields' => $this->getSelfLink() . '/field',
         ]);
     }
+
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig()
     {
         return [
             'resourceName' => 'section',

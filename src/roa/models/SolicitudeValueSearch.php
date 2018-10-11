@@ -7,14 +7,16 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ROA collection for SolicitudeValue records.
+ * Contract to filter and sort collections of `SolicitudeValue` records.
+ *
+ * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
 class SolicitudeValueSearch extends SolicitudeValue implements ResourceSearch
 {
     /**
      * @inhertidoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig()
     {
         return [
             'idAttribute' => [],
@@ -46,6 +48,7 @@ class SolicitudeValueSearch extends SolicitudeValue implements ResourceSearch
         }
         $this->checkAccess($params);
         $class = get_parent_class();
+
         return new ActiveDataProvider([
             'query' => $class::find()->innerJoinWith(['solicitude'])
                 ->andFilterWhere([
