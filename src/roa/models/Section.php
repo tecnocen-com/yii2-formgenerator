@@ -56,6 +56,6 @@ class Section extends base\Section implements Contract
      */
     public function extraFields()
     {
-        return ['form', 'fields', 'sectionFields'];
+        return ['form', 'fields'];
     }
 }

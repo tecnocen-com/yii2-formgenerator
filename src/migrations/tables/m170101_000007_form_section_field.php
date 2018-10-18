@@ -1,9 +1,7 @@
 <?php
-use tecnocen\formgenerator\migrations\SectionFieldConditionSupport;
 
 class m170101_000007_form_section_field extends tecnocen\rmdb\migrations\CreateEntity
 {
-    use SectionFieldConditionSupport;
     /**
      * @inheritdoc
      */
@@ -17,13 +15,13 @@ class m170101_000007_form_section_field extends tecnocen\rmdb\migrations\CreateE
      */
     public function columns()
     {
-        return array_merge([
+        return [
             'section_id' => $this->normalKey(),
             'field_id' => $this->normalKey(),
             'position' => $this->integer()->unsigned()->notNull(),
             'label' => $this->text()->defaultValue(null)
                 ->comment('When not set it will use the label on field.'),
-        ], $this->conditionColumns());
+        ];
     }
 
     /**
