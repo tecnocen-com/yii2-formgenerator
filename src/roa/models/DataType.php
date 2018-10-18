@@ -3,15 +3,19 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use tecnocen\roa\hal\Contract;
-use tecnocen\roa\hal\ContractTrait;
+use yii\helpers\Url;
+use yii\web\Link;
+use yii\web\Linkable;
 
 /**
- * ROA contract handling DataType records.
+ * ROA contract handling Form records.
+ *
+ * @method void checkAccess(array $params)
  */
-class DataType extends base\DataType implements Contract
+class DataType extends base\DataType implements
+    Linkable
 {
-    use ContractTrait;
+    use SlugTrait;
 
     /**
      * @inheritdoc
@@ -21,8 +25,35 @@ class DataType extends base\DataType implements Contract
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    public function getLinks()
+    {
+        $selfLink = $this->getSelfLink();
+
+        return array_merge($this->getSlugLinks(), [
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+            ],
+            'embeddable:fields' => 'fields',
+        ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function slugConfig()
     {
         return ['resourceName' => 'data-type'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['fields'];
     }
 }

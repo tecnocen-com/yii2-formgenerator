@@ -9,7 +9,7 @@ use tecnocen\formgenerator\roa\models\FormSearch;
  * CRUD resource for `Form` records
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
-class FormResource extends \tecnocen\roa\controllers\Resource
+class FormResource extends \tecnocen\roa\controllers\OAuth2Resource
 {
     /**
      * @inheritdoc

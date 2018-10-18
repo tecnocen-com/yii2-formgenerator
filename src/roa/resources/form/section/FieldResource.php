@@ -10,7 +10,7 @@ use tecnocen\formgenerator\roa\models\SectionFieldSearch;
  * CRUD resource for `SectionField` records
  * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
-class FieldResource extends \tecnocen\roa\controllers\Resource
+class FieldResource extends \tecnocen\roa\controllers\OAuth2Resource
 {
     /**
      * @inheritdoc

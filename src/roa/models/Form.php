@@ -3,38 +3,48 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use tecnocen\roa\hal\Contract;
-use tecnocen\roa\hal\ContractTrait;
+use yii\helpers\Url;
+use yii\web\Link;
+use yii\web\Linkable;
 use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling Form records.
+ *
+ * @method void checkAccess(array $params)
  */
-class Form extends base\Form implements Contract
+class Form extends base\Form implements Linkable
 {
-    use ContractTrait {
-        getLinks as getContractLinks;
-    }
+    use SlugTrait;
 
     /**
      * @inheritdoc
      */
     protected $sectionClass = Section::class;
-
     /**
      * @inheritdoc
      */
     public function getLinks()
     {
-        return array_merge($this->getContractLinks(), [
-            'sections' => $this->getSelfLink() . '/section',
+        $selfLink = $this->getSelfLink();
+
+        return array_merge($this->getSlugLinks(), [
+            'sections' => $selfLink . '/section',
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+            ],
+            'embeddable:sections' => 'sections',
         ]);
     }
 
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugConfig()
     {
         return [
             'resourceName' => 'form',
@@ -48,5 +58,13 @@ class Form extends base\Form implements Contract
                 }
             },
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['sections'];
     }
 }

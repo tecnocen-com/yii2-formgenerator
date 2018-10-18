@@ -14,7 +14,7 @@ class FieldSearch extends Field implements ResourceSearch
     /**
      * @inhertidoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugConfig()
     {
         return [
             'idAttribute' => [],
@@ -42,9 +42,7 @@ class FieldSearch extends Field implements ResourceSearch
         if (!$this->validate()) {
             return null;
         }
-
         $class = get_parent_class();
-
         return new ActiveDataProvider([
             'query' => $class::find()->andFilterWhere([
                     'created_by' => $this->created_by,

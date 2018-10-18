@@ -16,7 +16,7 @@ class FieldRulePropertySearch extends FieldRuleProperty implements
     /**
      * @inhertidoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugConfig()
     {
         return [
             'idAttribute' => [],
@@ -52,9 +52,9 @@ class FieldRulePropertySearch extends FieldRuleProperty implements
 
         return new ActiveDataProvider([
             'query' => $class::find()->andFilterWhere([
-                'rule_id' => $this->rule_id,
-                'created_by' => $this->created_by,
-            ]),
+                    'rule_id' => $this->rule_id,
+                    'created_by' => $this->created_by,
+                ]),
         ]);
     }
 }

@@ -3,18 +3,19 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use tecnocen\roa\hal\Contract;
-use tecnocen\roa\hal\ContractTrait;
+use yii\helpers\Url;
+use yii\web\Link;
+use yii\web\Linkable;
 use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling Field records.
+ *
+ * @method void checkAccess(array $params)
  */
-class Field extends base\Field implements Contract
+class Field extends base\Field implements Linkable
 {
-    use ContractTrait {
-        getLinks as getContractLinks;
-    }
+    use SlugTrait;
 
     /**
      * @inheritdoc
@@ -25,11 +26,10 @@ class Field extends base\Field implements Contract
      * @inheritdoc
      */
     protected $ruleClass = FieldRule::class;
-
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugConfig()
     {
         return [
             'resourceName' => 'field',
@@ -41,7 +41,7 @@ class Field extends base\Field implements Contract
                         'Field doesnt contain the requested route.'
                     );
                 }
-            },
+            }
         ];
     }
 
@@ -50,8 +50,24 @@ class Field extends base\Field implements Contract
      */
     public function getLinks()
     {
-        return array_merge($this->getContractLinks(), [
-            'rules' => $this->getSelfLink(). '/rule',
+        $selfLink = $this->getSelfLink();
+
+        return array_merge($this->getSlugLinks(), [
+            'rules' => $selfLink . '/rule',
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+                new Link([
+                    'name' => 'nestable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and Nestable related resources.',
+                ]),
+            ],
+            'embeddable:rules' => 'rules',
+            'nestable:dataType' => 'dataType',
         ]);
     }
 

@@ -3,18 +3,18 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use tecnocen\roa\hal\Contract;
-use tecnocen\roa\hal\ContractTrait;
-use yii\web\NotFoundHttpException;
+use yii\helpers\Url;
+use yii\web\Link;
+use yii\web\Linkable;
 
 /**
  * ROA contract handling FieldRule records.
+ *
+ * @method void checkAccess(array $params)
  */
-class FieldRule extends base\FieldRule implements Contract
+class FieldRule extends base\FieldRule implements Linkable
 {
-    use ContractTrait {
-        getLinks as getContractLinks;
-    }
+    use SlugTrait;
 
     /**
      * @inheritdoc
@@ -25,24 +25,14 @@ class FieldRule extends base\FieldRule implements Contract
      * @inheritdoc
      */
     protected $propertyClass = FieldRuleProperty::class;
-
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugConfig()
     {
         return [
             'resourceName' => 'rule',
             'parentSlugRelation' => 'field',
-            'checkAccess' => function ($params) {
-                if (isset($params['rule_id'])
-                    && $params['rule_id'] != $this->id
-                ) {
-                    throw new NotFoundHttpException(
-                        'Field Rule doesnt contain the requested route.'
-                    );
-                }
-            }
         ];
     }
 
@@ -51,8 +41,24 @@ class FieldRule extends base\FieldRule implements Contract
      */
     public function getLinks()
     {
-        return array_merge($this->getContractLinks(), [
-            'properties' => $this->getSelfLink() . '/property',
+        $selfLink = $this->getSelfLink();
+
+        return array_merge($this->getSlugLinks(), [
+            'properties' => $selfLink . '/property',
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+                new Link([
+                    'name' => 'nestable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and Nestable related resources.',
+                ]),
+            ],
+            'embeddable:properties' => 'properties',
+            'nestable:field' => 'field',
         ]);
     }
 

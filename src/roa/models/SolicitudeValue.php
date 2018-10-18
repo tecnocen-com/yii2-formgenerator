@@ -3,17 +3,18 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
-use tecnocen\roa\hal\Contract;
-use tecnocen\roa\hal\ContractTrait;
+use yii\helpers\Url;
+use yii\web\Link;
+use yii\web\Linkable;
 
 /**
- * ROA contract handling SolicitudeValue records.
+ * ROA contract handling Field records.
+ *
+ * @method void checkAccess(array $params)
  */
-class SolicitudeValue extends base\SolicitudeValue implements Contract
+class SolicitudeValue extends base\SolicitudeValue implements Linkable
 {
-    use ContractTrait {
-        getLinks as getContractLinks;
-    }
+    use SlugTrait;
 
     /**
      * @inheritdoc
@@ -40,16 +41,30 @@ class SolicitudeValue extends base\SolicitudeValue implements Contract
      */
     public function getLinks()
     {
-        return array_merge($this->getContractLinks(), [
+        $selfLink = $this->getSelfLink();
+
+        return array_merge($this->getSlugLinks(), [
             'field' => $this->field->getSelfLink(),
             'section' => $this->section->getSelfLink(),
+            'sectionField' => $this->sectionField->getSelfLink(),
+            'curies' => [
+                new Link([
+                    'name' => 'nestable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and Nestable related resources.',
+                ]),
+            ],
+            'nestable:field' => 'field',
+            'nestable:section' => 'section',
+            'nestable:sectionField' => 'sectionField',
+            'nestable:solicitude' => 'solicitude',
         ]);
     }
 
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugConfig()
     {
         return [
             'idAttribute' => ['section_id', 'field_id'],

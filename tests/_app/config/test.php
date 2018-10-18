@@ -37,6 +37,14 @@ return yii\helpers\ArrayHelper::merge(
                 'cookieValidationKey' => 'test',
                 'enableCsrfValidation' => false,
             ],
+            'response' => [
+                'formatters' => [
+                    Response::FORMAT_JSON => [
+                        'class' => JsonResponseFormatter::class,
+                        'prettyPrint' => YII_DEBUG,
+                    ],
+                ],
+            ],
         ],
         'params' => [],
     ]
