@@ -18,7 +18,6 @@ class m170101_000008_form_solicitude extends tecnocen\rmdb\migrations\CreateEnti
         return [
             'id' => $this->primaryKey(),
             'form_id' => $this->normalKey(),
-            'current_section_id' => $this->integer()->unsigned()->defaultValue(null),
         ];
     }
 

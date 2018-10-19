@@ -21,7 +21,6 @@ use tecnocen\formgenerator\behaviors\Positionable;
  */
 class SectionField extends \tecnocen\rmdb\models\Entity
 {
-    use SectionFieldConditionSupport;
     /**
      * @var string full class name of the model used in the relation
      * `getSection()`.
@@ -64,7 +63,7 @@ class SectionField extends \tecnocen\rmdb\models\Entity
      */
     public function rules()
     {
-        return array_merge([
+        return [
             [['section_id', 'field_id'], 'required'],
             [['section_id', 'field_id', 'position'], 'integer'],
             [
@@ -90,7 +89,7 @@ class SectionField extends \tecnocen\rmdb\models\Entity
                 'targetAttribute' => ['section_id', 'field_id'],
                 'message' => 'Field already associated to the section.',
             ],
-        ], $this->conditionRules());
+        ];
     }
 
     /**
