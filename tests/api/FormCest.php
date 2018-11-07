@@ -213,6 +213,8 @@ class FormCest extends \tecnocen\roa\test\AbstractResourceCest
      * @param  Example $example
      * @dataprovider deleteDataProvider
      * @depends fixtures
+     * @depends form\SectionCest:delete
+     * @depends form\SolicitudeCest:delete
      * @before authToken
      */
     public function delete(ApiTester $I, Example $example)

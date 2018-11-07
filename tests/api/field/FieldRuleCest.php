@@ -26,8 +26,10 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
     public function fixtures(ApiTester $I)
     {
         $I->haveFixtures([
-            'access_tokens' => OauthAccessTokensFixture::class,
-            'field_rule' => FieldRuleFixture::class,
+            'field_rule' => [
+                'class' => FieldRuleFixture::class,
+                'depends' => [],
+            ],
         ]);
     }
 
@@ -78,7 +80,7 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
             'filter by name' => [
                 'urlParams' => [
                     'field_id' => 1,
-                    'class' => 'string',
+                    'validator' => 'string',
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
@@ -92,7 +94,7 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
      * @param  ApiTester $I
      * @param  Example $example
      * @dataprovider viewDataProvider
-     * @depends fixtures
+     * @depends index
      * @before authToken
      */
     public function view(ApiTester $I, Example $example)
@@ -148,7 +150,7 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
                 'urlParams' => [
                     'field_id' => 1,
                 ],
-                'data' => ['class' => 'string'],
+                'data' => ['validator' => 'string'],
                 'httpCode' => HttpCode::CREATED,
             ],
         ];
@@ -158,7 +160,8 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
      * @param  ApiTester $I
      * @param  Example $example
      * @dataprovider updateDataProvider
-     * @depends fixtures
+     * @depends view
+     * @depends create
      * @before authToken
      */
     public function update(ApiTester $I, Example $example)
@@ -188,7 +191,7 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
      * @param  ApiTester $I
      * @param  Example $example
      * @dataprovider deleteDataProvider
-     * @depends fixtures
+     * @depends update
      * @before authToken
      */
     public function delete(ApiTester $I, Example $example)
@@ -228,7 +231,7 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
         return [
             'id' => 'integer:>0',
             'field_id' => 'integer:>0',
-            'class' => 'string'
+            'validator' => 'string'
         ];
     }
 

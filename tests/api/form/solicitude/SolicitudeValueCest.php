@@ -1,5 +1,8 @@
 <?php
 
+namespace form\solicitude;
+
+use ApiTester;
 use app\fixtures\OauthAccessTokensFixture;
 use app\fixtures\SolicitudeValueFixture;
 use Codeception\Example;
@@ -18,7 +21,7 @@ class SolicitudeValueCest extends \tecnocen\roa\test\AbstractResourceCest
     }
 
     /**
-     * @depends Solicitude:fixtures
+     * @depends form\SolicitudeCest:fixtures
      */
     public function fixtures(ApiTester $I)
     {
@@ -77,17 +80,6 @@ class SolicitudeValueCest extends \tecnocen\roa\test\AbstractResourceCest
                     'X-Pagination-Total-Count' => 6,
                 ],
             ],
-            'filter by value' => [
-                'urlParams' => [
-                    'form_id' => 1,
-                    'solicitude_id' => 1,
-                    'value' => 'Angel',
-                ],
-                'httpCode' => HttpCode::OK,
-                'headers' => [
-                    'X-Pagination-Total-Count' => 1,
-                ],
-            ],
         ];
     }
 
@@ -114,7 +106,7 @@ class SolicitudeValueCest extends \tecnocen\roa\test\AbstractResourceCest
                 'urlParams' => [
                     'form_id' => 1,
                     'solicitude_id' => 1,
-                    'value' => 'Manuel'
+                    // MISSING section_id, field_id
                 ],
                 'data' => [
                     'expand' => 'sectionField, section, field, solicitude',
@@ -125,7 +117,6 @@ class SolicitudeValueCest extends \tecnocen\roa\test\AbstractResourceCest
                 'urlParams' => [
                     'form_id' => 10,
                     'solicitude_id' => 1,
-                    'value' => 'Manuel'
                 ],
                 'httpCode' => HttpCode::NOT_FOUND,
             ],

@@ -231,6 +231,7 @@ class FieldCest extends \tecnocen\roa\test\AbstractResourceCest
      * @param  Example $example
      * @dataprovider deleteDataProvider
      * @depends fixtures
+     * @depends field\FieldRuleCest:delete
      * @before authToken
      */
     public function delete(ApiTester $I, Example $example)

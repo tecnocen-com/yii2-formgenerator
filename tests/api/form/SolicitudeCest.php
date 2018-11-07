@@ -1,5 +1,8 @@
 <?php
 
+namespace form;
+
+use ApiTester;
 use app\fixtures\OauthAccessTokensFixture;
 use app\fixtures\SolicitudeFixture;
 use Codeception\Example;
@@ -17,11 +20,16 @@ class SolicitudeCest extends \tecnocen\roa\test\AbstractResourceCest
         $I->amBearerAuthenticated(OauthAccessTokensFixture::SIMPLE_TOKEN);
     }
 
+    /**
+     * @depends FormCest:fixtures
+     */
     public function fixtures(ApiTester $I)
     {
         $I->haveFixtures([
-            'access_tokens' => OauthAccessTokensFixture::class,
-            'solicitude' => SolicitudeFixture::class,
+            'solicitude' => [
+                'class' => SolicitudeFixture::class,
+                'depends' => [],
+            ],
         ]);
     }
 
@@ -205,6 +213,7 @@ class SolicitudeCest extends \tecnocen\roa\test\AbstractResourceCest
      * @param  Example $example
      * @dataprovider deleteDataProvider
      * @depends fixtures
+     * @depends form\solicitude\SolicitudeValueCest:delete
      * @before authToken
      */
     public function delete(ApiTester $I, Example $example)

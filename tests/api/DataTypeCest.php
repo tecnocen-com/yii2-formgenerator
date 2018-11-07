@@ -118,7 +118,7 @@ class DataTypeCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'name' => 'string',
-            'class' => 'string',
+            'strategy' => 'string',
         ];
     }
 

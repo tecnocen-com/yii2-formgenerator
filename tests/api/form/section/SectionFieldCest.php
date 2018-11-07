@@ -1,6 +1,6 @@
 <?php
 
-namespace section\field;
+namespace form\section;
 
 use ApiTester;
 use app\fixtures\OauthAccessTokensFixture;
