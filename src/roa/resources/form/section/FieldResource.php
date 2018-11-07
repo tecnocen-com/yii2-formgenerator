@@ -30,10 +30,5 @@ class FieldResource extends \tecnocen\roa\controllers\Resource
     /**
      * @inheritdoc
      */
-    public function baseQuery()
-    {
-        return parent::baseQuery()->andWhere([
-            'section_id' => Yii::$app->request->getQueryParam('section_id'),
-        ]);
-    }
+    public $filterParams = ['section_id'];
 }

@@ -17,7 +17,7 @@ class m170101_000002_data_type extends tecnocen\rmdb\migrations\CreatePivot
     {
         return [
             'name' => $this->string(32)->notNull()->unique(),
-            'class' => $this->string(64)->notNull(),
+            'strategy' => $this->string(64)->notNull(),
         ];
     }
 }

@@ -43,7 +43,7 @@ class SectionField extends base\SectionField implements Contract
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => 'field_id',

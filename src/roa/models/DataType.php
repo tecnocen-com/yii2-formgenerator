@@ -21,7 +21,7 @@ class DataType extends base\DataType implements Contract
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'resourceName' => 'data-type',

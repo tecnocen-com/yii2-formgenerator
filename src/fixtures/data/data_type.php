@@ -4,35 +4,34 @@ use tecnocen\formgenerator\dataStrategies;
 
 $now = new yii\db\Expression('now()');
 
-
 return [
     [
         'name' => 'string',
-        'class' => dataStrategies\StringDataStrategy::class,
+        'strategy' => dataStrategies\StringDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
     ],
     [
         'name' => 'integer',
-        'class' => dataStrategies\IntegerDataStrategy::class,
+        'strategy' => dataStrategies\IntegerDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
     ],
     [
         'name' => 'decimal',
-        'class' => dataStrategies\DecimalDataStrategy::class,
+        'strategy' => dataStrategies\DecimalDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
     ],
     [
         'name' => 'boolean',
-        'class' => dataStrategies\BooleanDataStrategy::class,
+        'strategy' => dataStrategies\BooleanDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
     ],
     [
         'name' => 'public-file',
-        'class' => dataStrategies\FileDataStrategy::class,
+        'strategy' => dataStrategies\FileDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
     ],

@@ -16,7 +16,7 @@ class FieldRulePropertySearch extends FieldRuleProperty implements
     /**
      * @inhertidoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => [],
@@ -38,8 +38,10 @@ class FieldRulePropertySearch extends FieldRuleProperty implements
     /**
      * @inhertidoc
      */
-    public function search(array $params, $formName = '')
-    {
+    public function search(
+        array $params,
+        ?string $formName = ''
+    ): ?ActiveDataProvider {
         $this->load($params, $formName);
         if (!$this->validate()) {
             return null;

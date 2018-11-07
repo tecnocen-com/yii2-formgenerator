@@ -21,7 +21,7 @@ class FieldRuleProperty extends base\FieldRuleProperty implements Contract
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => 'property',

@@ -15,7 +15,7 @@ class FormSearch extends Form implements ResourceSearch
     /**
      * @inhertidoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => [],
@@ -37,8 +37,10 @@ class FormSearch extends Form implements ResourceSearch
     /**
      * @inhertidoc
      */
-    public function search(array $params, $formName = '')
-    {
+    public function search(
+        array $params,
+        ?string $formName = ''
+    ): ?ActiveDataProvider {
         $this->load($params, $formName);
         if (!$this->validate()) {
             return null;

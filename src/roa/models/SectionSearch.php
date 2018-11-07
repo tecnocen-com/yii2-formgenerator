@@ -15,7 +15,7 @@ class SectionSearch extends Section implements ResourceSearch
     /**
      * @inhertidoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => [],
@@ -39,8 +39,10 @@ class SectionSearch extends Section implements ResourceSearch
     /**
      * @inhertidoc
      */
-    public function search(array $params, $formName = '')
-    {
+    public function search(
+        array $params,
+        ?string $formName = ''
+    ): ?ActiveDataProvider {
         $this->load($params, $formName);
         $this->getBehavior('position')->attachValidators = false;
         if (!$this->validate()) {
