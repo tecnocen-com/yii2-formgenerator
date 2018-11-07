@@ -4,18 +4,21 @@ namespace tecnocen\formgenerator\models;
 
 use tecnocen\formgenerator\dataStrategies\DataStrategy;
 use yii\base\InvalidConfigException;
+use yii\db\ActiveQuery;
 
 /**
  * Model class for table `{{%formgenerator_data_type}}`
  *
  * @property string $name
- * @property string $class
+ * @property string $strategy
+ * @property-read DataStrategy $dataStrategy
  *
  * @property Field[] $fields
  */
 class DataType extends \tecnocen\rmdb\models\Pivot
 {
     protected $dataStrategy;
+
     /**
      * @var string full class name of the model used in the relation
      * `getFields()`.
@@ -39,7 +42,7 @@ class DataType extends \tecnocen\rmdb\models\Pivot
             [['name', 'class'], 'required'],
             [['name', 'class'], 'string', 'min' => 4],
             [['name'], 'unique'],
-            [['class'], function ($model, $attribute) {
+            [['strategy'], function ($model, $attribute) {
                 if (is_subclass_of($model->$attribute, DataStrategy::class)) {
                     return;
                 }
@@ -57,9 +60,12 @@ class DataType extends \tecnocen\rmdb\models\Pivot
         $this->ensureStrategy();
     }
 
+    /**
+     * Creates the `dataStrategy` object
+     */
     protected function ensureStrategy()
     {
-        $class = $this->class;
+        $class = $this->strategy;
         $this->dataStrategy = new $class();
         if (!$this->dataStrategy instanceof DataStrategy) {
             throw new InvalidConfigException(
@@ -69,19 +75,12 @@ class DataType extends \tecnocen\rmdb\models\Pivot
         }
     }
 
-    public function loadFieldValue(SolicitudeValue $model, $params, $formName)
+    /**
+     * @return DataStrategy
+     */
+    public function getDataStrategy(): DataStrategy
     {
-        return $this->dataStrategy->load($model, $params, $formName);
-    }
-
-    public function storeFieldValue(SolicitudeValue $model, $raw)
-    {
-        return $this->dataStrategy->store($model, $raw);
-    }
-
-    public function readValue($raw)
-    {
-        return $this->dataStrategy->read($raw);
+        return $this->dataStrategy;
     }
 
     /**
@@ -96,9 +95,9 @@ class DataType extends \tecnocen\rmdb\models\Pivot
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getFields()
+    public function getFields(): ActiveQuery
     {
         return $this->hasMany($this->fieldClass, ['data_type' => 'name'])
             ->inverseOf('dataType');

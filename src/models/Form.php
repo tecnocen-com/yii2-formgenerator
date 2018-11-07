@@ -2,6 +2,8 @@
 
 namespace tecnocen\formgenerator\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * Model class for table `{{%formgenerator_form}}`
  *
@@ -58,9 +60,9 @@ class Form extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSections()
+    public function getSections(): ActiveQuery
     {
         return $this->hasMany($this->sectionClass, ['form_id' => 'id'])
             ->inverseOf('form');

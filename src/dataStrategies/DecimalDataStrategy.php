@@ -3,25 +3,12 @@
 namespace tecnocen\formgenerator\dataStrategies;
 
 use tecnocen\formgenerator\models\SolicitudeValue;
-use yii\helpers\ArrayHelper;
 
-class DecimalDataStrategy implements DataStrategy
+class DecimalDataStrategy extends BaseDataStrategy
 {
-    public function __construct()
-    {
-    }
-
-    public function load(SolicitudeValue $model, $data, $formName = null)
-    {
-        if ('' === $formName) {
-            return ArrayHelper::getValue($data, 'raw');
-        }
-        if ($formName === null) {
-            $formName = $model->formName();
-        }
-        return ArrayHelper::getValue($data, $formName . '.raw');
-    }
-
+    /**
+     * @inheritdoc
+     */
     public function store(SolicitudeValue $model, $value)
     {
         if (null === $value) {
@@ -31,6 +18,9 @@ class DecimalDataStrategy implements DataStrategy
         return (float)$value;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function read($raw)
     {
         if (null === $raw) {

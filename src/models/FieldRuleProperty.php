@@ -2,6 +2,8 @@
 
 namespace tecnocen\formgenerator\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * Model class for table `{{%formgenerator_field_rule_property}}`
  *
@@ -74,9 +76,9 @@ class FieldRuleProperty extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getRule()
+    public function getRule(): ActiveQuery
     {
         return $this->hasOne($this->ruleClass, ['id' => 'rule_id']);
     }

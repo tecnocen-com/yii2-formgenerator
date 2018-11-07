@@ -5,28 +5,19 @@ namespace tecnocen\formgenerator\dataStrategies;
 use tecnocen\formgenerator\models\SolicitudeValue;
 use yii\helpers\ArrayHelper;
 
-class StringDataStrategy implements DataStrategy
+class StringDataStrategy extends BaseDataStrategy
 {
-    public function __construct()
-    {
-    }
-
-    public function load(SolicitudeValue $model, $data, $formName = null)
-    {
-        if ('' === $formName) {
-            return ArrayHelper::getValue($data, 'raw');
-        }
-        if ($formName === null) {
-            $formName = $model->formName();
-        }
-        return ArrayHelper::getValue($data, $formName . '.raw');
-    }
-
+    /**
+     * @inheritdoc
+     */
     public function store(SolicitudeValue $model, $value)
     {
         return $value;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function read($raw)
     {
         return $value;

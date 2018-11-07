@@ -5,34 +5,11 @@ namespace tecnocen\formgenerator\dataStrategies;
 use tecnocen\formgenerator\models\SolicitudeValue;
 use yii\helpers\ArrayHelper;
 
-class BooleanDataStrategy implements DataStrategy
+class BooleanDataStrategy extends BaseDataStrategy
 {
-    public function __construct()
-    {
-    }
-
-    public function load(SolicitudeValue $model, $data, $formName = null)
-    {
-        $scope = $formName === null ? $model->formName() : $formName;
-        if (empty($data)) {
-            return false;
-        }
-
-        if ($scope === '') {
-            if (isset($data['raw'])) {
-                $model->raw = $data['raw'];
-                return true;
-            }
-
-            return false;
-        } elseif (isset($data[$scope]['raw'])) {
-            $model->raw = $data[$scope]['raw'];
-            return true;
-        }
-
-        return false;
-    }
-
+    /**
+     * @inheritdoc
+     */
     public function store(SolicitudeValue $model, $value)
     {
         if (null === $raw || '' === $raw) {
@@ -46,6 +23,9 @@ class BooleanDataStrategy implements DataStrategy
         return 1;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function read($raw)
     {
         if (null === $raw) {

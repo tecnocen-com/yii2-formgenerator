@@ -2,6 +2,8 @@
 
 namespace tecnocen\formgenerator\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * Model class for table `{{%formgenerator_solicitude_value}}`
  *
@@ -18,6 +20,14 @@ namespace tecnocen\formgenerator\models;
  */
 class SolicitudeValue extends \tecnocen\rmdb\models\Entity
 {
+    const NOT_SET_VALUE = 'NOT_SET_VALUE';
+
+    /**
+     * @var mixed the value obtained after processing the raw stored data
+     * stored on the database.
+     */
+    protected $value = self::NOT_SET_VALUE;
+
     /**
      * @var string full class name of the model used in the relation
      * `getSectionField()`.
@@ -133,28 +143,33 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
                 ->with([
                     'dataType',
                     'rules' => function ($query) {
-                        $query->modelClass = 'tecnocen\\formgenerator\\models\\FieldRule';
+                        $query->modelClass = FieldRule::class;
                     },
                     'rules.properties',
                 ])
                 ->one();
             $this->populateRelation('field', $field);
-            foreach ($field->buildValidators($this, 'raw')
-                as $validator
-            ) {
-                $validator->validateAttributes($this, ['raw']);
-            }
-        }
+
+            array_walk(
+                $field->buildValidators($this, 'raw'),
+                function ($validator) {
+                    $validator->validateAttribute($this, 'raw');
+                }
+            );
+       }
+
         parent::afterValidate();
     }
+
     /**
      * @inheritdoc
      */
     public function getValue()
     {
-        if (null === $this->value) {
+        if (self::NOT_SET_VALUE === $this->value) {
             // memento
-            $this->value = $this->field->dataType->readValue($this->raw);
+            $this->value = $this->field->dataType->dataStrategy
+                ->read($this->raw);
         }
 
         return $this->value;
@@ -166,7 +181,9 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            $this->raw = $this->field->dataType->storeFieldValue($this, $this->raw);
+            $this->raw = $this->field->dataType->dataStrategy
+                ->store($this, $this->raw);
+
             return true;
         }
 
@@ -176,12 +193,24 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
     /**
      * @inheritdoc
      */
+    public function afterDelete()
+    {
+        $this->field->dataType->dataStrategy
+            ->erase($this->raw);
+        parent::afterDelete();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function load($params, $formName = null)
     {
         parent::load($params, $formName);
-        $this->field
-            ->dataType
-            ->loadFieldValue($model, $params, $formName);
+
+        if (null !== $this->field_id && null!== $this->field) {
+            $this->field->dataType->dataStrategy
+                ->load($this, $params, $formName);
+        }
     }
 
     /**
@@ -197,9 +226,9 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSectionField()
+    public function getSectionField(): ActiveQuery
     {
         return $this->hasOne(
             $this->sectionFieldClass,
@@ -208,25 +237,25 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSection()
+    public function getSection(): ActiveQuery
     {
         return $this->hasOne($this->sectionClass, ['id' => 'section_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getField()
+    public function getField(): ActiveQuery
     {
         return $this->hasOne($this->fieldClass, ['id' => 'field_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSolicitude()
+    public function getSolicitude(): ActiveQuery
     {
         return $this->hasOne($this->solicitudeClass, ['id' => 'solicitude_id']);
     }

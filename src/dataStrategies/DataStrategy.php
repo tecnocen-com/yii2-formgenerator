@@ -17,17 +17,23 @@ interface DataStrategy
     /**
      * Loads information from the data in the request to the model.
      *
-     * @param  Model  $model
-     * @param  array|null $data
-     * @param  string|null $formName
+     * @param  SolicitudeValue $model
+     * @param  ?array $data
+     * @param  ?string $formName
+     * @return bool whether the data was loaded
      */
-    public function load(SolicitudeValue $model, $data, $formName = null);
+    public function load(
+        SolicitudeValue $model,
+        ?array $data,
+        ?string $formName = null
+    ): bool;
 
     /**
      * Process the information from the request for its storage.
      *
-     * @param  Model  $model
-     * @param  mixed $value
+     * @param Model  $model
+     * @param mixed $value
+     * @return mixed the value to be stored on the database
      */
     public function store(SolicitudeValue $model, $value);
 
@@ -39,4 +45,11 @@ interface DataStrategy
      * @return mixed the processed value shown to the end user.
      */
     public function read($raw);
+
+    /**
+     * Called after deleting a SolicitudeValue record.
+     *
+     * @param mixed $raw
+     */
+    public function erase($raw);
 }
