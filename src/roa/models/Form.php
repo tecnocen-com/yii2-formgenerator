@@ -49,4 +49,12 @@ class Form extends base\Form implements Contract
             },
         ];
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function extraFields()
+    {
+        return ['sections'];
+    }
 }

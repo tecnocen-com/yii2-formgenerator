@@ -1,6 +1,11 @@
 Yii2 Form Generator Change Log
 ==========================
 
+0.4.1 November 15, 2018
+------------------------
+
+- Enh: Extrafields, form and section
+
 0.4.0 October 18, 2018
 ------------------------
 
