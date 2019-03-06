@@ -2,20 +2,23 @@
 
 namespace tecnocen\formgenerator\models;
 
-use yii\web\UploadedFile;
+use tecnocen\formgenerator\dataStrategies\DataStrategy;
+use yii\base\InvalidConfigException;
+use yii\db\ActiveQuery;
 
 /**
- * Model class for table `{{%formgenerator_form}}`
+ * Model class for table `{{%formgenerator_data_type}}`
  *
- * @property integer $id
  * @property string $name
- * @property string $label
- * @property string $cast
+ * @property string $strategy
+ * @property-read DataStrategy $dataStrategy
  *
  * @property Field[] $fields
  */
-class DataType extends \tecnocen\rmdb\models\Entity
+class DataType extends \tecnocen\rmdb\models\Pivot
 {
+    protected $dataStrategy;
+
     /**
      * @var string full class name of the model used in the relation
      * `getFields()`.
@@ -33,90 +36,51 @@ class DataType extends \tecnocen\rmdb\models\Entity
     /**
      * @inheritdoc
      */
-    protected function attributeTypecast()
+    public function rules()
     {
-        return parent::attributeTypecast() + ['id' => 'integer'];
+        return [
+            [['name', 'class'], 'required'],
+            [['name', 'class'], 'string', 'min' => 4],
+            [['name'], 'unique'],
+            [['strategy'], function ($model, $attribute) {
+                if (is_subclass_of($model->$attribute, DataStrategy::class)) {
+                    return;
+                }
+                $model->addErrors($attribute, 'Must implement DataStrategy.');
+            }],
+        ];
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function afterFind()
     {
-        return [
-            [['name', 'label', 'cast'], 'required'],
-            [['name', 'label', 'cast',], 'string', 'min' => 4],
-            [['name'], 'unique'],
-            [['cast'], 'verifyCast'],
-        ];
+        parent::afterFind();
+        $this->ensureStrategy();
     }
 
     /**
-     * @return Callable
+     * Creates the `dataStrategy` object
      */
-    protected function getCastCallable()
+    protected function ensureStrategy()
     {
-         $values = explode(':', $this->cast, 2);
-         return isset($values[1])
-             ? [$values[0], $values[1]]
-             : [static::class, $values[0]];
-    }
-
-    /**
-     * Cast the value of an attribute in a model.
-     *
-     * @param SolicitudeValue $model
-     * @param string $attribute
-     */
-    public function castValue(SolicitudeValue $model, $attribute)
-    {
-         $callable = $this->getCastCallable();
-         $model->$attribute = $callable($model->$attribute, $attribute);
-    }
-
-    /**
-     * Verify that the cast saved is callable.
-     *
-     * @param string $attribute
-     */
-    public function verifyCast($attribute)
-    {
-         if (!is_callable($this->getCastCallable())) {
-             $this->addError(
-                 $attribute,
-                 '`cast` must be an statically callable method.'
-             );
-         }
-    }
-
-    public static function booleanCast($value, $attribute)
-    {
-        return (bool)$value;
-    }
-
-    public static function integerCast($value, $attribute)
-    {
-        return (int)$value;
-    }
-
-    public static function stringCast($value, $attribute)
-    {
-        return (string)$value;
-    }
-
-    public static function floatCast($value, $attribute)
-    {
-        return (float)$value;
-    }
-
-    public static function fileCast($value, $attribute)
-    {
-        if (null !== ($uploadedFile = UploadedFile::getInstanceByName(
-            $attribute
-        ))) {
-            return $uploadedFile;
+        $class = $this->strategy;
+        $this->dataStrategy = new $class();
+        if (!$this->dataStrategy instanceof DataStrategy) {
+            throw new InvalidConfigException(
+                static::class . "::\$class '{$class}' must implement "
+                    . DataStrategy::class
+            );
         }
-        return $value;
+    }
+
+    /**
+     * @return DataStrategy
+     */
+    public function getDataStrategy(): DataStrategy
+    {
+        return $this->dataStrategy;
     }
 
     /**
@@ -125,19 +89,17 @@ class DataType extends \tecnocen\rmdb\models\Entity
     public function attributeLabels()
     {
         return array_merge([
-            'id' => 'ID',
             'name' => 'Data Type name',
-            'label' => 'Label',
-            'cast' => 'Type Cast Method',
+            'class' => 'Data Type PHP Class',
         ], parent::attributeLabels());
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getFields()
+    public function getFields(): ActiveQuery
     {
-        return $this->hasMany($this->fieldClass, ['data_type_id' => 'id'])
+        return $this->hasMany($this->fieldClass, ['data_type' => 'name'])
             ->inverseOf('dataType');
     }
 }

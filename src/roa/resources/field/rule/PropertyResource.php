@@ -30,13 +30,5 @@ class PropertyResource extends \tecnocen\roa\controllers\Resource
     /**
      * @inheritdoc
      */
-    public $filterParams = ['field_id', 'rule_id'];
-
-    /**
-     * @inheritdoc
-     */
-    public function baseQuery()
-    {
-        return parent::baseQuery()->innerJoinWith(['rule']);
-    }
+    public $filterParams = ['rule_id'];
 }

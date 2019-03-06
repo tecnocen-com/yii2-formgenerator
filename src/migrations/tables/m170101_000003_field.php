@@ -17,7 +17,7 @@ class m170101_000003_field extends tecnocen\rmdb\migrations\CreateEntity
     {
         return [
             'id' => $this->primaryKey(),
-            'data_type_id' => $this->normalKey(),
+            'data_type' => $this->string(32)->notNull(),
             'name' => $this->string(32)->unique()->notNull(),
             'label' => $this->text()->notNull(),
             'service' => $this->text()->defaultValue(null)
@@ -30,6 +30,13 @@ class m170101_000003_field extends tecnocen\rmdb\migrations\CreateEntity
      */
     public function foreignKeys()
     {
-        return ['data_type_id' => 'formgenerator_data_type'];
+        return [
+            'data_type' => [
+                'table' => 'formgenerator_data_type',
+                'columns' => [
+                    'data_type' => 'name',
+                ],
+            ],
+        ];
     }
 }

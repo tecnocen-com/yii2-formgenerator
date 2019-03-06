@@ -39,7 +39,7 @@ class Solicitude extends base\Solicitude implements Contract
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'resourceName' => 'solicitude',

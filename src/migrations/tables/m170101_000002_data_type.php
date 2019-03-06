@@ -1,6 +1,6 @@
 <?php
 
-class m170101_000002_data_type extends tecnocen\rmdb\migrations\CreateEntity
+class m170101_000002_data_type extends tecnocen\rmdb\migrations\CreatePivot
 {
     /**
      * @inheritdoc
@@ -16,10 +16,8 @@ class m170101_000002_data_type extends tecnocen\rmdb\migrations\CreateEntity
     public function columns()
     {
         return [
-            'id' => $this->primaryKey(),
             'name' => $this->string(32)->notNull()->unique(),
-            'label' => $this->text()->notNull(),
-            'cast' => $this->string(64)->notNull(),
+            'strategy' => $this->string(64)->notNull(),
         ];
     }
 }

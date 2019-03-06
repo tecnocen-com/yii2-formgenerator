@@ -18,7 +18,7 @@ class m170101_000004_field_rule extends tecnocen\rmdb\migrations\CreateEntity
         return [
             'id' => $this->primaryKey(),
             'field_id' => $this->normalKey(),
-            'class' => $this->string(64)->notNull(),
+            'validator' => $this->string(64)->notNull(),
         ];
     }
 

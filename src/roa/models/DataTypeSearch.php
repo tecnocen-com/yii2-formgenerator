@@ -14,7 +14,7 @@ class DataTypeSearch extends DataType implements ResourceSearch
     /**
      * @inhertidoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => [],
@@ -28,7 +28,7 @@ class DataTypeSearch extends DataType implements ResourceSearch
     public function rules()
     {
         return [
-            [['name', 'label'], 'string'],
+            [['name'], 'string'],
             [['created_by'], 'integer'],
         ];
     }
@@ -36,8 +36,10 @@ class DataTypeSearch extends DataType implements ResourceSearch
     /**
      * @inhertidoc
      */
-    public function search(array $params, $formName = '')
-    {
+    public function search(
+        array $params,
+        ?string $formName = ''
+    ): ?ActiveDataProvider {
         $this->load($params, $formName);
         if (!$this->validate()) {
             return null;
@@ -48,8 +50,7 @@ class DataTypeSearch extends DataType implements ResourceSearch
             'query' => $class::find()->andFilterWhere([
                     'created_by' => $this->created_by,
                 ])
-                ->andFilterWhere(['like', 'name', $this->name])
-                ->andFilterWhere(['like', 'label', $this->label]),
+                ->andFilterWhere(['like', 'name', $this->name]),
         ]);
     }
 }

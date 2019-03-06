@@ -14,6 +14,23 @@ class DataTypeResource extends \tecnocen\roa\controllers\Resource
     /**
      * @inheritdoc
      */
+    public $idAttribute = 'name';
+
+    /**
+     * @inheritdoc
+     */
+    public function verbs()
+    {
+        return [
+            'index' => ['GET', 'HEAD'],
+            'view' => ['GET', 'HEAD'],
+            'options' => ['OPTIONS'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public $modelClass = DataType::class;
 
     /**

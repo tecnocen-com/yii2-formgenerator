@@ -29,7 +29,7 @@ class FieldRule extends base\FieldRule implements Contract
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'resourceName' => 'rule',

@@ -3,12 +3,13 @@
 namespace tecnocen\formgenerator\models;
 
 use yii\base\Model;
+use yii\db\ActiveQuery;
 
 /**
  * Model class for table `{{%formgenerator_field}}`
  *
  * @property integer $id
- * @property integer $data_type_id
+ * @property integer $data_type
  * @property string $name
  * @property string $label
  *
@@ -44,7 +45,6 @@ class Field extends \tecnocen\rmdb\models\Entity
     {
         return parent::attributeTypecast() + [
             'id' => 'integer',
-            'data_type_id' => 'integer',
         ];
     }
 
@@ -54,14 +54,15 @@ class Field extends \tecnocen\rmdb\models\Entity
     public function rules()
     {
         return [
-            [['data_type_id', 'name', 'label'], 'required'],
-            [['data_type_id'], 'integer'],
+            [['data_type', 'name', 'label'], 'required'],
+            [['data_type'], 'string'],
             [
-                ['data_type_id'],
+                ['data_type'],
                 'exist',
                 'skipOnError' => true,
                 'targetClass' => DataType::class,
-                'targetAttribute' => ['data_type_id' => 'id'],
+                'targetAttribute' => ['data_type' => 'name'],
+                'message' => 'Unsupported Data Type "{value}".',
             ],
             [['name', 'label', 'service'], 'string', 'min' => 4],
             [['name'], 'unique'],
@@ -75,24 +76,24 @@ class Field extends \tecnocen\rmdb\models\Entity
     {
         return array_merge([
             'id' => 'ID',
-            'data_type_id' => 'Data Type ID',
+            'data_type' => 'Data Type',
             'name' => 'Field name',
             'label' => 'Field label',
         ], parent::attributeLabels());
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getDataType()
+    public function getDataType(): ActiveQuery
     {
-        return $this->hasOne($this->dataTypeClass, ['id' => 'data_type_id']);
+        return $this->hasOne($this->dataTypeClass, ['name' => 'data_type']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getRules()
+    public function getRules(): ActiveQuery
     {
         return $this->hasMany($this->ruleClass, ['field_id' => 'id'])
             ->inverseOf('field');
@@ -101,12 +102,13 @@ class Field extends \tecnocen\rmdb\models\Entity
     /**
      * @return \yii\validators\Validator[]
      */
-    public function buildValidators(Model $model, $attributes)
+    public function buildValidators(Model $model, $attributes): array
     {
-        $validators = [];
-        foreach ($this->rules as $rule) {
-            $validators[] = $rule->buildValidator($model, $attributes);
-        }
-        return $validators;
+        return array_map(
+            $this->rules,
+            function ($rule) use ($model, $attributes) {
+                return $rule->buildValidator($model, $attributes);
+            }
+        );
     }
 }

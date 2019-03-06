@@ -2,6 +2,8 @@
 
 namespace tecnocen\formgenerator\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * Model class for table `{{%formgenerator_solicitude}}`
  *
@@ -75,17 +77,17 @@ class Solicitude extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getForm()
+    public function getForm(): ActiveQuery
     {
         return $this->hasOne($this->formClass, ['id' => 'form_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getValues()
+    public function getValues(): ActiveQuery
     {
         return $this->hasMany(
             $this->solicitudeValueClass,

@@ -36,7 +36,9 @@ class Version extends \tecnocen\roa\modules\ApiVersion
         self::SECTION_ROUTE,
         self::SECTION_FIELD_ROUTE,
 
-        self::DATA_TYPE_ROUTE,
+        self::DATA_TYPE_ROUTE => [
+            'urlRule' => ['tokens' => ['{id}' => '<id:\w+>']],
+        ],
 
         self::FIELD_ROUTE,
         self::FIELD_RULE_ROUTE,
@@ -62,17 +64,6 @@ class Version extends \tecnocen\roa\modules\ApiVersion
                     'GET,HEAD' => 'index',
                     '{section_id}' => 'options',
                     '{section_id}/{id}' => 'options',
-                    '' => 'options',
-                ],
-            ],
-        ],
-        self::SOLICITUDE_VALUE_SEARCH_ROUTE => [
-            'class' => resources\SolicitudeValueResource::class,
-            'urlRule' => [
-                'tokens' => [
-                ],
-                'patterns' => [
-                    'GET,HEAD' => 'index',
                     '' => 'options',
                 ],
             ],

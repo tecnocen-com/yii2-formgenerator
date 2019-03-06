@@ -25,19 +25,5 @@ class ValueResource extends \tecnocen\roa\controllers\Resource
     /**
      * @inheritdoc
      */
-    public $searchClass = SolicitudeValueSearch::class;
-
-    /**
-     * @inheritdoc
-     */
-    public function baseQuery()
-    {
-        return parent::baseQuery()->andWhere([
-            'solicitude_id' => Yii::$app->request
-                ->getQueryParam('solicitude_id'),
-        ])->andFilterWhere([
-            'section_id' => Yii::$app->request
-                ->getQueryParam('section_id'),
-        ]);
-    }
+    public $filterParams = ['solicitude_id', 'section_id'];
 }

@@ -1,53 +1,38 @@
 <?php
 
-$now = new yii\db\Expression('now()');
+use tecnocen\formgenerator\dataStrategies;
 
+$now = new yii\db\Expression('now()');
 
 return [
     [
         'name' => 'string',
-        'Label' => 'String',
-        'cast' => 'stringCast',
+        'strategy' => dataStrategies\StringDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
-        'updated_by' => 1,
-        'updated_at' => $now,
     ],
     [
         'name' => 'integer',
-        'label' => 'Integer',
-        'cast' => 'integerCast',
+        'strategy' => dataStrategies\IntegerDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
-        'updated_by' => 1,
-        'updated_at' => $now,
     ],
     [
-        'name' => 'float',
-        'label' => 'Decimal',
-        'cast' => 'floatCast',
+        'name' => 'decimal',
+        'strategy' => dataStrategies\DecimalDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
-        'updated_by' => 1,
-        'updated_at' => $now,
     ],
     [
         'name' => 'boolean',
-        'label' => 'Boolean',
-        'cast' => 'booleanCast',
+        'strategy' => dataStrategies\BooleanDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
-        'updated_by' => 1,
-        'updated_at' => $now,
     ],
     [
-        'name' => 'file',
-        'label' => 'File',
-        'cast' => 'fileCast',
+        'name' => 'public-file',
+        'strategy' => dataStrategies\FileDataStrategy::class,
         'created_by' => 1,
         'created_at' => $now,
-        'updated_by' => 1,
-        'updated_at' => $now,
     ],
 ];
-

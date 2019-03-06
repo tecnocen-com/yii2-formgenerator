@@ -236,11 +236,11 @@ class FieldRulePropertyCest extends \tecnocen\roa\test\AbstractResourceCest
     {
         return [
             'delete field 1' => [
-                'url' => '/field/1/rule/3/property/max',
+                'url' => '/field/1/rule/3/property/min',
                 'httpCode' => HttpCode::NO_CONTENT,
             ],
             'not found' => [
-                'url' => '/field/1/rule/3/property/max',
+                'url' => '/field/1/rule/3/property/min',
                 'httpCode' => HttpCode::NOT_FOUND,
             ],
         ];

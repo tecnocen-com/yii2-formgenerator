@@ -19,7 +19,7 @@ class RuleResource extends \tecnocen\roa\controllers\Resource
     /**
      * @inheritdoc
      */
-    public $filterParams = ['field_id', 'class', 'created_by'];
+    public $filterParams = ['field_id', 'validator', 'created_by'];
 
     /**
      * @inheritdoc

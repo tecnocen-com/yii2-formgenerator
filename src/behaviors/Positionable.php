@@ -4,6 +4,7 @@ namespace tecnocen\formgenerator\behaviors;
 
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
+use yii\db\ActiveQuery;
 use yii\db\Expression as DbExpression;
 use yii\validators\Validator;
 
@@ -99,6 +100,7 @@ class Positionable extends \yii\base\Behavior
         if (!$this->attachValidators) {
             return;
         }
+
         $this->owner->validators[] = Validator::createValidator(
             'default',
             $this->owner,
@@ -121,9 +123,9 @@ class Positionable extends \yii\base\Behavior
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSiblings()
+    public function getSiblings(): ActiveQuery
     {
         return $this->owner->hasMany(get_class($this->owner), [
             $this->parentAttribute => $this->parentAttribute
@@ -188,15 +190,15 @@ class Positionable extends \yii\base\Behavior
 
     /**
      * Update the position of siblings on the database.
-     * @param integer|DbExpression $position the new position.
+     * @param int|DbExpression $position the new position.
      * @param array $condition the extra condition to update siblings.
-     * @return integer the number of updated siblings.
+     * @return int the number of updated siblings.
      */
     protected function updateSiblingsPosition(
         $position,
         array $condition,
         array $orderBy = []
-    ) {
+    ): int {
         $params = [];
         $queryBuilder = $this->owner->getDb()->getQueryBuilder();
         return $this->owner->getDb()->createCommand(
@@ -222,10 +224,10 @@ class Positionable extends \yii\base\Behavior
     /**
      * Increases the position of siblings by 1.
      *
-     * @var array $conditoin the extra condition to update siblings.
-     * @return integer the number of updated siblings.
+     * @param array $conditoin the extra condition to update siblings.
+     * @return int the number of updated siblings.
      */
-    protected function increaseSiblingsPosition(array $condition)
+    protected function increaseSiblingsPosition(array $condition): int
     {
         return $this->updateSiblingsPosition(
             $this->positionIncrease,
@@ -237,10 +239,10 @@ class Positionable extends \yii\base\Behavior
     /**
      * Decreases the position of siblings by 1.
      *
-     * @var array $conditoin the extra condition to update siblings.
-     * @return integer the number of updated siblings.
+     * @param array $conditoin the extra condition to update siblings.
+     * @return int the number of updated siblings.
      */
-    protected function decreaseSiblingsPosition(array $condition)
+    protected function decreaseSiblingsPosition(array $condition): int
     {
         return $this->updateSiblingsPosition(
             $this->positionDecrease,

@@ -49,13 +49,18 @@ class SolicitudeValue extends base\SolicitudeValue implements Contract
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => ['section_id', 'field_id'],
             'resourceName' => 'value',
             'parentSlugRelation' => 'solicitude',
         ];
+    }
+
+    public function fields()
+    {
+        return array_merge(parent::fields(), ['value']);
     }
 
     /**

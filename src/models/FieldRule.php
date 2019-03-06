@@ -3,6 +3,7 @@
 namespace tecnocen\formgenerator\models;
 
 use yii\base\Model;
+use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 use yii\validators\Validator;
 
@@ -11,7 +12,7 @@ use yii\validators\Validator;
  *
  * @property integer $id
  * @property integer $field_id
- * @property string $class
+ * @property string $validator
  *
  * @property Field $field
  * @property FieldRuleProperty[] $properties
@@ -55,7 +56,7 @@ class FieldRule extends \tecnocen\rmdb\models\Entity
     public function rules()
     {
         return [
-            [['field_id', 'class'], 'required'],
+            [['field_id', 'validator'], 'required'],
             [['field_id'], 'integer'],
             [
                 ['field_id'],
@@ -64,8 +65,19 @@ class FieldRule extends \tecnocen\rmdb\models\Entity
                 'targetClass' => Field::class,
                 'targetAttribute' => ['field_id' => 'id'],
             ],
-            [['class'], 'string', 'min' => 2],
-            // todo check its a valid validator class
+            [['validator'], 'string', 'min' => 2],
+            [['validator'], function ($attribute) {
+                $validator = $this->$attribute;
+
+                if (!isset(Validator::$builtInValidators[$validator])
+                    && !is_subclass_of($validator, Validator::class)
+                ) {
+                    $this->addError(
+                        $attribute,
+                        "'$validator' must be a valid validator."
+                    );
+                }
+            }],
         ];
     }
 
@@ -81,26 +93,35 @@ class FieldRule extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getField()
+    public function getField(): ActiveQuery
     {
         return $this->hasOne($this->fieldClass, ['id' => 'field_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @retur ActiveQuery
      */
-    public function getProperties()
+    public function getProperties(): ActiveQuery
     {
         return $this->hasMany($this->propertyClass, ['rule_id' => 'id'])
             ->inverseOf('rule');
     }
 
-    public function buildValidator(Model $model, $attributes)
+    /**
+     * Builds a validator for the model.
+     *
+     * The validator will get attachedk the properties stored in the database.
+     *
+     * @param Model $model
+     * @param string|array $attributes
+     * @return Validator
+     */
+    public function buildValidator(Model $model, $attributes): Validator
     {
         return Validator::createValidator(
-            $this->class,
+            $this->validator,
             $model,
             (array) $attributes,
             ArrayHelper::map($this->properties, 'property', 'value')

@@ -25,10 +25,5 @@ class SectionResource extends \tecnocen\roa\controllers\Resource
     /**
      * @inheritdoc
      */
-    public function baseQuery()
-    {
-        return parent::baseQuery()->andWhere([
-            'form_id' => Yii::$app->request->getQueryParam('form_id'),
-        ]);
-    }
+    public $filterParams = ['form_id'];
 }
