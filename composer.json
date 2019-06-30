@@ -31,7 +31,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "tecnocen/yii2-roa": "~0.4.0",
+        "tecnocen/yii2-roa": "dev-typecast as 0.5.x-dev",
         "tecnocen/yii2-rmdb": "*",
         "yiisoft/yii2": "~2.0.10"
     },
