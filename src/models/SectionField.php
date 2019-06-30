@@ -2,8 +2,9 @@
 
 namespace tecnocen\formgenerator\models;
 
-use Yii;
 use tecnocen\formgenerator\behaviors\Positionable;
+use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * Model class for table `{{%formgenerator_form_section_field}}`
@@ -128,25 +129,25 @@ class SectionField extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSection()
+    public function getSection(): ActiveQuery
     {
         return $this->hasOne($this->sectionClass, ['id' => 'section_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getField()
+    public function getField(): ActiveQuery
     {
         return $this->hasOne($this->fieldClass, ['id' => 'field_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSolicitudeValues()
+    public function getSolicitudeValues(): ActiveQuery
     {
         return $this->hasMany($this->solicitudeValueClass, [
             'field_id' => 'field_id',
@@ -155,9 +156,9 @@ class SectionField extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSolicitudeValuesDetail()
+    public function getSolicitudeValuesDetail(): ActiveQuery
     {
         return Yii::configure(
                 $this->getSolicitudeValues(),

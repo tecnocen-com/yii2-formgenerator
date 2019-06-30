@@ -3,9 +3,10 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
 use yii\helpers\Url;
 use yii\web\Link;
-use yii\web\Linkable;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -13,9 +14,11 @@ use yii\web\NotFoundHttpException;
  *
  * @method void checkAccess(array $params)
  */
-class FieldRuleProperty extends base\FieldRuleProperty implements Linkable
+class FieldRuleProperty extends base\FieldRuleProperty implements Contract
 {
-    use SlugTrait;
+    use ContractTrait {
+        getLinks as getContractLinks;
+    }
 
     /**
      * @inheritdoc
@@ -29,7 +32,7 @@ class FieldRuleProperty extends base\FieldRuleProperty implements Linkable
     {
         $selfLink = $this->getSelfLink();
 
-        return array_merge($this->getSlugLinks(), [
+        return array_merge($this->getContractLinks(), [
             'properties' => $selfLink . '/property',
             'curies' => [
                 new Link([
@@ -45,7 +48,7 @@ class FieldRuleProperty extends base\FieldRuleProperty implements Linkable
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => 'property',

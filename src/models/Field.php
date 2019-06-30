@@ -3,6 +3,7 @@
 namespace tecnocen\formgenerator\models;
 
 use yii\base\Model;
+use yii\db\ActiveQuery;
 
 /**
  * Model class for table `{{%formgenerator_field}}`
@@ -82,17 +83,17 @@ class Field extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getDataType()
+    public function getDataType(): ActiveQuery
     {
         return $this->hasOne($this->dataTypeClass, ['id' => 'data_type_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getRules()
+    public function getRules(): ActiveQuery
     {
         return $this->hasMany($this->ruleClass, ['field_id' => 'id'])
             ->inverseOf('field');
@@ -104,9 +105,11 @@ class Field extends \tecnocen\rmdb\models\Entity
     public function buildValidators(Model $model, $attributes)
     {
         $validators = [];
+
         foreach ($this->rules as $rule) {
             $validators[] = $rule->buildValidator($model, $attributes);
         }
+
         return $validators;
     }
 }

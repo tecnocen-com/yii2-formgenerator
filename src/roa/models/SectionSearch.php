@@ -10,7 +10,7 @@ class SectionSearch extends Section implements ResourceSearch
     /**
      * @inhertidoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => [],
@@ -34,14 +34,17 @@ class SectionSearch extends Section implements ResourceSearch
     /**
      * @inhertidoc
      */
-    public function search(array $params, $formName = '')
-    {
+    public function search(
+        array $params,
+        ?string $formName = ''
+    ): ?ActiveDataProvider {
         $this->load($params, $formName);
         $this->getBehavior('position')->attachValidators = false;
         if (!$this->validate()) {
             return null;
         }
         $class = get_parent_class();
+
         return new ActiveDataProvider([
             'query' => $class::find()->andFilterWhere([
                     'form_id' => $this->form_id,

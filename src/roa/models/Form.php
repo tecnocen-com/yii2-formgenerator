@@ -3,9 +3,10 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
 use yii\helpers\Url;
 use yii\web\Link;
-use yii\web\Linkable;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -13,14 +14,17 @@ use yii\web\NotFoundHttpException;
  *
  * @method void checkAccess(array $params)
  */
-class Form extends base\Form implements Linkable
+class Form extends base\Form implements Contract
 {
-    use SlugTrait;
+    use ContractTrait {
+        getLinks as getContractLinks;
+    }
 
     /**
      * @inheritdoc
      */
     protected $sectionClass = Section::class;
+
     /**
      * @inheritdoc
      */
@@ -28,7 +32,7 @@ class Form extends base\Form implements Linkable
     {
         $selfLink = $this->getSelfLink();
 
-        return array_merge($this->getSlugLinks(), [
+        return array_merge($this->getContractLinks(), [
             'sections' => $selfLink . '/section',
             'curies' => [
                 new Link([
@@ -44,7 +48,7 @@ class Form extends base\Form implements Linkable
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'resourceName' => 'form',

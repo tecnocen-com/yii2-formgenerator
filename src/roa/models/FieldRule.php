@@ -3,18 +3,21 @@
 namespace tecnocen\formgenerator\roa\models;
 
 use tecnocen\formgenerator\models as base;
+use tecnocen\roa\hal\Contract;
+use tecnocen\roa\hal\ContractTrait;
 use yii\helpers\Url;
 use yii\web\Link;
-use yii\web\Linkable;
 
 /**
  * ROA contract handling FieldRule records.
  *
  * @method void checkAccess(array $params)
  */
-class FieldRule extends base\FieldRule implements Linkable
+class FieldRule extends base\FieldRule implements Contract
 {
-    use SlugTrait;
+    use ContractTrait {
+        getLinks as getContractLinks;
+    }
 
     /**
      * @inheritdoc
@@ -24,11 +27,13 @@ class FieldRule extends base\FieldRule implements Linkable
     /**
      * @inheritdoc
      */
+
     protected $propertyClass = FieldRuleProperty::class;
     /**
      * @inheritdoc
      */
-    protected function slugConfig()
+
+    protected function slugBehaviorConfig(): array
     {
         return [
             'resourceName' => 'rule',
@@ -43,7 +48,7 @@ class FieldRule extends base\FieldRule implements Linkable
     {
         $selfLink = $this->getSelfLink();
 
-        return array_merge($this->getSlugLinks(), [
+        return array_merge($this->getContractLinks(), [
             'properties' => $selfLink . '/property',
             'curies' => [
                 new Link([

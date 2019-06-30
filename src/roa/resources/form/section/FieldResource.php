@@ -2,7 +2,6 @@
 
 namespace tecnocen\formgenerator\roa\resources\form\section;
 
-use Yii;
 use tecnocen\formgenerator\roa\models\SectionField;
 use tecnocen\formgenerator\roa\models\SectionFieldSearch;
 
@@ -30,10 +29,5 @@ class FieldResource extends \tecnocen\roa\controllers\Resource
     /**
      * @inheritdoc
      */
-    public function baseQuery()
-    {
-        return parent::baseQuery()->andWhere([
-            'section_id' => Yii::$app->request->getQueryParam('section_id'),
-        ]);
-    }
+    public $filterParams = ['section_id'];
 }

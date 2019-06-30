@@ -3,6 +3,7 @@
 namespace tecnocen\formgenerator\models;
 
 use tecnocen\formgenerator\behaviors\Positionable;
+use yii\db\ActiveQuery;
 
 /**
  * Model class for table `{{%formgenerator_form_section}}`
@@ -120,26 +121,26 @@ class Section extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getForm()
+    public function getForm(): ActiveQuery
     {
         return $this->hasOne($this->formClass, ['id' => 'form_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSectionFields()
+    public function getSectionFields(): ActiveQuery
     {
         return $this->hasMany($this->sectionFieldClass, ['section_id' => 'id'])
             ->inverseOf('section');
     }
 
     /**
-     * @return \yii\db\ActiveQuery sibling stages for the same workflow
+     * @return ActiveQuery sibling stages for the same workflow
      */
-    public function getFields()
+    public function getFields(): ActiveQuery
     {
         return $this->hasMany($this->fieldClass, ['id' => 'field_id'])
             ->via('sectionFields');

@@ -14,7 +14,7 @@ class SolicitudeValueSimpleSearch extends SolicitudeValue implements
     /**
      * @inhertidoc
      */
-    protected function slugConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => [],
@@ -45,14 +45,17 @@ class SolicitudeValueSimpleSearch extends SolicitudeValue implements
     /**
      * @inhertidoc
      */
-    public function search(array $params, $formName = '')
-    {
+    public function search(
+        array $params,
+        ?string $formName = ''
+    ): ?ActiveDataProvider {
         $this->load($params, $formName);
         if (!$this->validate()) {
             return null;
         }
         $this->checkAccess($params);
         $class = get_parent_class();
+
         return new ActiveDataProvider([
             'query' => $class::find()->innerJoinWith(['solicitude'])
                 ->andFilterWhere([

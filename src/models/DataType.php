@@ -2,6 +2,7 @@
 
 namespace tecnocen\formgenerator\models;
 
+use yii\db\ActiveQuery;
 use yii\web\UploadedFile;
 
 /**
@@ -133,9 +134,9 @@ class DataType extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getFields()
+    public function getFields(): ActiveQuery
     {
         return $this->hasMany($this->fieldClass, ['data_type_id' => 'id'])
             ->inverseOf('dataType');
