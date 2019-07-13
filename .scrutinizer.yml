@@ -157,7 +157,7 @@ build:
         php:
             version: 7.1
     nodes:
-        tests:
+        my-tests:
             environment:
                 mysql: 5.6
             project_setup:
@@ -165,6 +165,8 @@ build:
                     # crear la base de datos, el nombre tiene que coincidir con la base
                     # del archivo `environments/dev/common/config/main-local.php`
                     - mysql -e "create database yii2_formgenerator_test"
+            tests:
+                before:
                     # run migrations
                     - composer deploy-tests
                 override:
@@ -176,4 +178,10 @@ build:
                             file: 'tests/_output/coverage.xml'
                             format: 'clover'
                         idle_timeout: 1800
+        analysis:
+            project_setup:
+                override: [true]
+                
+            tests:
+                override:
                     - php-scrutinizer-run
