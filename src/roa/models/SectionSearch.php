@@ -5,6 +5,11 @@ namespace tecnocen\formgenerator\roa\models;
 use tecnocen\roa\ResourceSearch;
 use yii\data\ActiveDataProvider;
 
+/**
+ * Contract to filter and sort collections of `Section` records.
+ *
+ * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
+ */
 class SectionSearch extends Section implements ResourceSearch
 {
     /**

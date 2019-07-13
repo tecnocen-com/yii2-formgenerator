@@ -1,12 +1,21 @@
 Yii2 Form Generator Change Log
 ==========================
 
-0.4.0 under development
+0.4.1 November 15, 2018
+------------------------
+
+- Enh: Extrafields, form and section
+
+0.4.0 October 18, 2018
 ------------------------
 
 - Enh: Use Cases to use Yii2 Formgenerator
+- Brk: Upgraded requirement to Yii2 ROA 0.4.1
+- Brk: ROA resources now extend from
+ `tecnocen\roa\controllers\Resource`
+- Enh: ROA Models implement `tecnocen\roa\hal\Contract`
 
-0.3.0 under development
+0.3.0 March 3, 2018
 ------------------------
 
 - Enh: Live Demo

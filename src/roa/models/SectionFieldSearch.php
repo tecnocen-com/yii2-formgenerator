@@ -5,6 +5,11 @@ namespace tecnocen\formgenerator\roa\models;
 use tecnocen\roa\ResourceSearch;
 use yii\data\ActiveDataProvider;
 
+/**
+ * Contract to filter and sort collections of `SectionField` records.
+ *
+ * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
+ */
 class SectionFieldSearch extends SectionField implements ResourceSearch
 {
     /**
@@ -43,6 +48,7 @@ class SectionFieldSearch extends SectionField implements ResourceSearch
         if (!$this->validate()) {
             return null;
         }
+
         $this->checkAccess($params);
         $class = get_parent_class();
 
@@ -56,8 +62,8 @@ class SectionFieldSearch extends SectionField implements ResourceSearch
             'sort' => [
                 'defaultOrder' => [
                     'position' => SORT_ASC,
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 }

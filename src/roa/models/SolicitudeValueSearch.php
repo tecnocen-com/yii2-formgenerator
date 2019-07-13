@@ -7,7 +7,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ROA collection for SolicitudeValue records.
+ * Contract to filter and sort collections of `SolicitudeValue` records.
+ *
+ * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
 class SolicitudeValueSearch extends SolicitudeValue implements ResourceSearch
 {

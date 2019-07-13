@@ -9,9 +9,7 @@ use yii\helpers\Url;
 use yii\web\Link;
 
 /**
- * ROA contract handling form Section records.
- *
- * @method void checkAccess(array $params)
+ * ROA contract handling Section records.
  */
 class Section extends base\Section implements Contract
 {
@@ -76,6 +74,6 @@ class Section extends base\Section implements Contract
      */
     public function extraFields()
     {
-        return ['form', 'fields'];
+        return ['form', 'fields', 'sectionFields'];
     }
 }

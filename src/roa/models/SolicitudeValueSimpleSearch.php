@@ -6,7 +6,13 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * ROA collection for SolicitudeValue records.
+ * Contract to filter and sort collections of `SolicitudeValue` records.
+ *
+ * Unlike `SolicitudeValueSearch` this class doesnt invoke the parent
+ * `Solicitude` record so it can search `SolicitudeValue` records across
+ * different `Solicitude` records.
+ *
+ * @author Angel (Faryshta) Guevara <aguevara@alquimiadigital.mx>
  */
 class SolicitudeValueSimpleSearch extends SolicitudeValue implements
     \tecnocen\roa\ResourceSearch

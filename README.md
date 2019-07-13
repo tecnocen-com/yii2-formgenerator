@@ -43,7 +43,7 @@ require: {
 
 Then run the required migrations
 
-`php yii migrate/up -p=@tecnocen/formgenerator/migrations`
+`php yii migrate/up -p=@tecnocen/formgenerator/migrations/tables`
 
 Which will install the following table structure
 

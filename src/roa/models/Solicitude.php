@@ -7,11 +7,10 @@ use tecnocen\roa\hal\Contract;
 use tecnocen\roa\hal\ContractTrait;
 use yii\helpers\Url;
 use yii\web\Link;
+use yii\web\NotFoundHttpException;
 
 /**
- * ROA contract handling Field records.
- *
- * @method void checkAccess(array $params)
+ * ROA contract handling Solicitude records.
  */
 class Solicitude extends base\Solicitude implements Contract
 {
@@ -63,6 +62,15 @@ class Solicitude extends base\Solicitude implements Contract
         return [
             'resourceName' => 'solicitude',
             'parentSlugRelation' => 'form',
+            'checkAccess' => function ($params) {
+                if (isset($params['solicitude_id'])
+                    && $params['solicitude_id'] != $this->id
+                ) {
+                    throw new NotFoundHttpException(
+                        'Solicitude doesnt contain the requested route.'
+                    );
+                }
+            },
         ];
     }
 

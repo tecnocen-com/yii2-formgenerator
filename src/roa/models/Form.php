@@ -11,8 +11,6 @@ use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling Form records.
- *
- * @method void checkAccess(array $params)
  */
 class Form extends base\Form implements Contract
 {
@@ -63,7 +61,7 @@ class Form extends base\Form implements Contract
             },
         ];
     }
-
+    
     /**
      * @inheritdoc
      */

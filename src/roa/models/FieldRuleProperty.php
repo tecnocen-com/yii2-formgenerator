@@ -10,9 +10,7 @@ use yii\web\Link;
 use yii\web\NotFoundHttpException;
 
 /**
- * ROA contract handling FieldRule records.
- *
- * @method void checkAccess(array $params)
+ * ROA contract handling FieldRuleProperty records.
  */
 class FieldRuleProperty extends base\FieldRuleProperty implements Contract
 {

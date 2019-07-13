@@ -10,8 +10,6 @@ use yii\web\Link;
 
 /**
  * ROA contract handling FieldRule records.
- *
- * @method void checkAccess(array $params)
  */
 class FieldRule extends base\FieldRule implements Contract
 {
@@ -29,15 +27,24 @@ class FieldRule extends base\FieldRule implements Contract
      */
 
     protected $propertyClass = FieldRuleProperty::class;
+
     /**
      * @inheritdoc
      */
-
     protected function slugBehaviorConfig(): array
     {
         return [
             'resourceName' => 'rule',
             'parentSlugRelation' => 'field',
+            'checkAccess' => function ($params) {
+                if (isset($params['rule_id'])
+                    && $params['rule_id'] != $this->id
+                ) {
+                    throw new NotFoundHttpException(
+                        'Field Rule doesnt contain the requested route.'
+                    );
+                }
+            }
         ];
     }
 

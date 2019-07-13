@@ -9,9 +9,7 @@ use yii\helpers\Url;
 use yii\web\Link;
 
 /**
- * ROA contract handling Form records.
- *
- * @method void checkAccess(array $params)
+ * ROA contract handling DataType records.
  */
 class DataType extends base\DataType implements
     Contract
@@ -50,13 +48,5 @@ class DataType extends base\DataType implements
     protected function slugBehaviorConfig(): array
     {
         return ['resourceName' => 'data-type'];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function extraFields()
-    {
-        return ['fields'];
     }
 }

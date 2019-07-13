@@ -44,6 +44,7 @@ class FieldSearch extends Field implements ResourceSearch
         if (!$this->validate()) {
             return null;
         }
+
         $class = get_parent_class();
 
         return new ActiveDataProvider([

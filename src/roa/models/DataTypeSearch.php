@@ -45,6 +45,7 @@ class DataTypeSearch extends DataType implements ResourceSearch
             return null;
         }
         $class = get_parent_class();
+
         return new ActiveDataProvider([
             'query' => $class::find()->andFilterWhere([
                     'created_by' => $this->created_by,

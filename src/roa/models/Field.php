@@ -11,8 +11,6 @@ use yii\web\NotFoundHttpException;
 
 /**
  * ROA contract handling Field records.
- *
- * @method void checkAccess(array $params)
  */
 class Field extends base\Field implements Contract
 {
@@ -45,7 +43,7 @@ class Field extends base\Field implements Contract
                         'Field doesnt contain the requested route.'
                     );
                 }
-            }
+            },
         ];
     }
 
