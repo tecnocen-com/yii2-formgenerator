@@ -1,6 +1,14 @@
 Yii2 Form Generator Change Log
 ==========================
 
+0.5.0 July 13, 2019
+
+- Brk: Methods now use the typecast supported in php 7.1
+
+0.4.2 December 19, 2018
+
+- Require flowpath on dev
+
 0.4.1 November 15, 2018
 ------------------------
 
