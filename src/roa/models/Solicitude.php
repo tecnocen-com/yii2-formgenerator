@@ -5,6 +5,8 @@ namespace tecnocen\formgenerator\roa\models;
 use tecnocen\formgenerator\models as base;
 use tecnocen\roa\hal\Contract;
 use tecnocen\roa\hal\ContractTrait;
+use yii\helpers\Url;
+use yii\web\Link;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -31,15 +33,31 @@ class Solicitude extends base\Solicitude implements Contract
      */
     public function getLinks()
     {
+        $selfLink = $this->getSelfLink();
+
         return array_merge($this->getContractLinks(), [
-            'values' => $this->getSelfLink() . '/value',
+            'values' => $selfLink . '/value',
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+                new Link([
+                    'name' => 'nestable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and Nestable related resources.',
+                ]),
+            ],
+            'embeddable:values' => 'values',
+            'nestable:form' => 'form',
         ]);
     }
 
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'resourceName' => 'solicitude',

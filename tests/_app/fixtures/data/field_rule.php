@@ -5,7 +5,7 @@ $now = new yii\db\Expression('now()');
 return [
     [
         'field_id' => 1,
-        'class' => 'trim',
+        'rule_class' => 'trim',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -13,7 +13,7 @@ return [
     ],
     [
         'field_id' => 1,
-        'class' => 'required',
+        'rule_class' => 'required',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -21,7 +21,7 @@ return [
     ],
     [
         'field_id' => 1,
-        'class' => 'string',
+        'rule_class' => 'string',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -29,7 +29,7 @@ return [
     ],
     [
         'field_id' => 2,
-        'class' => 'trim',
+        'rule_class' => 'trim',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -37,7 +37,7 @@ return [
     ],
     [
         'field_id' => 2,
-        'class' => 'required',
+        'rule_class' => 'required',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -45,7 +45,7 @@ return [
     ],
     [
         'field_id' => 2,
-        'class' => 'string',
+        'rule_class' => 'string',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -53,7 +53,7 @@ return [
     ],
     [
         'field_id' => 3,
-        'class' => 'trim',
+        'rule_class' => 'trim',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -61,7 +61,7 @@ return [
     ],
     [
         'field_id' => 3,
-        'class' => 'required',
+        'rule_class' => 'required',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -69,7 +69,7 @@ return [
     ],
     [
         'field_id' => 3,
-        'class' => 'date',
+        'rule_class' => 'date',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -77,7 +77,7 @@ return [
     ],
     [
         'field_id' => 4,
-        'class' => 'trim',
+        'rule_class' => 'trim',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -85,7 +85,7 @@ return [
     ],
     [
         'field_id' => 4,
-        'class' => 'required',
+        'rule_class' => 'required',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -93,7 +93,7 @@ return [
     ],
     [
         'field_id' => 4,
-        'class' => 'email',
+        'rule_class' => 'email',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -101,7 +101,7 @@ return [
     ],
     [
         'field_id' => 5,
-        'class' => 'required',
+        'rule_class' => 'required',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -109,7 +109,7 @@ return [
     ],
     [
         'field_id' => 5,
-        'class' => 'integer',
+        'rule_class' => 'integer',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,
@@ -117,7 +117,7 @@ return [
     ],
     [
         'field_id' => 6,
-        'class' => 'number',
+        'rule_class' => 'number',
         'created_by' => 1,
         'created_at' => $now,
         'updated_by' => 1,

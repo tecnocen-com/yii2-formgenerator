@@ -5,6 +5,8 @@ namespace tecnocen\formgenerator\roa\models;
 use tecnocen\formgenerator\models as base;
 use tecnocen\roa\hal\Contract;
 use tecnocen\roa\hal\ContractTrait;
+use yii\helpers\Url;
+use yii\web\Link;
 
 /**
  * ROA contract handling form SectionField records.
@@ -35,6 +37,8 @@ class SectionField extends base\SectionField implements Contract
      */
     public function getLinks()
     {
+        $selfLink = $this->getSelfLink();
+
         return array_merge($this->getContractLinks(), [
             'field' => $this->field->getSelfLink(),
         ]);
@@ -43,7 +47,7 @@ class SectionField extends base\SectionField implements Contract
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => 'field_id',

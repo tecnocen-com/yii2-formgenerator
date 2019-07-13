@@ -5,7 +5,8 @@ namespace tecnocen\formgenerator\roa\models;
 use tecnocen\formgenerator\models as base;
 use tecnocen\roa\hal\Contract;
 use tecnocen\roa\hal\ContractTrait;
-use yii\web\NotFoundHttpException;
+use yii\helpers\Url;
+use yii\web\Link;
 
 /**
  * ROA contract handling FieldRule records.
@@ -24,12 +25,13 @@ class FieldRule extends base\FieldRule implements Contract
     /**
      * @inheritdoc
      */
+
     protected $propertyClass = FieldRuleProperty::class;
 
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'resourceName' => 'rule',
@@ -51,8 +53,24 @@ class FieldRule extends base\FieldRule implements Contract
      */
     public function getLinks()
     {
+        $selfLink = $this->getSelfLink();
+
         return array_merge($this->getContractLinks(), [
-            'properties' => $this->getSelfLink() . '/property',
+            'properties' => $selfLink . '/property',
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+                new Link([
+                    'name' => 'nestable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and Nestable related resources.',
+                ]),
+            ],
+            'embeddable:properties' => 'properties',
+            'nestable:field' => 'field',
         ]);
     }
 

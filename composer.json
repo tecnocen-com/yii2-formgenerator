@@ -31,9 +31,9 @@
     ],
     "require": {
         "php": "^7.1",
-        "tecnocen/yii2-roa": ">0.4.0",
+        "tecnocen/yii2-roa": "~0.5.0",
         "tecnocen/yii2-rmdb": "*",
-        "yiisoft/yii2": "~2.0.10"
+        "yiisoft/yii2": "~2.0.21"
     },
     "require-dev": {
         "codeception/base": "^2.2.11",

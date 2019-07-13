@@ -3,6 +3,7 @@
 namespace tecnocen\formgenerator\models;
 
 use yii\base\Model;
+use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 use yii\validators\Validator;
 
@@ -11,7 +12,7 @@ use yii\validators\Validator;
  *
  * @property integer $id
  * @property integer $field_id
- * @property string $class
+ * @property string $rule_class
  *
  * @property Field $field
  * @property FieldRuleProperty[] $properties
@@ -55,7 +56,7 @@ class FieldRule extends \tecnocen\rmdb\models\Entity
     public function rules()
     {
         return [
-            [['field_id', 'class'], 'required'],
+            [['field_id', 'rule_class'], 'required'],
             [['field_id'], 'integer'],
             [
                 ['field_id'],
@@ -64,7 +65,7 @@ class FieldRule extends \tecnocen\rmdb\models\Entity
                 'targetClass' => Field::class,
                 'targetAttribute' => ['field_id' => 'id'],
             ],
-            [['class'], 'string', 'min' => 2],
+            [['rule_class'], 'string', 'min' => 2],
             // todo check its a valid validator class
         ];
     }
@@ -76,31 +77,35 @@ class FieldRule extends \tecnocen\rmdb\models\Entity
     {
         return array_merge([
             'field_id' => 'Field ID',
-            'class' => 'Validator Class',
+            'rule_class' => 'Rule Class',
         ], parent::attributeLabels());
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getField()
+    public function getField(): ActiveQuery
     {
         return $this->hasOne($this->fieldClass, ['id' => 'field_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getProperties()
+    public function getProperties(): ActiveQuery
     {
         return $this->hasMany($this->propertyClass, ['rule_id' => 'id'])
             ->inverseOf('rule');
     }
 
+    /**
+     * @param Model $model
+     * @param array $attributes
+     */
     public function buildValidator(Model $model, $attributes)
     {
         return Validator::createValidator(
-            $this->class,
+            $this->rule_class,
             $model,
             (array) $attributes,
             ArrayHelper::map($this->properties, 'property', 'value')

@@ -4,6 +4,7 @@ namespace tecnocen\formgenerator\roa\resources;
 
 use tecnocen\formgenerator\roa\models\Field;
 use tecnocen\formgenerator\roa\models\FieldSearch;
+use yii\db\ActiveQuery;
 
 /**
  * CRUD resource for `Field` records
@@ -24,7 +25,7 @@ class FieldResource extends \tecnocen\roa\controllers\Resource
     /**
      * @inheritdoc
      */
-    public function baseQuery()
+    public function baseQuery(): ActiveQuery
     {
         return parent::baseQuery()->alias('field')->with(['dataType']);
     }

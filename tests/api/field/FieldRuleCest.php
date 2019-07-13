@@ -78,7 +78,7 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
             'filter by name' => [
                 'urlParams' => [
                     'field_id' => 1,
-                    'class' => 'string',
+                    'rule_class' => 'string',
                 ],
                 'httpCode' => HttpCode::OK,
                 'headers' => [
@@ -148,7 +148,7 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
                 'urlParams' => [
                     'field_id' => 1,
                 ],
-                'data' => ['class' => 'string'],
+                'data' => ['rule_class' => 'string'],
                 'httpCode' => HttpCode::CREATED,
             ],
         ];
@@ -228,7 +228,7 @@ class FieldRuleCest extends \tecnocen\roa\test\AbstractResourceCest
         return [
             'id' => 'integer:>0',
             'field_id' => 'integer:>0',
-            'class' => 'string'
+            'rule_class' => 'string'
         ];
     }
 

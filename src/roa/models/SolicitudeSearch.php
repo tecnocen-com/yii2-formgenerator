@@ -15,7 +15,7 @@ class SolicitudeSearch extends Solicitude implements ResourceSearch
     /**
      * @inhertidoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => [],
@@ -77,8 +77,10 @@ class SolicitudeSearch extends Solicitude implements ResourceSearch
     /**
      * @inhertidoc
      */
-    public function search(array $params, $formName = '')
-    {
+    public function search(
+        array $params,
+        ?string $formName = ''
+    ): ?ActiveDataProvider {
         $this->load($params, $formName);
         if (!$this->validate()) {
             return null;
@@ -88,6 +90,7 @@ class SolicitudeSearch extends Solicitude implements ResourceSearch
             'form_id' => $this->form_id,
             'created_by' => $this->created_by,
         ]);
+
         foreach ($this->value as $field_id => $value) {
             $alias = "value_$field_id";
             $query->andWhere([

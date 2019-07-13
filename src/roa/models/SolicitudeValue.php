@@ -5,6 +5,8 @@ namespace tecnocen\formgenerator\roa\models;
 use tecnocen\formgenerator\models as base;
 use tecnocen\roa\hal\Contract;
 use tecnocen\roa\hal\ContractTrait;
+use yii\helpers\Url;
+use yii\web\Link;
 
 /**
  * ROA contract handling SolicitudeValue records.
@@ -40,6 +42,8 @@ class SolicitudeValue extends base\SolicitudeValue implements Contract
      */
     public function getLinks()
     {
+        $selfLink = $this->getSelfLink();
+
         return array_merge($this->getContractLinks(), [
             'field' => $this->field->getSelfLink(),
             'section' => $this->section->getSelfLink(),
@@ -49,7 +53,7 @@ class SolicitudeValue extends base\SolicitudeValue implements Contract
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'idAttribute' => ['section_id', 'field_id'],

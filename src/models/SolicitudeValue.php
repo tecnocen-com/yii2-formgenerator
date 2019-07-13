@@ -2,6 +2,8 @@
 
 namespace tecnocen\formgenerator\models;
 
+use yii\db\ActiveQuery;
+
 /**
  * Model class for table `{{%formgenerator_solicitude_value}}`
  *
@@ -161,9 +163,9 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSectionField()
+    public function getSectionField(): ActiveQuery
     {
         return $this->hasOne(
             $this->sectionFieldClass,
@@ -172,25 +174,25 @@ class SolicitudeValue extends \tecnocen\rmdb\models\Entity
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSection()
+    public function getSection(): ActiveQuery
     {
         return $this->hasOne($this->sectionClass, ['id' => 'section_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getField()
+    public function getField(): ActiveQuery
     {
         return $this->hasOne($this->fieldClass, ['id' => 'field_id']);
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getSolicitude()
+    public function getSolicitude(): ActiveQuery
     {
         return $this->hasOne($this->solicitudeClass, ['id' => 'solicitude_id']);
     }

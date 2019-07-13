@@ -4,7 +4,7 @@ namespace tecnocen\formgenerator\roa\resources\field\rule;
 
 use tecnocen\formgenerator\roa\models\FieldRuleProperty;
 use tecnocen\formgenerator\roa\models\FieldRulePropertySearch;
-use Yii;
+use yii\db\ActiveQuery;
 
 /**
  * CRUD resource for `FieldRuleProperty` records
@@ -35,7 +35,7 @@ class PropertyResource extends \tecnocen\roa\controllers\Resource
     /**
      * @inheritdoc
      */
-    public function baseQuery()
+    public function baseQuery(): ActiveQuery
     {
         return parent::baseQuery()->innerJoinWith(['rule']);
     }

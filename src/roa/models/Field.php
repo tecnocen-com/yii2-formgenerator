@@ -5,6 +5,8 @@ namespace tecnocen\formgenerator\roa\models;
 use tecnocen\formgenerator\models as base;
 use tecnocen\roa\hal\Contract;
 use tecnocen\roa\hal\ContractTrait;
+use yii\helpers\Url;
+use yii\web\Link;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -29,7 +31,7 @@ class Field extends base\Field implements Contract
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'resourceName' => 'field',
@@ -50,8 +52,24 @@ class Field extends base\Field implements Contract
      */
     public function getLinks()
     {
+        $selfLink = $this->getSelfLink();
+
         return array_merge($this->getContractLinks(), [
-            'rules' => $this->getSelfLink(). '/rule',
+            'rules' => $selfLink . '/rule',
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+                new Link([
+                    'name' => 'nestable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and Nestable related resources.',
+                ]),
+            ],
+            'embeddable:rules' => 'rules',
+            'nestable:dataType' => 'dataType',
         ]);
     }
 

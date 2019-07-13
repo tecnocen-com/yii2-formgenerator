@@ -5,6 +5,8 @@ namespace tecnocen\formgenerator\roa\models;
 use tecnocen\formgenerator\models as base;
 use tecnocen\roa\hal\Contract;
 use tecnocen\roa\hal\ContractTrait;
+use yii\helpers\Url;
+use yii\web\Link;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -26,15 +28,25 @@ class Form extends base\Form implements Contract
      */
     public function getLinks()
     {
+        $selfLink = $this->getSelfLink();
+
         return array_merge($this->getContractLinks(), [
-            'sections' => $this->getSelfLink() . '/section',
+            'sections' => $selfLink . '/section',
+            'curies' => [
+                new Link([
+                    'name' => 'embeddable',
+                    'href' => Url::to($selfLink, ['expand' => '{rel}']),
+                    'title' => 'Embeddable and not Nestable related resources.',
+                ]),
+            ],
+            'embeddable:sections' => 'sections',
         ]);
     }
 
     /**
      * @inheritdoc
      */
-    protected function slugBehaviorConfig()
+    protected function slugBehaviorConfig(): array
     {
         return [
             'resourceName' => 'form',
